@@ -1,0 +1,207 @@
+generator client {
+  provider     = "prisma-client"
+  output       = "../src/generated/prisma"
+  moduleFormat = "cjs"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  STUDENT
+  INSTRUCTOR
+  ADMIN
+}
+
+// Niveles del Marco Común Europeo (equivalentes a ТЭУ, ТБУ, ТРКИ-1..4)
+enum CourseLevel {
+  A1
+  A2
+  B1
+  B2
+  C1
+  C2
+}
+
+enum CourseStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum EnrollmentStatus {
+  ACTIVE
+  COMPLETED
+  DROPPED
+}
+
+enum AssessmentType {
+  QUIZ
+  ASSIGNMENT
+  EXAM
+}
+
+model User {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  // Vacía en las cuentas que solo entran con Google.
+  passwordHash String?
+  // Identificador de la cuenta de Google (`sub`), si entró alguna vez con ella.
+  googleId     String?  @unique
+  // Sin confirmar el correo la cuenta no puede entrar. Google y las altas de
+  // un admin la dan por confirmada.
+  emailVerifiedAt    DateTime?
+  // Último correo de confirmación enviado; limita los reenvíos.
+  verificationSentAt DateTime?
+  // Versión de las sesiones: sube al cambiar la contraseña y deja sin efecto
+  // los tokens emitidos antes.
+  tokenVersion       Int       @default(0)
+  firstName    String
+  lastName     String
+  // Nombre completo para mostrar; lo arma el servidor con nombre y apellido.
+  name         String
+  role         Role     @default(STUDENT)
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  enrollments Enrollment[]
+  // Inscripciones que este profe evalúa.
+  evaluating  Enrollment[] @relation("EnrollmentEvaluator")
+  gradesGiven Grade[]      @relation("GradeGrader")
+
+  @@index([role])
+  @@index([lastName])
+}
+
+// Los cursos son de la plataforma: los crea y edita un admin. Los profes no
+// son dueños de cursos; evalúan a los estudiantes que los eligen al inscribirse.
+model Course {
+  id          String       @id @default(uuid())
+  title       String
+  slug        String       @unique
+  description String
+  level       CourseLevel
+  status      CourseStatus @default(DRAFT)
+  publishedAt DateTime?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  lessons     Lesson[]
+  enrollments Enrollment[]
+  assessments Assessment[]
+
+  @@index([status, level])
+}
+
+model Lesson {
+  id              String   @id @default(uuid())
+  courseId        String
+  title           String
+  content         String
+  order           Int
+  durationMinutes Int      @default(0)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  course      Course           @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  progress    LessonProgress[]
+  assessments Assessment[]
+
+  @@unique([courseId, order])
+}
+
+model Enrollment {
+  id          String           @id @default(uuid())
+  studentId   String
+  courseId    String
+  // Profe que el estudiante eligió para que lo evalúe en este curso.
+  evaluatorId String
+  status      EnrollmentStatus @default(ACTIVE)
+  enrolledAt  DateTime         @default(now())
+  completedAt DateTime?
+
+  student   User   @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  evaluator User   @relation("EnrollmentEvaluator", fields: [evaluatorId], references: [id], onDelete: Restrict)
+  course    Course @relation(fields: [courseId], references: [id], onDelete: Restrict)
+  progress    LessonProgress[]
+  grades      Grade[]
+  submissions Submission[]
+
+  @@unique([studentId, courseId])
+  @@index([courseId, status])
+  @@index([evaluatorId])
+}
+
+model LessonProgress {
+  id           String   @id @default(uuid())
+  enrollmentId String
+  lessonId     String
+  completedAt  DateTime @default(now())
+
+  enrollment Enrollment @relation(fields: [enrollmentId], references: [id], onDelete: Cascade)
+  lesson     Lesson     @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+
+  @@unique([enrollmentId, lessonId])
+}
+
+// Evaluación de un curso. `weight` es el % que aporta a la nota final;
+// la suma de los pesos de un curso no puede superar 100.
+// Si tiene `questions`, el estudiante la responde en la plataforma y solo
+// recibe nota cuando el profe revisa su entrega.
+model Assessment {
+  id           String         @id @default(uuid())
+  courseId     String
+  lessonId     String?
+  title        String
+  type         AssessmentType
+  instructions String?
+  questions    String[]
+  maxScore     Decimal        @db.Decimal(6, 2)
+  weight       Decimal        @db.Decimal(5, 2)
+  dueDate      DateTime?
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+
+  course      Course       @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  lesson      Lesson?      @relation(fields: [lessonId], references: [id], onDelete: SetNull)
+  grades      Grade[]
+  submissions Submission[]
+
+  @@index([courseId])
+}
+
+// Respuestas de un estudiante a una evaluación; `answers[i]` responde a `questions[i]`.
+model Submission {
+  id           String   @id @default(uuid())
+  assessmentId String
+  enrollmentId String
+  answers      String[]
+  submittedAt  DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  assessment Assessment @relation(fields: [assessmentId], references: [id], onDelete: Restrict)
+  enrollment Enrollment @relation(fields: [enrollmentId], references: [id], onDelete: Cascade)
+
+  @@unique([assessmentId, enrollmentId])
+  @@index([enrollmentId])
+}
+
+model Grade {
+  id           String   @id @default(uuid())
+  assessmentId String
+  enrollmentId String
+  score        Decimal  @db.Decimal(6, 2)
+  feedback     String?
+  gradedById   String
+  gradedAt     DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  assessment Assessment @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
+  enrollment Enrollment @relation(fields: [enrollmentId], references: [id], onDelete: Cascade)
+  gradedBy   User       @relation("GradeGrader", fields: [gradedById], references: [id], onDelete: Restrict)
+
+  @@unique([assessmentId, enrollmentId])
+  @@index([enrollmentId])
+}
