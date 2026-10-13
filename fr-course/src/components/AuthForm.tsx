@@ -138,6 +138,12 @@ export function AuthForm({ mode }: { mode: "login" | "registro" }) {
             {isLogin ? "Entrar" : "Crear cuenta"}
           </button>
           <GoogleButton mode={mode} onCredential={withGoogle} />
+          {/* Con Google también se crea la cuenta desde la pantalla de entrar. */}
+          <p className="muted small">
+            {isLogin ? "Al continuar aceptas los " : "Al crear tu cuenta aceptas los "}
+            <Link href="/terminos">Términos y condiciones</Link> y la{" "}
+            <Link href="/privacidad">Política de privacidad</Link>.
+          </p>
         </form>
         <p>
           {isLogin ? "¿Primera vez por aquí? " : "¿Ya tienes cuenta? "}

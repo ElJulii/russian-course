@@ -281,7 +281,7 @@ export async function api<T>(
     });
   } catch {
     throw new ApiError(
-      "No hay conexión con el servidor. Revisa que la API esté encendida.",
+      "No hay conexión con el servidor. Try again Later.",
       0,
     );
   }

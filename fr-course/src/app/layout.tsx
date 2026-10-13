@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Onest, Unbounded } from "next/font/google";
+import { Footer } from "@/components/Footer";
 import { Nav } from "@/components/Nav";
 import { AuthProvider } from "@/lib/auth";
 import "./globals.css";
@@ -28,6 +29,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <AuthProvider>
           <Nav />
           {children}
+          <Footer />
         </AuthProvider>
       </body>
     </html>

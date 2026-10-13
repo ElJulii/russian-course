@@ -31,6 +31,8 @@ html {
 }
 
 body {
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
   background: var(--paper);
   color: var(--ink);
@@ -906,4 +908,169 @@ tr + tr td {
 .field-error {
   color: var(--red);
   font-weight: 600;
+}
+
+/* ---------- Pie de página ---------- */
+
+.footer {
+  /* Empuja el pie al fondo cuando la página es más corta que la ventana. */
+  margin-top: auto;
+  border-top: 0.6rem solid var(--red);
+  background: var(--ink);
+  color: #fff;
+  font-size: 0.95rem;
+}
+
+.footer-inner {
+  display: grid;
+  grid-template-columns: minmax(14rem, 1.5fr) repeat(3, minmax(9rem, 1fr));
+  gap: 2rem 2.5rem;
+  padding-block: clamp(2.5rem, 6vw, 3.5rem) 2.5rem;
+}
+
+.footer-about {
+  display: grid;
+  gap: 1rem;
+  align-content: start;
+  max-width: 22rem;
+}
+
+.footer-about p,
+.footer-end {
+  color: #b9bdd6;
+}
+
+.footer .brand-mark {
+  border-color: #fff;
+}
+
+.footer-title {
+  margin-bottom: 0.85rem;
+  color: var(--yellow);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.footer-list {
+  display: grid;
+  gap: 0.55rem;
+  list-style: none;
+}
+
+.footer-list a {
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+
+.footer-list a:hover {
+  text-decoration: underline;
+  text-decoration-color: var(--yellow);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.25em;
+}
+
+.footer-end {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.5rem 2rem;
+  padding-block: 1.25rem;
+  border-top: 1px solid #3a3e63;
+  font-size: 0.85rem;
+}
+
+.footer-end .cyr {
+  color: #fff;
+}
+
+@media (max-width: 52rem) {
+  .footer-inner {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .footer-about {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 30rem) {
+  .footer-inner {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- Páginas legales ---------- */
+
+.legal {
+  max-width: 46rem;
+}
+
+.legal article {
+  margin-top: 2rem;
+}
+
+.legal h2 {
+  margin-top: 2.5rem;
+  font-size: clamp(1.1rem, 2vw, 1.3rem);
+  /* Los enlaces a un apartado no quedan tapados por la barra fija. */
+  scroll-margin-top: 5.5rem;
+}
+
+.legal p,
+.legal ul,
+.legal .table-wrap,
+.legal-facts {
+  margin-top: 0.9rem;
+}
+
+.legal ul {
+  display: grid;
+  gap: 0.45rem;
+  padding-left: 1.25rem;
+}
+
+.legal article a {
+  text-decoration-color: var(--red);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.2em;
+  overflow-wrap: anywhere;
+}
+
+.legal td {
+  min-width: 9rem;
+  white-space: normal;
+  vertical-align: top;
+}
+
+.legal code {
+  font-size: 0.9em;
+}
+
+.legal-facts {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.4rem 1.5rem;
+}
+
+.legal-facts dt {
+  color: var(--ink-soft);
+  font-weight: 600;
+}
+
+.legal-updated {
+  margin-top: 3rem;
+  padding-top: 1rem;
+  border-top: 2px solid var(--rule);
+}
+
+a.filter {
+  text-decoration: none;
+}
+
+.filter[aria-current="page"] {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: #fff;
 }
