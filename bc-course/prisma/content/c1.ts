@@ -1,14 +1,13 @@
-import type { CourseContent } from './course-content';
+import type { LessonContent } from './course-content';
 
 // Temario C1 (equivalente a ТРКИ-3): precisión léxica, sintaxis del texto
 // académico y oficial, orden de palabras, norma culta, lectura literaria y
 // discurso público.
-export const C1: CourseContent = {
-  lessons: [
-    {
-      title: 'Precisión léxica: sinónimos y parónimos',
-      durationMinutes: 60,
-      content: `En C1 el error ya no es gramatical, sino de elección: la palabra existe, pero no es la justa. Esta estación trabaja las series que el hablante culto distingue sin pensar.
+export const C1: LessonContent[] = [
+  {
+    title: 'Precisión léxica: sinónimos y parónimos',
+    durationMinutes: 60,
+    content: `En C1 el error ya no es gramatical, sino de elección: la palabra existe, pero no es la justa. Esta estación trabaja las series que el hablante culto distingue sin pensar.
 
 1. SINÓNIMOS QUE NO SON INTERCAMBIABLES
 знать / уметь / мочь: знать язык (conocimiento), уметь плавать (destreza), мочь прийти (posibilidad).
@@ -57,18 +56,11 @@ export const C1: CourseContent = {
 
 TEXTO
 Выступление молодого учёного произвело на аудиторию сильное впечатление. Он не просто изложил факты, но и убедительно обосновал свою гипотезу, уделив особое внимание спорным моментам. Предыдущий докладчик, крупный специалист в той же области, задал несколько вопросов и высказал ряд замечаний, однако в целом дал работе высокую оценку. Организаторы предоставили слово всем желающим, и дискуссия, вызвавшая живой интерес, продолжалась до позднего вечера.`,
-      exercises: [
-        'Elige la palabra correcta y justifica: (Надень / Одень) шапку, на улице мороз. Ректор (представил / предоставил) слово гостю. Это очень (эффектный / эффективный) метод лечения. Он (экономный / экономичный / экономический) человек. Прошу (оплатить / заплатить) за проезд. Она слишком (обидная / обидчивая). Встреча (случилась / состоялась / произошла) в назначенное время.',
-        'Corrige los errores de combinabilidad y los pleonasmos: «Это играет большое значение». «Он одержал поражение». «Мы приняли участие в мае месяце». «У нас есть свободная вакансия». «Она написала свою автобиографию». «Он сделал преступление». «Я хочу спросить вопрос». «Учёный поднял тост за успех».',
-        'Completa con el verbo adecuado (оказывать, принимать, наносить, совершать, уделять, вызывать, ставить, проявлять): ___ влияние · ___ меры · ___ ущерб · ___ подвиг · ___ внимание · ___ сомнения · ___ диагноз · ___ инициативу. Escribe una frase con cada combinación.',
-        'Explica la diferencia y escribe una frase con cada palabra: причина / повод / предлог · правда / истина · помнить / вспомнить / запомнить / напомнить · изменить / заменить / сменить / обменять.',
-        'Traduce al ruso evitando los falsos amigos: Mi familia tiene un apellido raro. Es una persona muy inteligente y muy culta. El tema es de gran actualidad. La década de los noventa fue difícil. Compré una revista en la tienda. El aula estaba llena. Aspira al puesto de director.',
-      ],
-    },
-    {
-      title: 'Casos difíciles del aspecto y de los verbos de movimiento',
-      durationMinutes: 55,
-      content: `Los contextos donde hasta los nativos dudan y donde la elección cambia el sentido o el tono.
+  },
+  {
+    title: 'Casos difíciles del aspecto y de los verbos de movimiento',
+    durationMinutes: 55,
+    content: `Los contextos donde hasta los nativos dudan y donde la elección cambia el sentido o el tono.
 
 1. COMPETENCIA DE ASPECTOS
 Hay contextos en que ambos son posibles y el matiz es pragmático:
@@ -119,19 +111,12 @@ Ponerse: вставать / встать, ложиться / лечь, сади�
 
 TEXTO
 — Проходите, садитесь. Вы уже обедали? — Спасибо, обедал. Я, собственно, ненадолго: шёл мимо и решил зайти. — Нельзя не признать, вы пришли вовремя. К нам сегодня приходил инспектор, и вопрос о проверке встал очень остро. — Что же будем делать? — Отвечать на его письмо я не буду: пусть сначала поставят нас в известность официально. А вы пока сходите в архив и поставьте подпись под актом.`,
-      exercises: [
-        'Explica el matiz entre las dos frases: a) Я не отвечу на этот вопрос. / Я не буду отвечать на этот вопрос. b) Можно не приходить. / Нельзя не прийти. c) Сядьте! / Садитесь, пожалуйста. d) Вы будете брать эту книгу? / Вы возьмёте эту книгу? e) Он вышел. / Он ушёл.',
-        'Completa con стоять, лежать, сидеть, висеть o ставить, класть, сажать, вешать (o sus perfectivos) en la forma correcta: Ваза ___ на столе, а книги ___ на полке. ___ пальто в шкаф. Врач ___ диагноз. Этот костюм хорошо на вас ___. ___ деньги в кошелёк. Вопрос ___ очень остро. Мы ___ три дерева в саду. Часы ___, надо завести.',
-        'Elige el verbo correcto: Поезд (идёт / едет) до Казани. Не (иди / ходи) туда, там опасно! Я (схожу / сойду) в магазин и вернусь. Он (исходил / находил) весь город пешком. Сегодня в кино (идёт / ходит) новый фильм. Таксист (ведёт / везёт) машину, а пассажиров он (ведёт / везёт) в аэропорт.',
-        'Completa con el verbo con o sin -ся: Лекция ___ (начать) в девять. Профессор ___ (начать) лекцию. Мы ___ (договорить) завтра, сейчас нет времени. Мы ___ (договорить) встретиться завтра. Ребёнок не ___ (слушать) родителей. Я ___ (занять) у него тысячу рублей. Она ___ (занять) йогой.',
-        'Escribe un diálogo de 14 líneas en una oficina o en una consulta donde se usen: tres imperfectivos de cortesía, dos dobles negaciones afirmativas, la oposición не буду + inf. / no + perfectivo futuro, y cuatro usos figurados de verbos de posición.',
-      ],
-    },
-    {
-      title:
-        'Sintaxis del texto escrito: nominalización y construcciones librescas',
-      durationMinutes: 60,
-      content: `El ruso escrito culto tiende al estilo nominal: sustantivos verbales, cadenas de genitivos, preposiciones derivadas y predicados descompuestos. Hay que saber producirlo y, también, cuándo aligerarlo.
+  },
+  {
+    title:
+      'Sintaxis del texto escrito: nominalización y construcciones librescas',
+    durationMinutes: 60,
+    content: `El ruso escrito culto tiende al estilo nominal: sustantivos verbales, cadenas de genitivos, preposiciones derivadas y predicados descompuestos. Hay que saber producirlo y, también, cuándo aligerarlo.
 
 1. PREDICADOS DESCOMPUESTOS (verbo de apoyo + sustantivo)
 решить → принять решение · помочь → оказать помощь · влиять → оказывать влияние · участвовать → принимать участие · анализировать → проводить анализ · контролировать → осуществлять контроль · надеяться → выражать надежду · сомневаться → подвергать сомнению · критиковать → подвергать критике · изменить → внести изменения · согласиться → дать согласие / прийти к согласию · обещать → дать обещание · заботиться → проявлять заботу · использоваться → находить применение · расти → наблюдается рост · значить → иметь значение · стремиться → испытывать стремление · отказаться → ответить отказом · вывести → сделать вывод · сравнить → провести сравнение · побеждать → одержать победу
@@ -172,18 +157,11 @@ Coma entre dos conjunciones contiguas (что если, что когда, и х
 
 TEXTO
 В ходе реализации программы наблюдался значительный рост числа участников, что объясняется главным образом расширением финансирования за счёт средств регионального бюджета. Вместе с тем эксперты выражают сомнение в том, что достигнутые результаты удастся сохранить в случае сокращения расходов. В связи с этим комиссия приняла решение о проведении дополнительного анализа и внесла ряд изменений в план работы на следующий год. По завершении проверки итоговый доклад будет представлен в министерство.`,
-      exercises: [
-        'Sustituye el verbo por un predicado descompuesto: Комиссия решила продлить срок. / Этот фактор влияет на результат. / Мы надеемся на сотрудничество. / В план изменили два пункта. / Учёные сравнили два метода. / Он согласился на публикацию. / Эта теория критикуется.',
-        'Sustituye la subordinada por una preposición derivada + sustantivo: Когда закончился срок договора, стороны подписали новый. / Потому что изменились условия, проект пересмотрели. / Чтобы избежать ошибок, проверьте данные. / Если не будет документов, заявление не примут. / Хотя эксперты возражали, закон приняли. / Пока шли переговоры, было достигнуто соглашение.',
-        'Completa con то en el caso correcto y la conjunción: Проблема заключается ___, ___ нет финансирования. Всё зависит ___, ___ они ответят. Он настаивает ___, ___ мы приехали. Это привело ___, ___ цены выросли. Начнём ___, ___ определим термины. Судя ___, ___ он говорит, он специалист.',
-        'Aligera estas frases cancelerescas: «Осуществление контроля за качеством продукции производится специалистами отдела». «В целях недопущения возникновения конфликтных ситуаций необходимо проведение разъяснительной работы». «Имеет место отсутствие необходимой документации».',
-        'Redacta el resumen ejecutivo de un informe (10 a 12 frases, estilo nominal) sobre los resultados de un proyecto educativo, sanitario o ambiental: contexto, datos, causas, dudas de los expertos, decisiones. Usa al menos seis preposiciones derivadas, cuatro predicados descompuestos y tres construcciones con то.',
-      ],
-    },
-    {
-      title: 'El estilo científico: resumen, reseña y artículo',
-      durationMinutes: 60,
-      content: `El ТРКИ-3 exige comprender y producir textos académicos: аннотация (abstract), реферат (resumen crítico), рецензия (reseña), тезисы (tesis de una ponencia) y доклад.
+  },
+  {
+    title: 'El estilo científico: resumen, reseña y artículo',
+    durationMinutes: 60,
+    content: `El ТРКИ-3 exige comprender y producir textos académicos: аннотация (abstract), реферат (resumen crítico), рецензия (reseña), тезисы (tesis de una ponencia) y доклад.
 
 1. RASGOS DEL ESTILO CIENTÍFICO
 Objetividad (sin «я»: мы, pasiva, impersonales), precisión terminológica, lógica explícita, sintaxis compleja, presente atemporal.
@@ -228,18 +206,11 @@ Preguntas: Спасибо за вопрос. · Если я правильно �
 
 TEXTO (аннотация и фрагмент рецензии)
 Статья посвящена проблеме усвоения категории вида испаноговорящими студентами. Материалом исследования послужили письменные работы ста учащихся уровня В1–С1. Автор выделяет три типа ошибок и приходит к выводу о том, что их причиной является не столько интерференция родного языка, сколько недостаточное внимание к прагматике высказывания. — Несомненным достоинством работы является богатый фактический материал. Вместе с тем вызывает сомнение тезис о том, что выявленные закономерности универсальны: выборка ограничена одним вузом. Указанное замечание, однако, не снижает ценности исследования, которое представляет интерес для преподавателей русского языка как иностранного.`,
-      exercises: [
-        'Define y clasifica en estilo científico (dos frases cada uno, con fórmulas distintas): причастие, синоним, климат, демократия, инфляция.',
-        'Reformula en estilo científico: «Люди стали больше болеть, потому что воздух грязный». «Если много читать, словарный запас растёт». «Мы посмотрели на цифры и поняли, что метод работает». «Наверное, это из-за стресса». «Язык бывает устный и письменный».',
-        'Explica la diferencia entre estos verbos de cita y escribe una frase con cada uno: утверждать, полагать, допускать, подчёркивать, упоминать, оспаривать, опровергать, ссылаться на.',
-        'Escribe la аннотация (5 o 6 frases) de un artículo imaginario sobre uno de estos temas: el bilingüismo en la infancia, el efecto de las redes sociales en la lectura, el cambio climático en el Ártico.',
-        'Escribe una рецензия de 14 a 16 frases sobre un libro, artículo o documental que conozcas: tema y actualidad, estructura, tres ideas del autor (con verbos de cita variados), dos méritos, dos reparos y valoración final.',
-      ],
-    },
-    {
-      title: 'El estilo oficial: documentos y correspondencia',
-      durationMinutes: 55,
-      content: `En el ámbito administrativo y empresarial ruso la forma es contenido: cada documento tiene un formato fijo (реквизиты) y fórmulas que no se improvisan.
+  },
+  {
+    title: 'El estilo oficial: documentos y correspondencia',
+    durationMinutes: 55,
+    content: `En el ámbito administrativo y empresarial ruso la forma es contenido: cada documento tiene un formato fijo (реквизиты) y fórmulas que no se improvisan.
 
 1. PARTES DE UN DOCUMENTO
 адресат (a quién, dativo, arriba a la derecha) · адресант (de quién: от + genitivo) · наименование документа (en el centro, minúscula si sigue texto) · текст · дата · подпись · расшифровка подписи (И. И. Иванов) · печать (sello) · исходящий номер (исх. №) · приложение (anexo)
@@ -298,18 +269,11 @@ Asunto claro (тема): «Запрос коммерческого предло�
 
 TEXTO (письмо-претензия)
 Уважаемый Андрей Петрович! В соответствии с договором № 45 от 10.03.2026 Ваша компания обязалась поставить оборудование не позднее 1 мая. Однако по состоянию на 20 мая оборудование не получено. В связи с этим наше предприятие несёт значительные убытки. Просим Вас в течение пяти рабочих дней сообщить о причинах задержки и о новых сроках поставки. В противном случае мы будем вынуждены расторгнуть договор в одностороннем порядке и потребовать возмещения ущерба. С уважением, директор Л. А. Гомес.`,
-      exercises: [
-        'Escribe con el formato completo un заявление pidiendo un traslado a otro departamento, y debajo una объяснительная записка por no haber entregado un informe a tiempo.',
-        'Escribe una доверенность para que un colega recoja en tu nombre un documento en la secretaría de la universidad.',
-        'Pasa del registro coloquial al oficial: «Мы вам пишем, потому что вы не заплатили». «Пришлите, пожалуйста, цены». «Извините, что так получилось». «Мы не можем на это согласиться». «Спасибо, что помогли». «Если не ответите, пойдём в суд».',
-        'Responde con una carta formal de 10 a 12 frases a la reclamación del texto, como director de la empresa proveedora: reconoce el retraso, explica la causa, propón nuevos plazos y una compensación.',
-        'Reescribe en ruso claro, sin канцелярит: «В настоящее время в целях улучшения качества обслуживания населения осуществляется проведение мероприятий по сокращению времени ожидания». «Гражданам необходимо произвести оплату услуг в установленные сроки». Luego explica en 4 o 5 frases, en ruso, dónde es adecuado el estilo oficial y dónde no.',
-      ],
-    },
-    {
-      title: 'El estilo periodístico y la retórica de la prensa',
-      durationMinutes: 55,
-      content: `La prensa rusa combina la información con la valoración y el juego verbal. Leerla exige reconocer la ironía, la cita encubierta y la carga evaluativa de las palabras.
+  },
+  {
+    title: 'El estilo periodístico y la retórica de la prensa',
+    durationMinutes: 55,
+    content: `La prensa rusa combina la información con la valoración y el juego verbal. Leerla exige reconocer la ironía, la cita encubierta y la carga evaluativa de las palabras.
 
 1. GÉNEROS
 Informativos: заметка · хроника · репортаж · интервью · отчёт
@@ -356,18 +320,11 @@ Gancho (зацепка): anécdota, cifra, cita o pregunta. Tesis clara. Dos o t
 
 TEXTO (колонка)
 «Хотели как лучше»? В городе в очередной раз «оптимизировали» маршруты общественного транспорта. Чиновники уверяют, что горожане якобы только выиграют: автобусов станет меньше, зато они будут ходить «строго по расписанию». Свежо предание… Жители окраин, которым теперь приходится добираться до центра с двумя пересадками, почему-то не спешат благодарить слуг народа. Кому же выгодна такая «забота»? Вопрос, разумеется, риторический. А воз, как водится, и ныне там.`,
-      exercises: [
-        'En la columna del texto, identifica y explica: tres marcas de ironía, dos palabras aladas y su origen, una perífrasis, una pregunta retórica, una marca de distancia y una presuposición.',
-        'Da la variante neutra de estas expresiones y di qué valoración transmiten: отрицательный рост, непопулярные меры, пресловутая реформа, слуги народа, показуха, произвол чиновников, оптимизация штата, боевики.',
-        'Explica el sentido y propón una situación actual en la que un periodista usaría cada cita: «А воз и ныне там». «А судьи кто?» «Хотели как лучше, а получилось как всегда». «Рукописи не горят». «Умом Россию не понять».',
-        'Crea cinco titulares para estas noticias, al menos dos con cita transformada: sube el precio del transporte / un equipo de científicos descubre un fármaco / dimite un ministro tras un escándalo / se inaugura un puente con dos años de retraso / una ola de calor bate récords.',
-        'Escribe una columna de opinión de 16 a 18 frases sobre un problema de tu ciudad o país, con gancho inicial, tesis, dos argumentos, un giro irónico, al menos tres figuras retóricas, una palabra alada y composición circular.',
-      ],
-    },
-    {
-      title: 'Orden de palabras, tema y rema, entonación',
-      durationMinutes: 55,
-      content: `El orden de palabras ruso es «libre» gramaticalmente, pero no comunicativamente. Cada orden responde a una pregunta distinta. Dominarlo es lo que separa el ruso correcto del ruso natural.
+  },
+  {
+    title: 'Orden de palabras, tema y rema, entonación',
+    durationMinutes: 55,
+    content: `El orden de palabras ruso es «libre» gramaticalmente, pero no comunicativamente. Cada orden responde a una pregunta distinta. Dominarlo es lo que separa el ruso correcto del ruso natural.
 
 1. TEMA Y REMA (актуальное членение)
 El tema (тема) es lo conocido, aquello de lo que se habla; el rema (рема) es lo nuevo. En estilo neutro: TEMA → REMA, y el rema lleva el acento de frase al final.
@@ -429,18 +386,11 @@ Recursos de enlace: repetición, pronombres (он, этот, такой), sinón
 
 TEXTO
 В маленьком городе на берегу Волги жил старый учитель. Учителя этого знали все. Каждое утро выходил он на набережную, садился на скамейку и смотрел на реку. Приезжали к нему бывшие ученики — человек десять в год, не больше. Не о славе он мечтал и не о деньгах. Хорошим он был человеком! А умер учитель весной, когда тронулся лёд. Памятник ему поставили не власти — поставили ученики.`,
-      exercises: [
-        'Para cada frase, escribe la pregunta a la que responde: Анна купила словарь вчера. / Вчера словарь купила Анна. / Анна вчера купила словарь. / Словарь Анна купила вчера. / Вчера Анна купила словарь.',
-        'Traduce al ruso marcando con el orden de palabras lo que en español marcan los artículos: Entró una mujer en la sala. / La mujer entró en la sala. / El libro lo compró mi hermano. / En la mesa hay una carta. / La carta está en la mesa. / Vinieron unos estudiantes. / Los estudiantes vinieron.',
-        'Explica qué se niega o enfatiza en cada variante: Не я сказал ему об этом. / Я не сказал ему об этом. / Я сказал не ему об этом. / Я сказал ему не об этом. — Только он читал эту статью. / Он только читал эту статью. / Он читал только эту статью.',
-        'Indica el tipo de ИК y dónde va el centro en cada lectura: «Это ваш брат?» (pregunta si es el hermano) / «Это ваш брат?» (pregunta si es de usted) / «Какая погода!» (admiración) / «Какая погода?» / «А вы?» / «Какой он специалист!» (desprecio).',
-        'En el texto del maestro, señala cinco inversiones y explica su efecto. Después reescríbelo en orden neutro (como una nota biográfica) y comenta en 4 frases qué se pierde.',
-      ],
-    },
-    {
-      title: 'Norma culta: errores que cometen los nativos',
-      durationMinutes: 55,
-      content: `La культура речи es una disciplina que se enseña en la escuela rusa. Conocer sus puntos conflictivos te permite hablar mejor que muchos nativos y entender los debates sobre la lengua.
+  },
+  {
+    title: 'Norma culta: errores que cometen los nativos',
+    durationMinutes: 55,
+    content: `La культура речи es una disciplina que se enseña en la escuela rusa. Conocer sus puntos conflictivos te permite hablar mejor que muchos nativos y entender los debates sobre la lengua.
 
 1. ACENTOS NORMATIVOS (ударение)
 звонИть: звонИт, позвонИшь, позвонЯт (no «звОнит») · включИть: включИт · облегчИть · углубИть · баловАть · ходАтайствовать · принЯть: прИнял, принялА, прИняли · начАть: нАчал, началА, нАчали · понЯть: пОнял, понялА · занЯть: зАнял, занялА · брать: бралА · спать: спалА · жить: жилА · быть: не былА, нЕ был · дать: далА, нЕ дал / не дАл
@@ -486,18 +436,11 @@ Coma siempre antes de что, чтобы, который, если, когда e
 
 TEXTO (encuentra las normas aplicadas)
 По приезде в Сочи обе делегации были приняты заведующим отделом. Согласно программе, гостям предложили чёрный кофе и торты. Директора́ предприятий подписали договоры на поставку пятисот килограммов яблок и двухсот пар носков. Большинство участников выразили уверенность в успехе проекта, хотя эксперт позвони́т и уточнит детали лишь по окончании переговоров.`,
-      exercises: [
-        'Marca el acento normativo con mayúscula en la vocal tónica: звонит, торты, договор, каталог, красивее, начала, принял, средства, квартал, обеспечение, свекла, включит, бралась, столяр, банты.',
-        'Corrige los errores: «Ложи книги на стол». «Ехай домой!» «Она более красивее сестры». «Согласно приказа директора». «По приезду в Москву». «Мы хочем пить». «Пять килограмм помидор и пара носок». «Оплатите за проезд». «Одень пальто». «У обоих девочек».',
-        'Escribe con letras, en el caso correcto: с (500) рублями · к (200) студентам · о (800) книгах · без (1,5) часов · в (2001) году · у (обе) сестёр · (2, colectivo) братьев · (22) дня.',
-        'Elige la variante correcta y explica: Он не мог (не / ни) согласиться. Кто бы (не / ни) пришёл, меня нет. Она хочет (учится / учиться). Он хорошо (учится / учиться). Я (тоже / то же) так думаю. Он сказал (тоже / то же) самое. (В течение / В течении) года. (В следствии / Вследствие) дождя.',
-        'En el texto final, localiza diez normas de esta lección y explica cada una. Luego escribe un párrafo de 8 frases sobre una reunión de trabajo que contenga al menos ocho puntos conflictivos usados correctamente.',
-      ],
-    },
-    {
-      title: 'Fraseología, refranes e intertextualidad',
-      durationMinutes: 55,
-      content: `El hablante culto ruso piensa con citas. La mitad de lo que se dice en una conversación animada alude a la Biblia, a fábulas, a clásicos escolares o al cine soviético. Esta estación da el repertorio mínimo.
+  },
+  {
+    title: 'Fraseología, refranes e intertextualidad',
+    durationMinutes: 55,
+    content: `El hablante culto ruso piensa con citas. La mitad de lo que se dice en una conversación animada alude a la Biblia, a fábulas, a clásicos escolares o al cine soviético. Esta estación da el repertorio mínimo.
 
 1. FRASEOLOGISMOS DE ORIGEN BÍBLICO Y ECLESIÁSTICO
 блудный сын · козёл отпущения (chivo expiatorio) · запретный плод · камень преткновения (piedra de tropiezo) · не от мира сего · соль земли · глас вопиющего в пустыне · манна небесная · метать бисер перед свиньями · нести свой крест · умывать руки · вавилонское столпотворение · зарыть талант в землю · книга за семью печатями · Фома неверующий · волк в овечьей шкуре · кто не работает, тот не ест · хлеб насущный · земля обетованная · альфа и омега · суета сует · притча во языцех (la comidilla de todos) · ничтоже сумняшеся (sin dudarlo, irónico) · внести свою лепту · на сон грядущий · злачное место · святая святых
@@ -534,18 +477,11 @@ Carácter nacional: Авось да небось. · Русский мужик �
 
 TEXTO
 Ремонт дороги у нас откладывали в долгий ящик лет десять. Наконец приехала комиссия. К её приезду, разумеется, построили потёмкинские деревни: покрасили заборы, залатали ямы — получился тришкин кафтан. Жители пытались жаловаться, но это был глас вопиющего в пустыне. Начальник, ничтоже сумняшеся, отрапортовал об успехах, а виноватым, как водится, сделали прораба — нашли козла отпущения. Словом, гром не грянет — мужик не перекрестится. А воз и ныне там.`,
-      exercises: [
-        'Explica el origen y el significado y escribe una frase actual con cada uno: козёл отпущения, потёмкинские деревни, сизифов труд, тришкин кафтан, медвежья услуга, дамоклов меч, человек в футляре, отложить в долгий ящик, пиррова победа, филькина грамота.',
-        'Di de qué obra o autor procede cada cita y en qué situación la usarías hoy: «А Васька слушает да ест». «Счастливые часов не наблюдают». «Над кем смеётесь? Над собой смеётесь!» «Краткость — сестра таланта». «Мы все учились понемногу…». «Восток — дело тонкое».',
-        'En el texto de la carretera, identifica los siete fraseologismos, clasifícalos por origen y sustitúyelos por expresiones neutras. Comenta en 3 frases qué pierde el texto.',
-        'Transforma cinco frases hechas para crear titulares sobre temas actuales (truncamiento o sustitución) y explica el juego en cada caso.',
-        'Escribe un texto satírico de 14 frases sobre una situación burocrática, escolar o familiar, con al menos diez fraseologismos o citas de orígenes distintos (bíblico, antiguo, histórico, Krylov, clásicos, cine) y dos refranes.',
-      ],
-    },
-    {
-      title: 'Leer literatura clásica: lengua del siglo XIX',
-      durationMinutes: 60,
-      content: `Leer a Pushkin, Gógol, Tolstói o Chéjov en original exige reconocer formas y palabras que el ruso actual ha abandonado o reservado al estilo elevado.
+  },
+  {
+    title: 'Leer literatura clásica: lengua del siglo XIX',
+    durationMinutes: 60,
+    content: `Leer a Pushkin, Gógol, Tolstói o Chéjov en original exige reconocer formas y palabras que el ruso actual ha abandonado o reservado al estilo elevado.
 
 1. ESLAVONISMOS ECLESIÁSTICOS FRENTE A FORMAS RUSAS
 El ruso literario nació de la convivencia de dos lenguas: el ruso antiguo y el eslavo eclesiástico. Muchas raíces existen en doble forma; la eslavónica es más abstracta o solemne.
@@ -600,18 +536,11 @@ TEXTO PARA COMENTAR (Lérmontov, «Парус», 1832)
 В тумане моря голубом!..
 Что ищет он в стране далёкой?
 Что кинул он в краю родном?..`,
-      exercises: [
-        'Da la forma rusa correspondiente a cada eslavonismo y explica la diferencia de uso actual: град, глава, страна, врата, прах, чуждый, краткий, единый, древо, глас. Escribe dos ejemplos de palabras actuales que conservan cada raíz eslavónica.',
-        '«Traduce» al ruso actual: очи, уста, чело, длань, перст, сей, дабы, ибо, нежели, ныне, ведать, внимать, зреть, уповать, грядущий. Luego di cuáles de estos historicismos no tienen equivalente y qué designaban: верста, пуд, барин, ямщик, крепостной, аршин.',
-        'Explica las formas gramaticales antiguas en: «Чего тебе надобно, старче?» / «средь бела дня» / «Христос воскресе!» / «на босу ногу» / «тобою» / «да-с» / «от мала до велика».',
-        'Analiza el fragmento de Gógol (тройка): léxico, sintaxis, ritmo y tono. ¿Qué imagen de Rusia construye? (10 a 12 frases en ruso).',
-        'Comenta la estrofa de Lérmontov en 12 a 14 frases en ruso: tema, imágenes, inversiones del orden de palabras, la forma «одинокой», el papel de las preguntas y la puntuación, y qué simboliza la vela.',
-      ],
-    },
-    {
-      title: 'Hablar en público: argumentar, refutar, persuadir',
-      durationMinutes: 55,
-      content: `El ТРКИ-3 evalúa el monólogo razonado y la discusión con un interlocutor que lleva la contraria. Hay que sostener una posición con matices, sin perder la cortesía.
+  },
+  {
+    title: 'Hablar en público: argumentar, refutar, persuadir',
+    durationMinutes: 55,
+    content: `El ТРКИ-3 evalúa el monólogo razonado y la discusión con un interlocutor que lleva la contraria. Hay que sostener una posición con matices, sin perder la cortesía.
 
 1. TIPOS DE ARGUMENTO
 Lógico: hechos, datos, causa y efecto. · De autoridad: «Как писал Лихачёв…» · Por ejemplo o analogía: «Представьте себе…» · Por experiencia: «Мне приходилось сталкиваться…» · Por valores: «Речь идёт о достоинстве человека». · Ad absurdum: «Если следовать этой логике, то…»
@@ -662,18 +591,11 @@ Contacto: Как вы знаете… · Согласитесь, что… · О
 
 TEXTO (выступление)
 Уважаемые коллеги! Позвольте начать с вопроса: сколько книг вы прочитали за последний год не по работе? Вижу улыбки. Вряд ли кто-то станет спорить с тем, что мы читаем всё меньше. Мне могут возразить, что чтение просто изменило форму: мы читаем с экрана. Безусловно, это так. Однако короткий пост и роман требуют от нас разного: первый — секунды внимания, второй — терпения, сочувствия, памяти. Я не призываю отказаться от технологий. Я лишь убеждён, что человек, разучившийся читать длинные тексты, постепенно разучивается и думать длинные мысли. Давайте же вернём себе эту способность — хотя бы по двадцать страниц в день.`,
-      exercises: [
-        'En el discurso del texto identifica: gancho, tesis, objeción anticipada, concesión, refutación, argumento, llamada final y tres recursos de persuasión. Cópialos y nómbralos.',
-        'Responde a cada afirmación con concesión + refutación (3 frases cada una), usando fórmulas distintas: «Иностранные слова разрушают русский язык». «Классическую литературу в школе нужно заменить современной». «Учёный не несёт ответственности за то, как используют его открытия».',
-        'Identifica la falacia y responde con cortesía: «Вы так говорите, потому что сами никогда не работали». «Все так считают, значит, это правда». «Либо мы запрещаем интернет детям, либо теряем целое поколение». «После реформы выросла безработица — значит, виновата реформа».',
-        'Escribe tres textos breves: un brindis en una jubilación (5 frases), una felicitación oficial por un aniversario de empresa (5 frases) y un pésame formal (3 frases).',
-        'Escribe un discurso de 22 a 25 frases para un debate universitario sobre uno de los temas del punto 9. Debe incluir gancho, tesis, tres tipos de argumento distintos, una objeción anticipada y refutada, matización de tu postura y cierre con llamada a la acción.',
-      ],
-    },
-    {
-      title: 'Lengua y cultura: conceptos clave de la visión rusa del mundo',
-      durationMinutes: 55,
-      content: `La lingüoculturología rusa sostiene que cada lengua guarda una «imagen del mundo» (языковая картина мира). Ciertas palabras son difíciles de traducir porque condensan una experiencia histórica. Conocerlas es parte de la competencia C1.
+  },
+  {
+    title: 'Lengua y cultura: conceptos clave de la visión rusa del mundo',
+    durationMinutes: 55,
+    content: `La lingüoculturología rusa sostiene que cada lengua guarda una «imagen del mundo» (языковая картина мира). Ciertas palabras son difíciles de traducir porque condensan una experiencia histórica. Conocerlas es parte de la competencia C1.
 
 1. ДУША, ДУХ, СЕРДЦЕ
 душа es el centro de la persona: sentimientos, sinceridad, vida interior. Aparece donde el español diría «corazón», «ánimo» o nada.
@@ -719,38 +641,5 @@ Supersticiones corrientes: no dar la mano en el umbral · sentarse antes de un v
 
 TEXTO
 Русское слово «тоска» трудно перевести. Это не просто грусть и не скука: тоска возникает, когда душа просит чего-то, чего сама не может назвать. Недаром она рифмуется в сознании с простором — с бесконечной дорогой, степью, далью. Человек, выросший среди этих пространств, привык и к воле, и к терпению, надеется на авось и верит в судьбу. Конечно, всё это отчасти миф. Но мифы, закреплённые в языке, живут долго: достаточно прислушаться к тому, как часто в обычном разговоре звучат слова «душа», «судьба» и «правда».`,
-      exercises: [
-        'Explica en ruso, con un ejemplo cada una, la diferencia entre: правда / истина · свобода / воля · родина / отечество · душевный / духовный · друг / приятель / знакомый · тоска / грусть / скука.',
-        'Traduce al español buscando la expresión más natural y comenta qué se pierde: «На душе тяжело». «Мы поговорили по душам». «Не судьба». «Авось пронесёт». «Ничего, прорвёмся». «Он человек с размахом». «Мне за него обидно». «Неудобно отказывать».',
-        'Completa con душа en la forma adecuada dentro del modismo y explica: У него ___ нараспашку. В глубине ___ я с ним согласен. На улице ни ___. Она вкладывает ___ в работу. Не стой у меня над ___! Они живут ___ в ___.',
-        'Compara en 10 frases en ruso una norma de comportamiento verbal rusa (la sonrisa, la franqueza, «Как дела?», los brindis, el consejo no pedido) con la de tu país.',
-        'Escribe un ensayo de 18 a 20 frases: «Есть ли в испанском языке слова, которые так же трудно перевести на русский, как „тоска“ на испанский?». Presenta dos o tres palabras de tu lengua, explícalas en ruso y reflexiona sobre si la lengua refleja realmente el carácter de un pueblo o es un mito.',
-      ],
-    },
-  ],
-  exam: {
-    title: 'Examen final C1',
-    instructions: `Este examen cubre las doce estaciones del curso y sigue el formato del ТРКИ-3: léxico y gramática, lectura crítica y escritura en distintos registros. Responde en ruso. Puedes corregir tu entrega mientras el profe no la haya calificado. Vale 100 puntos y se aprueba con 70.
-
-TEXTO PARA LOS EJERCICIOS 9, 10 Y 11
-О пользе скуки
-Нынешнему человеку, кажется, удалось победить скуку. Стоит образоваться паузе — в очереди, в метро, за обедом — как рука сама тянется к телефону. Мы гордимся этой победой, не замечая, что она пиррова. Ещё в позапрошлом веке было замечено, что праздный ум — не пустой ум. Именно в минуты вынужденного безделья, глядя в окно вагона или дожидаясь приёма, человек оставался наедине с собой, и тогда в голову приходили мысли, которых не дождёшься за письменным столом. Пушкин, запертый холерным карантином в Болдине, написал за три месяца больше, чем за иные годы. Разумеется, было бы нелепо утверждать, что гениальность рождается из скуки. Речь о другом: о том, что тишина есть условие всякой внутренней работы. Мне возразят, что современный человек, напротив, получил доступ ко всей мировой культуре и никогда ещё не был так хорошо осведомлён. Безусловно. Однако осведомлённость и понимание — вещи разные: первая приходит извне, второе вызревает внутри, и для него, как для хлеба, нужно время. Не оттого ли нам так трудно дочитать длинную книгу, что мы разучились выносить самих себя? Отнять у человека скуку — значит оказать ему медвежью услугу. Так что, оказавшись в очереди без телефона, не спешите досадовать. Быть может, это и есть та самая манна небесная, которой нам недостаёт.`,
-    questions: [
-      'Precisión léxica. Elige y justifica: Ректор (представил / предоставил) слово докладчику. Это (играет / имеет) большое значение. Комиссия (нанесла / оказала) помощь пострадавшим. (Надень / Одень) куртку. Встреча (случилась / состоялась) вчера. Он (экономный / экономичный) хозяин, а машина у него (экономная / экономичная). Corrige: «свободная вакансия», «в мае месяце», «одержать поражение», «более лучше».',
-      'Aspecto y verbos de posición y movimiento. a) Explica el matiz: Я не буду отвечать. / Я не отвечу. — Нельзя не согласиться. / Можно не соглашаться. b) Completa: Вопрос ___ очень остро. Врач ___ диагноз. Поезд ___ до Казани. ___ в аптеку и возвращайся. Он ___ всю страну на машине. Костюм хорошо на нём ___.',
-      'Sintaxis libresca. a) Nominaliza con preposición derivada: Когда закончились переговоры, стороны подписали договор. / Чтобы избежать недоразумений, уточните сроки. / Хотя эксперты возражали, проект утвердили. b) Completa con то: Всё зависит ___, как они ответят. Он настаивает ___, чтобы мы уехали. Это привело ___, что цены выросли. c) Aligera: «Осуществление проверки качества работ производится комиссией».',
-      'Estilo científico. Escribe la аннотация (5 frases) del texto «О пользе скуки» como si fuera un artículo académico, y dos frases de рецензия: un mérito y un reparo.',
-      'Estilo oficial. Escribe, con formato completo, una carta de reclamación (письмо-претензия) de 8 a 10 frases a una empresa de transporte por la pérdida de un envío, citando el contrato, el plazo y las consecuencias en caso de no respuesta.',
-      'Norma culta. a) Marca el acento: звонит, договор, каталог, торты, начала, красивее, средства, включит. b) Corrige: «Согласно приказа». «По приезду». «Ложи сюда». «Пять килограмм апельсин». «С пятьсот рублями». «Мы хочем». «Ехай домой». «У обоих сестёр».',
-      'Orden de palabras. a) Traduce marcando con el orden lo que el español marca con artículos: Entró un hombre. / El hombre entró. / La carta la escribió Ana. / En la ciudad se ha abierto un museo. b) Explica qué se niega: Не он написал это письмо. / Он написал не это письмо. / Он не написал это письмо. c) ¿Qué diferencia hay entre «пять минут» y «минут пять»?',
-      'Fraseología e intertextualidad. Explica origen y sentido y úsalos en una frase sobre la actualidad: пиррова победа, медвежья услуга, манна небесная, потёмкинские деревни, козёл отпущения, «А воз и ныне там», «Свежо предание, а верится с трудом», человек в футляре.',
-      'Comprensión crítica. Lee «О пользе скуки» y responde: ¿Cuál es la tesis del autor? ¿Qué papel cumple el ejemplo de Pushkin y qué límite le pone el propio autor? ¿Qué objeción anticipa y cómo la refuta? ¿Qué diferencia establece entre осведомлённость y понимание? ¿Cómo interpretas la pregunta retórica sobre la dificultad de terminar un libro largo?',
-      'Análisis estilístico del texto. Identifica y comenta: el estilo funcional y el género; tres fraseologismos; una comparación; una pregunta retórica; dos inversiones del orden de palabras; tres marcas de concesión o matización; un arcaísmo o palabra elevada («есть» como cópula, «нынешний», «недостаёт») y su efecto; el tipo de cierre.',
-      'Resumen y réplica. a) Resume el texto en 5 frases en estilo neutro. b) Escribe una réplica de 8 a 10 frases en la que estés parcialmente en desacuerdo con el autor, usando fórmulas de concesión y de refutación cortés.',
-      'Literatura. Comenta en 10 a 12 frases esta cuarteta de Pushkin (1829): «Я вас любил: любовь ещё, быть может, / В душе моей угасла не совсем; / Но пусть она вас больше не тревожит; / Я не хочу печалить вас ничем». Atiende al tratamiento (вы), a los tiempos verbales, a las palabras modales, al léxico y al tono.',
-      'Lengua y cultura. Explica en 10 frases, con ejemplos, por qué тоска, воля y правда se consideran difíciles de traducir, y di si te convence la idea de la «imagen lingüística del mundo».',
-      'Discurso. Escribe un discurso de 20 a 22 frases para un público universitario sobre «Нужна ли человеку тишина в эпоху информации?». Incluye gancho, tesis, tres argumentos de tipos distintos, una objeción anticipada y refutada, y una llamada final.',
-      'Ensayo argumentativo. Escribe un ensayo de 25 a 30 frases sobre uno de estos temas: «Заимствования: обогащение или засорение языка?» / «Отвечает ли учёный за последствия своих открытий?» / «Можно ли понять другую культуру, не зная её языка?». Se valorarán la estructura, la precisión léxica, la variedad sintáctica, el uso adecuado de fraseología y la corrección normativa.',
-    ],
   },
-};
+];

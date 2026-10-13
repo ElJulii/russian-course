@@ -22,15 +22,15 @@ de la API (varios orígenes separados por coma).
 | `/` | Todos | Portada y catálogo con filtro por nivel y búsqueda |
 | `/login`, `/registro` | Todos | Entrar y crear cuenta, con correo y contraseña o con Google. El registro con contraseña pide confirmar el correo |
 | `/verificar` | Todos | Destino del enlace del correo: confirma la cuenta e inicia sesión |
-| `/cursos/[id]` | Todos | Recorrido del curso, inscripción eligiendo profe, avance y lista de ejercicios y examen |
-| `/cursos/[id]/lecciones/[lessonId]` | Inscritos, profe, admin | Contenido de la lección, sus ejercicios y marcarla como completada |
-| `/cursos/[id]/evaluaciones/[assessmentId]` | Inscritos, profe, admin | Responder los ejercicios o el examen y ver la nota cuando el profe califica |
+| `/cursos/[id]` | Todos | Recorrido del curso, inscripción, avance y lista de tests y examen con tu mejor nota |
+| `/cursos/[id]/lecciones/[lessonId]` | Inscritos, admin | Contenido de la lección y acceso a su test; sin test, se marca como completada |
+| `/cursos/[id]/evaluaciones/[assessmentId]` | Inscritos, admin | Responder el test o el examen de opción múltiple, ver la corrección con explicaciones y repetirlo |
 | `/mi-ruta` | Estudiante | Cursos en los que está inscrito y su progreso |
-| `/notas` | Estudiante | Notas por evaluación y puntos acumulados |
-| `/ensenar` | Profe, admin | Admin: todos los cursos y creación. Profe: lista de los estudiantes que lo eligieron (curso, avance, entregas por calificar) |
-| `/ensenar/[id]` | Profe, admin | Profe: entregas y notas de sus estudiantes. Admin: además estaciones, evaluaciones, cifras, publicar y archivar |
-| `/admin` | Admin | Usuarios: crear cuentas, rol y acceso |
-| `/perfil` | Con sesión | Nombre y contraseña |
+| `/notas` | Estudiante | Mejor nota e intentos por evaluación y puntos acumulados |
+| `/ensenar` | Admin | Todos los cursos y creación |
+| `/ensenar/[id]` | Admin | Estaciones, evaluaciones (editor de preguntas), notas de los estudiantes, cifras, publicar y archivar |
+| `/admin` | Admin | Usuarios: crear cuentas, rol, bloquear y eliminar estudiantes |
+| `/perfil` | Con sesión | Nombre y contraseña; el estudiante puede eliminar su cuenta |
 
 ## Dónde está cada cosa
 

@@ -1,5 +1,4 @@
 import {
-  BadRequestException,
   ConflictException,
   ForbiddenException,
   Injectable,
@@ -8,20 +7,9 @@ import {
 import { AuthUser } from '../common/decorators';
 import { PaginationDto, paginate } from '../common/pagination';
 import { CoursesService } from '../courses/courses.service';
-import {
-  CourseStatus,
-  EnrollmentStatus,
-  Role,
-} from '../generated/prisma/enums';
+import { CourseStatus, EnrollmentStatus } from '../generated/prisma/enums';
 import { PrismaService } from '../prisma/prisma.service';
-
-function progressOf(completed: number, total: number) {
-  return {
-    completedLessons: completed,
-    totalLessons: total,
-    percent: total === 0 ? 0 : Math.round((completed / total) * 100),
-  };
-}
+import { lessonTests, progressOf, recordLessonCompleted } from './progress';
 
 @Injectable()
 export class EnrollmentsService {
@@ -30,8 +18,7 @@ export class EnrollmentsService {
     private readonly courses: CoursesService,
   ) {}
 
-  // Al inscribirse, el estudiante elige qué profe lo evaluará en el curso.
-  async enroll(user: AuthUser, courseId: string, evaluatorId: string) {
+  async enroll(user: AuthUser, courseId: string) {
     const course = await this.prisma.course.findUnique({
       where: { id: courseId },
       select: { status: true },
@@ -53,21 +40,11 @@ export class EnrollmentsService {
     if (existing?.status === EnrollmentStatus.COMPLETED) {
       throw new ConflictException('Ya completaste este curso');
     }
-    const evaluator = await this.prisma.user.findUnique({
-      where: { id: evaluatorId },
-      select: { role: true, isActive: true },
-    });
-    if (!evaluator?.isActive || evaluator.role !== Role.INSTRUCTOR) {
-      throw new BadRequestException(
-        'Elige un profe activo para que te evalúe en este curso',
-      );
-    }
-    // Quien se dio de baja retoma el curso conservando su progreso y sus
-    // notas, y puede cambiar de profe.
+    // Quien se dio de baja retoma el curso conservando su progreso y sus notas.
     return this.prisma.enrollment.upsert({
       where: key,
-      create: { studentId: user.id, courseId, evaluatorId },
-      update: { status: EnrollmentStatus.ACTIVE, evaluatorId },
+      create: { studentId: user.id, courseId },
+      update: { status: EnrollmentStatus.ACTIVE },
     });
   }
 
@@ -97,7 +74,6 @@ export class EnrollmentsService {
         status: true,
         enrolledAt: true,
         completedAt: true,
-        evaluator: { select: { name: true } },
         course: {
           select: {
             id: true,
@@ -111,68 +87,17 @@ export class EnrollmentsService {
       },
       orderBy: { enrolledAt: 'desc' },
     });
-    return enrollments.map(({ _count, course, evaluator, ...enrollment }) => {
+    return enrollments.map(({ _count, course, ...enrollment }) => {
       const { _count: courseCount, ...courseData } = course;
       return {
         ...enrollment,
-        evaluator: evaluator.name,
         course: courseData,
         progress: progressOf(_count.progress, courseCount.lessons),
       };
     });
   }
 
-  // Estudiantes que el usuario evalúa (el profe, solo quienes lo eligieron):
-  // en qué curso está cada uno, cuánto ha avanzado y qué entregas esperan nota.
-  async listEvaluating(user: AuthUser) {
-    const enrollments = await this.prisma.enrollment.findMany({
-      where: this.courses.gradingScope(user),
-      select: {
-        id: true,
-        status: true,
-        enrolledAt: true,
-        student: { select: { id: true, name: true, email: true } },
-        evaluator: { select: { id: true, name: true } },
-        course: {
-          select: {
-            id: true,
-            title: true,
-            level: true,
-            _count: { select: { lessons: true, assessments: true } },
-          },
-        },
-        submissions: { select: { assessmentId: true } },
-        grades: { select: { assessmentId: true } },
-        _count: { select: { progress: true } },
-      },
-      orderBy: [
-        { student: { lastName: 'asc' } },
-        { student: { firstName: 'asc' } },
-        { course: { level: 'asc' } },
-      ],
-    });
-    return enrollments.map(
-      ({ _count, course, submissions, grades, ...enrollment }) => {
-        const { _count: courseCount, ...courseData } = course;
-        const graded = new Set(grades.map((g) => g.assessmentId));
-        return {
-          ...enrollment,
-          course: courseData,
-          progress: progressOf(_count.progress, courseCount.lessons),
-          work: {
-            total: courseCount.assessments,
-            submitted: submissions.length,
-            graded: graded.size,
-            pendingReview: submissions.filter(
-              (s) => !graded.has(s.assessmentId),
-            ).length,
-          },
-        };
-      },
-    );
-  }
-
-  // Lista de estudiantes de un curso con su avance y su profe (admin).
+  // Lista de estudiantes de un curso con su avance (admin).
   async listByCourse(
     user: AuthUser,
     courseId: string,
@@ -190,7 +115,6 @@ export class EnrollmentsService {
           enrolledAt: true,
           completedAt: true,
           student: { select: { id: true, name: true, email: true } },
-          evaluator: { select: { id: true, name: true } },
           _count: { select: { progress: true } },
         },
         orderBy: { enrolledAt: 'asc' },
@@ -240,26 +164,15 @@ export class EnrollmentsService {
           `Primero debes completar la lección ${pendingBefore.order}: "${pendingBefore.title}"`,
         );
       }
-
-      await tx.lessonProgress.upsert({
-        where: { enrollmentId_lessonId: { enrollmentId, lessonId } },
-        create: { enrollmentId, lessonId },
-        update: {},
-      });
-
-      const [completed, total] = await Promise.all([
-        tx.lessonProgress.count({ where: { enrollmentId } }),
-        tx.lesson.count({ where: { courseId } }),
-      ]);
-      let status = enrollment.status;
-      if (completed === total && status === EnrollmentStatus.ACTIVE) {
-        status = EnrollmentStatus.COMPLETED;
-        await tx.enrollment.update({
-          where: { id: enrollmentId },
-          data: { status, completedAt: new Date() },
-        });
+      // Con test, la estación solo se completa aprobándolo.
+      const { pending } = await lessonTests(tx, enrollmentId, lessonId);
+      if (pending.length > 0) {
+        throw new ConflictException(
+          `Esta estación se completa al aprobar su test: «${pending[0].title}»`,
+        );
       }
-      return { enrollmentId, status, progress: progressOf(completed, total) };
+
+      return recordLessonCompleted(tx, enrollment, lessonId);
     });
   }
 }

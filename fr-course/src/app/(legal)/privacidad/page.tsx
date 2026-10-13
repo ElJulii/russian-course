@@ -13,7 +13,7 @@ export default function PrivacyPage() {
       <h1>Política de privacidad</h1>
       <p className="lede">
         Aquí te contamos qué datos tuyos guardamos, para qué los usamos, quién los
-        ve y cómo puedes pedir que los corrijamos o los borremos.
+        ve y cómo puedes corregirlos o eliminar tu cuenta cuando quieras.
       </p>
 
       <h2>1. Quién responde por tus datos</h2>
@@ -37,9 +37,8 @@ export default function PrivacyPage() {
         </li>
         <li>
           <strong>Tu actividad en los cursos:</strong> los cursos en los que te
-          inscribes, el profe que eliges, las estaciones que completas, las
-          respuestas que entregas en ejercicios y exámenes, y las notas y
-          comentarios que recibes.
+          inscribes, las estaciones que completas, las opciones que marcas en
+          cada intento de los tests y exámenes, y las notas que obtienes.
         </li>
         <li>
           <strong>Datos técnicos:</strong> tu dirección IP y los registros básicos
@@ -57,7 +56,7 @@ export default function PrivacyPage() {
       <ul>
         <li>
           <strong>Prestarte el servicio</strong> (crear tu cuenta, mantener tu
-          sesión, guardar tu avance, que tu profe califique tus entregas). Base:
+          sesión, guardar tu avance, corregir tus tests y calcular tus notas). Base:
           la ejecución de los <Link href="/terminos">Términos y condiciones</Link>{" "}
           que aceptas al registrarte.
         </li>
@@ -78,18 +77,15 @@ export default function PrivacyPage() {
       <p>
         Cuando la ley de tu país exija tu consentimiento para alguno de estos
         usos, lo das al crear tu cuenta y puedes retirarlo en cualquier momento
-        pidiendo la baja.
+        eliminándola.
       </p>
 
       <h2>4. Quién puede ver tus datos</h2>
       <ul>
         <li>
-          <strong>El profe que elijas</strong> en cada curso ve tu nombre, tu
-          avance, tus entregas y tus notas de ese curso.
-        </li>
-        <li>
           <strong>Los administradores</strong> de la plataforma ven los datos de
-          las cuentas y de los cursos para gestionarlos.
+          las cuentas y, de cada curso, tu avance y tus notas, para gestionarlos.
+          Los demás estudiantes no ven tu nombre ni tus notas.
         </li>
         <li>
           <strong>Proveedores que nos prestan servicios</strong>: alojamiento del
@@ -97,10 +93,6 @@ export default function PrivacyPage() {
           de sesión de Google (Google Ireland Limited / Google LLC). Solo tratan
           los datos siguiendo nuestras instrucciones o, en el caso de Google,
           conforme a su propia política de privacidad.
-        </li>
-        <li>
-          <strong>Si eres profe</strong>, tu nombre se muestra a los estudiantes
-          para que puedan elegirte al inscribirse.
         </li>
       </ul>
       <p>
@@ -117,11 +109,16 @@ export default function PrivacyPage() {
 
       <h2>6. Cuánto tiempo los conservamos</h2>
       <p>
-        Guardamos tus datos mientras tu cuenta exista. Si pides la baja,
-        eliminamos o anonimizamos tus datos en un plazo máximo de 30 días, salvo
-        los que debamos conservar por obligación legal o para atender
-        reclamaciones, que quedan bloqueados durante el plazo que marque la ley.
-        Los registros técnicos del servidor se borran de forma periódica.
+        Guardamos tus datos mientras tu cuenta exista. Cuando la eliminas desde{" "}
+        <Link href="/perfil">Tu cuenta</Link>, se borran en ese momento y de
+        forma definitiva de nuestra base de datos tu nombre, tu correo, tu
+        contraseña, tus inscripciones, tu avance, tus intentos y tus notas; no
+        conservamos una copia para recuperarlos. Lo mismo ocurre si un
+        administrador cierra tu cuenta o si nos pides la baja por correo, que
+        atendemos en un máximo de 30 días. Solo quedan los registros técnicos
+        del servidor, que se borran de forma periódica, y los datos que debamos
+        conservar por obligación legal o para atender reclamaciones, bloqueados
+        durante el plazo que marque la ley.
       </p>
 
       <h2 id="derechos">7. Tus derechos</h2>
@@ -136,7 +133,10 @@ export default function PrivacyPage() {
       </ul>
       <p>
         Tu nombre, apellido y contraseña puedes cambiarlos tú mismo en{" "}
-        <Link href="/perfil">Tu cuenta</Link>. Para lo demás, escribe a{" "}
+        <Link href="/perfil">Tu cuenta</Link>. Ahí mismo puedes eliminar tu
+        cuenta y todos tus datos con el botón «Eliminar mi cuenta», sin tener
+        que pedírnoslo ni dar explicaciones; el borrado es inmediato y no se
+        puede deshacer. Para lo demás, o si no puedes entrar, escribe a{" "}
         <a href={`mailto:${LEGAL.email}`}>{LEGAL.email}</a> desde el correo de tu
         cuenta; respondemos en un máximo de 30 días. Si crees que no hemos
         atendido bien tu solicitud, puedes reclamar ante {LEGAL.authority}.

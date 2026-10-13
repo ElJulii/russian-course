@@ -43,7 +43,6 @@ function MyRoute() {
             <Roundel level={enrollment.course.level} />
             <div style={{ flex: 1, minWidth: "12rem" }}>
               <h3>{enrollment.course.title}</h3>
-              <p className="small muted">Te evalúa {enrollment.evaluator}</p>
             </div>
             <span
               className={

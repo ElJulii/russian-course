@@ -54,22 +54,6 @@ export class CoursesService {
     return !!user && hasPermission(user.role, Permission.CourseManage);
   }
 
-  // Profes y admins revisan entregas; qué estudiantes ve cada uno lo decide gradingScope.
-  canGrade(user: AuthUser | undefined) {
-    return !!user && hasPermission(user.role, Permission.GradeManage);
-  }
-
-  // Inscripciones vigentes que el usuario puede calificar: el admin todas, el
-  // profe solo las de quienes lo eligieron como evaluador.
-  gradingScope(user: AuthUser): Prisma.EnrollmentWhereInput {
-    return {
-      status: { not: EnrollmentStatus.DROPPED },
-      ...(!hasPermission(user.role, Permission.GradeManageAny) && {
-        evaluatorId: user.id,
-      }),
-    };
-  }
-
   async getManageable(user: AuthUser, courseId: string): Promise<Course> {
     const course = await this.prisma.course.findUnique({
       where: { id: courseId },
@@ -83,17 +67,8 @@ export class CoursesService {
     return course;
   }
 
-  // Curso cuyas entregas puede revisar el usuario (profe o admin).
-  async getGradable(user: AuthUser, courseId: string): Promise<Course> {
-    const course = await this.getVisible(user, courseId);
-    if (!this.canGrade(user)) {
-      throw new ForbiddenException('Tu rol no califica entregas');
-    }
-    return course;
-  }
-
-  // Los borradores solo los ve el admin; los archivados, además, los profes
-  // (siguen calificando) y quienes ya estaban inscritos.
+  // Los borradores solo los ve el admin; los archivados, además, quienes ya
+  // estaban inscritos.
   async getVisible(user: AuthUser | undefined, courseId: string) {
     const course = await this.prisma.course.findUnique({
       where: { id: courseId },
@@ -102,8 +77,10 @@ export class CoursesService {
       !course ||
       (course.status !== CourseStatus.PUBLISHED &&
         !this.canManage(user) &&
-        !(course.status === CourseStatus.ARCHIVED && this.canGrade(user)) &&
-        !(await this.isEnrolled(user, courseId)))
+        !(
+          course.status === CourseStatus.ARCHIVED &&
+          (await this.isEnrolled(user, courseId))
+        ))
     ) {
       throw new NotFoundException('Curso no encontrado');
     }
@@ -169,50 +146,6 @@ export class CoursesService {
     );
   }
 
-  // Cursos en los que el usuario tiene estudiantes que evaluar, con cuántos
-  // son y cuántas entregas esperan nota.
-  async listTeaching(user: AuthUser) {
-    const scope = this.gradingScope(user);
-    const [courses, pending] = await Promise.all([
-      this.prisma.course.findMany({
-        where: { enrollments: { some: scope } },
-        select: {
-          id: true,
-          title: true,
-          level: true,
-          status: true,
-          _count: { select: { enrollments: { where: scope } } },
-        },
-        orderBy: [{ level: 'asc' }, { title: 'asc' }],
-      }),
-      this.prisma.submission.findMany({
-        where: { enrollment: scope },
-        select: {
-          assessmentId: true,
-          enrollmentId: true,
-          assessment: { select: { courseId: true } },
-          enrollment: {
-            select: { grades: { select: { assessmentId: true } } },
-          },
-        },
-      }),
-    ]);
-    const pendingByCourse = new Map<string, number>();
-    for (const submission of pending) {
-      const graded = submission.enrollment.grades.some(
-        (g) => g.assessmentId === submission.assessmentId,
-      );
-      if (graded) continue;
-      const courseId = submission.assessment.courseId;
-      pendingByCourse.set(courseId, (pendingByCourse.get(courseId) ?? 0) + 1);
-    }
-    return courses.map(({ _count, ...course }) => ({
-      ...course,
-      students: _count.enrollments,
-      pendingReview: pendingByCourse.get(course.id) ?? 0,
-    }));
-  }
-
   async findOne(user: AuthUser | undefined, courseId: string) {
     await this.getVisible(user, courseId);
     const [course, enrollment] = await Promise.all([
@@ -237,7 +170,6 @@ export class CoursesService {
             select: {
               id: true,
               status: true,
-              evaluator: { select: { id: true, name: true } },
               progress: { select: { lessonId: true } },
             },
           })
@@ -248,11 +180,9 @@ export class CoursesService {
       ...course,
       viewer: {
         canManage: this.canManage(user),
-        canGrade: this.canGrade(user),
         enrollment: enrollment && {
           id: enrollment.id,
           status: enrollment.status,
-          evaluator: enrollment.evaluator,
           completedLessonIds: enrollment.progress.map((p) => p.lessonId),
         },
       },
@@ -295,12 +225,16 @@ export class CoursesService {
       throw new ConflictException('El curso ya está publicado');
     }
 
-    const [lessons, weights] = await Promise.all([
+    const [lessons, weights, empty] = await Promise.all([
       this.prisma.lesson.count({ where: { courseId } }),
       this.prisma.assessment.aggregate({
         where: { courseId },
         _sum: { weight: true },
         _count: true,
+      }),
+      this.prisma.assessment.findMany({
+        where: { courseId, questions: { equals: [] } },
+        select: { title: true },
       }),
     ]);
     const problems: string[] = [];
@@ -308,6 +242,11 @@ export class CoursesService {
     if (weights._count > 0 && !weights._sum.weight?.equals(100)) {
       problems.push(
         `los pesos de sus evaluaciones deben sumar 100 (suman ${weights._sum.weight?.toString()})`,
+      );
+    }
+    if (empty.length > 0) {
+      problems.push(
+        `hay evaluaciones sin preguntas (${empty.map((a) => `«${a.title}»`).join(', ')})`,
       );
     }
     if (problems.length) {

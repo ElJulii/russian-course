@@ -15,10 +15,10 @@ interface PlatformStats {
 
 type UserRow = User & {
   isActive: boolean;
-  _count: { evaluating: number; enrollments: number };
+  _count: { enrollments: number };
 };
 
-// Alta de cuentas (sobre todo profes). La API genera una contraseña inicial
+// Alta de cuentas por un admin. La API genera una contraseña inicial
 // aleatoria y la devuelve una sola vez para mostrarla.
 function NewUser({ onCreated }: { onCreated: () => void }) {
   const action = useAction();
@@ -26,7 +26,7 @@ function NewUser({ onCreated }: { onCreated: () => void }) {
     firstName: "",
     lastName: "",
     email: "",
-    role: "INSTRUCTOR" as Role,
+    role: "STUDENT" as Role,
   });
   const [created, setCreated] = useState<(User & { initialPassword: string }) | null>(
     null,
@@ -135,6 +135,16 @@ function Admin() {
       stats.reload();
     });
 
+  // Cuenta cuyo borrado está pendiente de confirmar.
+  const [confirming, setConfirming] = useState<string | null>(null);
+  const remove = (id: string) =>
+    action.run(async () => {
+      await api(`/users/${id}`, { method: "DELETE" });
+      setConfirming(null);
+      users.reload();
+      stats.reload();
+    });
+
   return (
     <main className="shell page stack" style={{ "--gap": "1.75rem" } as CSSProperties}>
       <h1>Usuarios</h1>
@@ -146,8 +156,8 @@ function Admin() {
             <dd>{stats.data.usersByRole.STUDENT ?? 0}</dd>
           </div>
           <div>
-            <dt>Profes</dt>
-            <dd>{stats.data.usersByRole.INSTRUCTOR ?? 0}</dd>
+            <dt>Admins</dt>
+            <dd>{stats.data.usersByRole.ADMIN ?? 0}</dd>
           </div>
           <div>
             <dt>Cursos publicados</dt>
@@ -203,7 +213,6 @@ function Admin() {
               <tr>
                 <th>Persona</th>
                 <th>Rol</th>
-                <th className="num">Estudiantes que evalúa</th>
                 <th className="num">Inscripciones</th>
                 <th>Acceso</th>
               </tr>
@@ -236,16 +245,50 @@ function Admin() {
                         ))}
                       </select>
                     </td>
-                    <td className="num">{user._count.evaluating}</td>
                     <td className="num">{user._count.enrollments}</td>
                     <td>
-                      <button
-                        className={user.isActive ? "btn btn-quiet btn-danger" : "btn btn-quiet"}
-                        disabled={isMe || action.busy}
-                        onClick={() => update(user.id, "status", { isActive: !user.isActive })}
-                      >
-                        {user.isActive ? "Desactivar" : "Reactivar"}
-                      </button>
+                      {confirming === user.id ? (
+                        <div className="row">
+                          <span className="small">¿Eliminar con todo su avance?</span>
+                          <button
+                            className="btn btn-quiet btn-danger"
+                            disabled={action.busy}
+                            onClick={() => remove(user.id)}
+                          >
+                            Sí, eliminar
+                          </button>
+                          <button
+                            className="btn btn-quiet"
+                            disabled={action.busy}
+                            onClick={() => setConfirming(null)}
+                          >
+                            Cancelar
+                          </button>
+                        </div>
+                      ) : (
+                        <div className="row">
+                          <button
+                            className={
+                              user.isActive ? "btn btn-quiet btn-danger" : "btn btn-quiet"
+                            }
+                            disabled={isMe || action.busy}
+                            onClick={() =>
+                              update(user.id, "status", { isActive: !user.isActive })
+                            }
+                          >
+                            {user.isActive ? "Bloquear" : "Desbloquear"}
+                          </button>
+                          {user.role === "STUDENT" && (
+                            <button
+                              className="btn btn-quiet btn-danger"
+                              disabled={action.busy}
+                              onClick={() => setConfirming(user.id)}
+                            >
+                              Eliminar
+                            </button>
+                          )}
+                        </div>
+                      )}
                     </td>
                   </tr>
                 );

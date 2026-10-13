@@ -25,6 +25,8 @@ interface AuthValue {
   // Entra o crea la cuenta con el ID token del botón de Google.
   loginWithGoogle: (credential: string) => Promise<User>;
   logout: () => void;
+  // Olvida la sesión sin avisar a la API: la cuenta ya no existe.
+  forget: () => void;
   setUser: (user: User) => void;
 }
 
@@ -77,6 +79,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       // La cookie solo la puede borrar la API.
       void api("/auth/logout", { method: "POST" }).catch(() => undefined);
     },
+    forget: () => {
+      sessionHint.clear();
+      setState({ user: null, loading: false });
+    },
     setUser: (user) => setState({ user, loading: false }),
   };
 
@@ -89,5 +95,4 @@ export function useAuth() {
   return value;
 }
 
-export const canTeach = (user: User | null) =>
-  user?.role === "INSTRUCTOR" || user?.role === "ADMIN";
+export const isAdmin = (user: User | null) => user?.role === "ADMIN";

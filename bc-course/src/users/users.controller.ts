@@ -1,7 +1,9 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
+  HttpCode,
   Param,
   ParseUUIDPipe,
   Patch,
@@ -16,6 +18,7 @@ import { CurrentUser, RequirePermissions } from '../common/decorators';
 import { Permission } from '../common/rbac/permissions';
 import {
   CreateUserDto,
+  DeleteAccountDto,
   ListUsersDto,
   UpdateProfileDto,
   UpdateRoleDto,
@@ -53,9 +56,15 @@ export class UsersController {
     return profile;
   }
 
-  @Get('instructors')
-  instructors() {
-    return this.users.listInstructors();
+  @Delete('me')
+  @HttpCode(204)
+  async removeMe(
+    @CurrentUser() user: AuthUser,
+    @Body() dto: DeleteAccountDto,
+    @Res({ passthrough: true }) response: Response,
+  ) {
+    await this.users.removeSelf(user.id, dto);
+    this.session.end(response);
   }
 
   @Post()
@@ -100,5 +109,15 @@ export class UsersController {
     @Body() dto: UpdateStatusDto,
   ) {
     return this.users.updateStatus(actor, id, dto.isActive);
+  }
+
+  @Delete(':id')
+  @HttpCode(204)
+  @RequirePermissions(Permission.UserManage)
+  remove(
+    @CurrentUser() actor: AuthUser,
+    @Param('id', ParseUUIDPipe) id: string,
+  ) {
+    return this.users.remove(actor, id);
   }
 }

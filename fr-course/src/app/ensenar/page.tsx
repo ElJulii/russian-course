@@ -3,23 +3,9 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, type CSSProperties } from "react";
-import { Guard, Loading, Meter, Notice, Roundel, useAction } from "@/components/ui";
-import {
-  api,
-  type CourseSummary,
-  type EvaluatedStudent,
-  type Level,
-  type Page,
-  type TeachingCourse,
-} from "@/lib/api";
-import { useAuth } from "@/lib/auth";
-import {
-  COURSE_STATUS,
-  ENROLLMENT_STATUS,
-  LEVELS,
-  LEVEL_KEYS,
-  plural,
-} from "@/lib/labels";
+import { Guard, Loading, Notice, Roundel, useAction } from "@/components/ui";
+import { api, type CourseSummary, type Level, type Page } from "@/lib/api";
+import { COURSE_STATUS, LEVELS, LEVEL_KEYS, plural } from "@/lib/labels";
 import { useApi } from "@/lib/useApi";
 
 function NewCourse() {
@@ -110,8 +96,8 @@ function PlatformCourses() {
         <div className="stack">
           <h1>Cursos</h1>
           <p className="lede">
-            Las líneas de la plataforma. Arma las estaciones y las evaluaciones, y
-            publica cuando estén listas.
+            Las líneas de la plataforma. Arma las estaciones y sus tests, y publica
+            cuando estén listas.
           </p>
         </div>
         <button className="btn btn-sun" onClick={() => setCreating(!creating)}>
@@ -176,166 +162,17 @@ function PlatformCourses() {
   );
 }
 
-// Estudiantes que eligieron a este profe: en qué curso va cada uno y qué
-// entregas tiene esperando nota.
-function StudentList() {
-  const students = useApi<EvaluatedStudent[]>("/enrollments/evaluating");
-
-  return (
-    <section className="stack">
-      <h2>Tus estudiantes</h2>
-      <Loading loading={students.loading} error={students.error} />
-      {!!students.data?.length && (
-        <div className="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Estudiante</th>
-                <th>Curso</th>
-                <th>Avance</th>
-                <th className="num">Entregas</th>
-                <th>Por calificar</th>
-              </tr>
-            </thead>
-            <tbody>
-              {students.data.map((row) => (
-                <tr key={row.id}>
-                  <td>
-                    <strong>{row.student.name}</strong>
-                    <div className="small muted">{row.student.email}</div>
-                  </td>
-                  <td>
-                    <span className="row" style={{ flexWrap: "nowrap" }}>
-                      <Roundel level={row.course.level} />
-                      <span>
-                        {row.course.title}
-                        <div className="small muted">
-                          {ENROLLMENT_STATUS[row.status]}
-                        </div>
-                      </span>
-                    </span>
-                  </td>
-                  <td style={{ minWidth: "9rem" }}>
-                    <Meter percent={row.progress.percent} />
-                    <span className="small muted">
-                      {row.progress.completedLessons} de {row.progress.totalLessons}{" "}
-                      estaciones
-                    </span>
-                  </td>
-                  <td className="num">
-                    {row.work.submitted} de {row.work.total}
-                    <div className="small muted">{row.work.graded} con nota</div>
-                  </td>
-                  <td>
-                    {row.work.pendingReview > 0 ? (
-                      <Link href={`/ensenar/${row.course.id}`} className="btn btn-sun">
-                        Calificar {row.work.pendingReview}
-                      </Link>
-                    ) : (
-                      <span className="small muted">
-                        {row.work.submitted === 0 ? "Aún no entrega nada" : "Al día"}
-                      </span>
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
-    </section>
-  );
-}
-
-// Profe: sus estudiantes y los cursos donde lo eligieron para evaluar.
-function MyStudents() {
-  const courses = useApi<TeachingCourse[]>("/courses/teaching");
-
-  return (
-    <>
-      <header className="stack">
-        <h1>Evaluar</h1>
-        <p className="lede">
-          Solo ves a los estudiantes que te eligieron. Cuando entregan sus
-          ejercicios o su examen final, los calificas aquí.
-        </p>
-      </header>
-
-      <Loading loading={courses.loading} error={courses.error} />
-
-      {courses.data?.length === 0 && (
-        <div className="empty">
-          <h2>Todavía nadie te ha elegido</h2>
-          <p className="muted">
-            Cuando un estudiante se suba a un curso y te elija como profe, lo verás
-            aquí.
-          </p>
-        </div>
-      )}
-
-      {!!courses.data?.length && <StudentList />}
-
-      {!!courses.data?.length && <h2>Por curso</h2>}
-
-      {!!courses.data?.length && (
-        <div className="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Curso</th>
-                <th>Estado</th>
-                <th className="num">Tus estudiantes</th>
-                <th className="num">Entregas por calificar</th>
-              </tr>
-            </thead>
-            <tbody>
-              {courses.data.map((course) => (
-                <tr key={course.id}>
-                  <td>
-                    <Link
-                      href={`/ensenar/${course.id}`}
-                      className="row"
-                      style={{ flexWrap: "nowrap" }}
-                    >
-                      <Roundel level={course.level} />
-                      <strong>{course.title}</strong>
-                    </Link>
-                  </td>
-                  <td>
-                    <span className={statusChip(course.status)}>
-                      {COURSE_STATUS[course.status]}
-                    </span>
-                  </td>
-                  <td className="num">{course.students}</td>
-                  <td className="num">
-                    {course.pendingReview > 0 ? (
-                      <span className="chip chip-sun">{course.pendingReview}</span>
-                    ) : (
-                      0
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
-    </>
-  );
-}
-
 function Teach() {
-  const { user } = useAuth();
   return (
     <main className="shell page stack" style={{ "--gap": "1.75rem" } as CSSProperties}>
-      {user?.role === "ADMIN" ? <PlatformCourses /> : <MyStudents />}
+      <PlatformCourses />
     </main>
   );
 }
 
 export default function TeachPage() {
   return (
-    <Guard roles={["INSTRUCTOR", "ADMIN"]}>
+    <Guard roles={["ADMIN"]}>
       <Teach />
     </Guard>
   );

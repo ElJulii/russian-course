@@ -1,13 +1,12 @@
-import type { CourseContent } from './course-content';
+import type { LessonContent } from './course-content';
 
 // Temario A1 (equivalente a ТЭУ): leer y escribir en cirílico, presentarse,
 // hablar de la familia, la ciudad, la comida y la rutina en presente y pasado.
-export const A1: CourseContent = {
-  lessons: [
-    {
-      title: 'El alfabeto cirílico (Алфавит)',
-      durationMinutes: 50,
-      content: `El ruso se escribe con 33 letras. Buena noticia: casi siempre se lee como se escribe. Apréndelas por grupos.
+export const A1: LessonContent[] = [
+  {
+    title: 'El alfabeto cirílico (Алфавит)',
+    durationMinutes: 50,
+    content: `El ruso se escribe con 33 letras. Buena noticia: casi siempre se lee como se escribe. Apréndelas por grupos.
 
 1. AMIGAS: se ven y suenan como en español
 А а (a) · К к (k) · М м (m) · О о (o) · Т т (t)
@@ -36,18 +35,11 @@ PALABRAS INTERNACIONALES PARA PRACTICAR
 такси, паспорт, телефон, кофе, музыка, театр, студент, компьютер, футбол, аэропорт, Москва, Россия, Мексика, Колумбия, Испания.
 
 CONSEJO: escribe a mano cada letra diez veces mientras la dices en voz alta. Leer cirílico con fluidez toma una o dos semanas de práctica diaria.`,
-      exercises: [
-        'Escribe con letras latinas cómo suenan estas palabras: ресторан, сахар, нет, вот, сок.',
-        'Escribe en cirílico estas palabras internacionales: taxi, pasaporte (passport), teléfono, metro, café (la bebida).',
-        'Escribe tu nombre y tu ciudad en cirílico.',
-        '¿Qué sonido tiene cada letra? В, Н, Р, С, Х, У. Da una palabra rusa de ejemplo para cada una.',
-        'Copia el alfabeto completo en orden y marca las letras que no suenan solas. Explica para qué sirve cada una.',
-      ],
-    },
-    {
-      title: 'Pronunciación: acento, vocales y consonantes',
-      durationMinutes: 45,
-      content: `EL ACENTO (ударение)
+  },
+  {
+    title: 'Pronunciación: acento, vocales y consonantes',
+    durationMinutes: 45,
+    content: `EL ACENTO (ударение)
 Cada palabra rusa tiene una sola sílaba fuerte y no se marca al escribir: hay que aprenderla con la palabra. Aquí la marcamos en MAYÚSCULA.
 мАма · водА (agua) · спасИбо (gracias) · хорошО (bien)
 El acento puede cambiar el significado: зАмок (castillo) / замОк (cerradura).
@@ -77,18 +69,11 @@ El orden de palabras no cambia; sube el tono en la palabra clave.
 
 LECTURA
 Это Москва. Москва — большой город. Вот метро, вот парк, а вот ресторан. Это мой друг Иван. Он студент. Сегодня хорошо!`,
-      exercises: [
-        'Escribe cómo se pronuncian realmente (con letras latinas y la sílaba fuerte en mayúscula): молоко, Москва, хорошо, окно, спасибо.',
-        '¿Cómo suena la última consonante de estas palabras y por qué? хлеб, друг, город, нож, глаз.',
-        'Explica la diferencia de pronunciación entre мат y мать, y entre брат y брать.',
-        'Copia la lectura final de la lección y tradúcela al español.',
-        'Convierte en pregunta y traduce: Это парк. / Он студент. / Это ресторан. Explica qué cambia al decirlas.',
-      ],
-    },
-    {
-      title: 'Saludos, despedidas y cortesía',
-      durationMinutes: 40,
-      content: `TÚ Y USTED
+  },
+  {
+    title: 'Saludos, despedidas y cortesía',
+    durationMinutes: 40,
+    content: `TÚ Y USTED
 ты = tú (amigos, familia, niños) · вы = usted y también "ustedes". Con desconocidos, mayores y en el trabajo usa siempre вы.
 
 SALUDAR
@@ -134,18 +119,11 @@ DIÁLOGO 2 (formal)
 — Тоже хорошо. До свидания!
 
 NOTA CULTURAL: en situaciones formales los rusos se llaman por nombre y patronímico (el nombre del padre + -ович / -овна): Иван Петрович, Анна Сергеевна.`,
-      exercises: [
-        '¿Qué dices en ruso en cada situación? a) Llegas a clase a las 9 de la mañana y saludas a la profesora. b) Te despides de un amigo hasta mañana. c) Pisas a alguien en el metro. d) Te dan las gracias.',
-        'Traduce al ruso: —¡Hola! ¿Cómo estás? —Bien, gracias. ¿Y tú? —Más o menos.',
-        'Reescribe el diálogo 1 en registro formal (con вы).',
-        'Escribe un diálogo de 6 líneas entre tú y tu vecino mayor, el señor Николай Иванович, por la tarde.',
-        'Explica cuándo se usa ты y cuándo вы, con dos ejemplos de cada uno.',
-      ],
-    },
-    {
-      title: 'Presentarse: Меня зовут… Кто это? Что это?',
-      durationMinutes: 50,
-      content: `LOS PRONOMBRES PERSONALES
+  },
+  {
+    title: 'Presentarse: Меня зовут… Кто это? Что это?',
+    durationMinutes: 50,
+    content: `LOS PRONOMBRES PERSONALES
 я (yo) · ты (tú) · он (él) · она (ella) · оно (ello, neutro) · мы (nosotros) · вы (usted, ustedes) · они (ellos, ellas)
 
 EN PRESENTE NO SE DICE "SER"
@@ -190,18 +168,11 @@ DIÁLOGO
 — Я из России, из Москвы. Вы студентка?
 — Нет, я не студентка. Я журналистка. А кто вы по профессии?
 — Я программист.`,
-      exercises: [
-        'Preséntate por escrito en ruso: saludo, nombre, país, profesión u ocupación (mínimo 4 frases).',
-        'Traduce al ruso: Él se llama Dmitri. Es ingeniero. Ella se llama Olga. No es estudiante, es maestra.',
-        'Responde con frases completas: Кто это? (tu mejor amigo) / Что это? (tres objetos que tengas cerca).',
-        'Completa con и, а o но: Я студент, ___ она врач. / Это Анна ___ Иван. / Он русский, ___ живёт в Мексике.',
-        'Escribe las preguntas para estas respuestas: Меня зовут Игорь. / Я из Перу. / Нет, я не врач. / Это мой телефон.',
-      ],
-    },
-    {
-      title: 'El género y los posesivos',
-      durationMinutes: 50,
-      content: `TRES GÉNEROS
+  },
+  {
+    title: 'El género y los posesivos',
+    durationMinutes: 50,
+    content: `TRES GÉNEROS
 Todo sustantivo ruso es masculino, femenino o neutro, y se reconoce por la última letra.
 · MASCULINO (он): termina en consonante o en -й → стол (mesa), дом, брат, музей, чай
 · FEMENINO (она): termina en -а o -я → мама, книга (libro), машина, семья (familia), неделя (semana)
@@ -238,18 +209,11 @@ Ojo: "Это книга" (Esto es un libro) / "Эта книга моя" (Este l
 
 VOCABULARIO: COSAS DE TODOS LOS DÍAS
 стол (mesa) · стул (silla) · ручка (bolígrafo) · карандаш (lápiz) · сумка · ключ · телефон · компьютер · книга · тетрадь · словарь · окно · дверь · комната (habitación) · квартира (apartamento) · паспорт · деньги (dinero, siempre plural)`,
-      exercises: [
-        'Clasifica por género (он, она, оно): стол, книга, окно, день, ночь, папа, кофе, море, семья, музей, время, тетрадь.',
-        'Completa con мой, моя, моё o мои: ___ брат, ___ мама, ___ письмо, ___ ключи, ___ словарь, ___ квартира.',
-        'Responde con Вот он / она / оно / они: Где паспорт? Где сумка? Где молоко? Где деньги? Где дверь?',
-        'Haz la pregunta con Чей / Чья / Чьё / Чьи y respóndela: (телефон, él) / (машина, nosotros) / (место, usted) / (книги, ella).',
-        'Traduce al ruso: Este es mi cuarto. Esta mesa es nuestra. ¿Dónde está tu cuaderno? Su (de ella) papá es médico.',
-      ],
-    },
-    {
-      title: 'Los números, la edad y los precios',
-      durationMinutes: 45,
-      content: `DEL 0 AL 10
+  },
+  {
+    title: 'Los números, la edad y los precios',
+    durationMinutes: 45,
+    content: `DEL 0 AL 10
 0 ноль · 1 один · 2 два · 3 три · 4 четыре · 5 пять · 6 шесть · 7 семь · 8 восемь · 9 девять · 10 десять
 
 DEL 11 AL 19: número + -надцать
@@ -288,18 +252,11 @@ EL TELÉFONO
 
 SUMAR Y RESTAR
 Два плюс три — пять. · Десять минус четыре — шесть. · Сколько будет семь плюс восемь? — Пятнадцать.`,
-      exercises: [
-        'Escribe con letras en ruso: 7, 12, 19, 24, 40, 58, 90, 100, 365, 1000.',
-        'Resuelve y escribe todo con letras: 8 + 9 = ? / 30 − 14 = ? / 50 + 50 = ? / 21 − 2 = ?',
-        'Completa con год, года o лет: Мне 21 ___. Ему 34 ___. Ей 15 ___. Вам 40 ___. Ему 12 ___. Ей 63 ___.',
-        'Responde con frases completas: Сколько тебе лет? Сколько лет твоей маме (o a un amigo)? Какой у тебя номер телефона? (puedes inventarlo)',
-        'Escribe un diálogo corto en una tienda: preguntas el precio de un libro y de dos boletos, te responden y dices si es caro o barato.',
-      ],
-    },
-    {
-      title: 'El presente de los verbos',
-      durationMinutes: 60,
-      content: `El infinitivo ruso termina casi siempre en -ть. En presente hay dos conjugaciones.
+  },
+  {
+    title: 'El presente de los verbos',
+    durationMinutes: 60,
+    content: `El infinitivo ruso termina casi siempre en -ть. En presente hay dos conjugaciones.
 
 PRIMERA CONJUGACIÓN (verbos en -ать, -ять, -еть): se quita -ть y se añade
 я -ю · ты -ешь · он/она -ет · мы -ем · вы -ете · они -ют
@@ -340,18 +297,11 @@ ADVERBIOS DE FRECUENCIA
 
 TEXTO
 Меня зовут Антон. Я живу в Москве и работаю в банке. Утром я завтракаю и читаю новости. Днём я работаю, а вечером отдыхаю: смотрю фильмы или гуляю. Моя жена Лена не работает, она студентка. Она изучает испанский язык и уже хорошо говорит по-испански. Мы любим готовить вместе.`,
-      exercises: [
-        'Conjuga en las seis personas: работать, смотреть, жить.',
-        'Completa con la forma correcta: Я ___ (читать) книгу. Ты ___ (говорить) по-русски? Они ___ (жить) в Мадриде. Мы не ___ (понимать). Вы ___ (хотеть) чай? Она ___ (писать) письмо.',
-        'Responde sobre el texto con frases completas: Где работает Антон? Что он делает вечером? Что изучает Лена? Что они любят делать вместе?',
-        'Traduce al ruso: Hablo español y un poco de ruso. Mi hermano no trabaja, estudia. ¿Qué haces por la noche? Nos gusta pasear.',
-        'Escribe 6 frases sobre lo que haces por la mañana, por la tarde y por la noche, usando al menos tres adverbios de frecuencia.',
-      ],
-    },
-    {
-      title: 'El plural y los adjetivos',
-      durationMinutes: 50,
-      content: `EL PLURAL DE LOS SUSTANTIVOS
+  },
+  {
+    title: 'El plural y los adjetivos',
+    durationMinutes: 50,
+    content: `EL PLURAL DE LOS SUSTANTIVOS
 · Masculinos en consonante y femeninos en -а → -ы: стол → столы · студент → студенты · машина → машины · комната → комнаты
 · Después de г, к, х, ж, ш, щ, ч nunca se escribe ы, sino -и: книга → книги · парк → парки · нож → ножи · девушка → девушки
 · Terminados en -й, -ь, -я → -и: музей → музеи · словарь → словари · ночь → ночи · неделя → недели
@@ -382,18 +332,11 @@ MUY, BASTANTE
 
 TEXTO
 Это наша квартира. Она небольшая, но очень красивая. Вот большая комната: здесь новый диван, старый стол и белые стулья. А это маленькая кухня. Окна большие, а двери синие. Наши соседи — хорошие и добрые люди.`,
-      exercises: [
-        'Escribe el plural: стол, книга, окно, музей, друг, человек, ребёнок, город, сестра, письмо, словарь, дом.',
-        'Completa con la forma correcta del adjetivo: ___ (новый) машина, ___ (большой) окно, ___ (хороший) друзья, ___ (красный) стол, ___ (старый) книги, ___ (маленький) кафе.',
-        'Escribe lo contrario: Это большой город. / Это старая машина. / Это дешёвые билеты. / Это трудное слово.',
-        'Haz la pregunta con Какой / Какая / Какое / Какие para cada frase: Это красивый парк. / Это интересная книга. / Это холодное молоко. / Это новые студенты.',
-        'Describe tu casa o tu habitación en 5 o 6 frases, con al menos seis adjetivos y dos colores.',
-      ],
-    },
-    {
-      title: '¿Dónde? El caso preposicional y la ciudad',
-      durationMinutes: 55,
-      content: `LOS CASOS
+  },
+  {
+    title: '¿Dónde? El caso preposicional y la ciudad',
+    durationMinutes: 55,
+    content: `LOS CASOS
 En ruso el sustantivo cambia de terminación según su función en la frase. Hay seis casos. La forma del diccionario es el NOMINATIVO (el sujeto). El primero que aprendemos es el PREPOSICIONAL, que responde a Где? (¿dónde?).
 
 CÓMO SE FORMA: casi siempre con -е
@@ -426,18 +369,11 @@ UBICAR
 
 TEXTO
 Я живу в Санкт-Петербурге, в центре, на улице Ленина. Мой дом находится рядом с парком. Я работаю в библиотеке, а моя сестра учится в университете. Вечером мы часто гуляем в парке или сидим в кафе на площади и говорим о жизни.`,
-      exercises: [
-        'Pon en preposicional con в o на: (Москва), (школа), (стол), (Россия), (работа), (метро), (улица), (сад), (площадь), (Колумбия).',
-        'Responde con frases completas: Где ты живёшь? Где ты работаешь или учишься? Где живёт твоя семья? Где ты отдыхаешь вечером?',
-        'Completa con в o на y la terminación: Книга ___ стол__. Мы ___ урок__. Дети ___ парк__. Она работает ___ почт__. Они живут ___ Испани__.',
-        'Traduce al ruso: Vivo en el centro. El hotel está en la plaza. Pensamos en ti. ¿De qué hablan ellos? Hablan del trabajo.',
-        'Describe tu ciudad o tu barrio en 6 frases: qué hay y dónde está cada cosa (usa слева, справа, рядом, далеко, в центре).',
-      ],
-    },
-    {
-      title: 'El acusativo: comida, gustos y adónde vas',
-      durationMinutes: 60,
-      content: `EL ACUSATIVO marca el objeto directo: responde a Что? (¿qué?) y Кого? (¿a quién?).
+  },
+  {
+    title: 'El acusativo: comida, gustos y adónde vas',
+    durationMinutes: 60,
+    content: `EL ACUSATIVO marca el objeto directo: responde a Что? (¿qué?) y Кого? (¿a quién?).
 
 CÓMO SE FORMA
 · Masculinos inanimados y neutros: NO cambian. Я читаю журнал. Я пью молоко. Я вижу дом.
@@ -480,18 +416,11 @@ ADÓNDE VAS: КУДА? + В / НА + ACUSATIVO
 Я иду в магазин. · Мы идём на работу. · Она едет в Москву. · Они едут на море.
 Especial: домой = a casa. Я иду домой.
 Куда вы идёте? — Мы идём в кино.`,
-      exercises: [
-        'Pon la palabra entre paréntesis en acusativo: Я читаю (книга). Мы пьём (вода). Он знает (Иван). Ты видишь (сестра)? Я жду (друг). Она покупает (хлеб) и (рыба).',
-        'Sustituye el nombre por un pronombre: Я знаю Анну. / Мы слушаем учителя. / Ты видишь студентов? / Он любит Марию и Олега.',
-        'Completa con Где o Куда y responde usando la palabra dada: ___ ты идёшь? (магазин) / ___ ты работаешь? (банк) / ___ они едут? (Москва) / ___ живёт Анна? (Москва).',
-        'Escribe un diálogo en un café (mínimo 8 líneas): saludas, pides algo de comer y de beber, preguntas el precio y pides la cuenta.',
-        'Escribe 6 frases sobre lo que comes y bebes en el desayuno, el almuerzo y la cena, y dos cosas que no te gustan.',
-      ],
-    },
-    {
-      title: 'У меня есть… La familia',
-      durationMinutes: 50,
-      content: `TENER EN RUSO
+  },
+  {
+    title: 'У меня есть… La familia',
+    durationMinutes: 50,
+    content: `TENER EN RUSO
 No se usa un verbo "tener", sino la construcción У + persona + есть + lo que se tiene (en nominativo).
 У меня есть брат. — Tengo un hermano. (literalmente: "junto a mí hay un hermano")
 у меня · у тебя · у него (él) · у неё (ella) · у нас · у вас · у них
@@ -524,18 +453,11 @@ DOLER Y OTRAS FRASES CON У
 
 TEXTO: МОЯ СЕМЬЯ
 У меня большая семья. Мой папа — инженер, ему пятьдесят два года. Моя мама — учительница, она работает в школе. У меня есть старший брат и младшая сестра. Брата зовут Павел, он женат, и у него есть сын. Сестру зовут Катя, она ещё учится в школе. У нас нет собаки, но есть старый кот. Его зовут Барсик. Мои бабушка и дедушка живут в деревне, у них там большой дом и красивый сад.`,
-      exercises: [
-        'Traduce al ruso: Tengo una hermana. ¿Tienes carro? Él tiene una familia grande. No tenemos perro. Ella no tiene hermano.',
-        'Responde en negativo: У тебя есть машина? У него есть сестра? У вас есть время? У неё есть телефон? У них есть дом?',
-        'Responde sobre el texto: Кто папа по профессии? Сколько ему лет? Где работает мама? Как зовут брата? У них есть собака? Где живут бабушка и дедушка?',
-        'Completa con у меня, у него, у неё, у нас o у них: Это Иван. ___ есть сын. / Это Анна. ___ нет брата. / Мы студенты. ___ есть урок. / Это мои родители. ___ большой дом.',
-        'Escribe un texto de 8 a 10 frases sobre tu familia: quiénes son, cómo se llaman, cuántos años tienen, a qué se dedican, dónde viven y cómo son.',
-      ],
-    },
-    {
-      title: 'El tiempo, la rutina y el pasado',
-      durationMinutes: 60,
-      content: `LOS DÍAS DE LA SEMANA (se escriben con minúscula)
+  },
+  {
+    title: 'El tiempo, la rutina y el pasado',
+    durationMinutes: 60,
+    content: `LOS DÍAS DE LA SEMANA (se escriben con minúscula)
 понедельник (lunes) · вторник · среда · четверг · пятница · суббота · воскресенье
 Какой сегодня день? — Сегодня вторник.
 Когда? → в + acusativo: в понедельник · во вторник · в среду · в четверг · в пятницу · в субботу · в воскресенье
@@ -575,37 +497,5 @@ EL CLIMA EN UNA FRASE
 
 TEXTO: МОЙ ДЕНЬ
 Обычно я встаю в семь часов, принимаю душ и завтракаю. В восемь тридцать я иду на работу. Я работаю в офисе, в центре. В час я обедаю в кафе. Вечером я ужинаю дома, читаю или смотрю телевизор. Но вчера была суббота, и я не работал. Утром я долго спал, потом гулял в парке. Днём я был в магазине и купил продукты. Вечером мы были в ресторане: ели пиццу, пили вино и много говорили. Было очень весело!`,
-      exercises: [
-        'Escribe con letras en ruso qué hora es: 1:00, 3:00, 5:00, 8:30, 12:15. Luego di a qué hora te levantas y a qué hora te acuestas.',
-        'Pon los verbos en pasado: Вчера я ___ (работать). Анна ___ (читать) книгу. Мы ___ (быть) в театре. Иван не ___ (хотеть) есть. Дети ___ (смотреть) фильм. Она ___ (идти) домой.',
-        'Responde sobre el texto: Во сколько он встаёт? Где он обедает? Какой день был вчера? Где он был днём? Что они делали вечером?',
-        'Traduce al ruso: El lunes trabajo. Ayer estuve en casa. ¿Dónde estuviste el sábado? No tuve tiempo. La clase empieza a las diez.',
-        'Escribe un texto de 10 frases: 5 sobre tu rutina normal (con horas) y 5 sobre lo que hiciste ayer o el fin de semana pasado.',
-      ],
-    },
-  ],
-  exam: {
-    title: 'Examen final A1',
-    instructions: `Este examen cubre las doce estaciones del curso. Responde en ruso salvo que el ejercicio pida otra cosa; escribe en cirílico. Puedes corregir tu entrega mientras el profe no la haya calificado. Vale 100 puntos y se aprueba con 70.
-
-TEXTO PARA LOS EJERCICIOS 9 Y 10
-Здравствуйте! Меня зовут Карлос, мне двадцать шесть лет. Я из Мексики, но сейчас живу в Москве. Я программист и работаю в большой компании в центре. У меня есть младшая сестра Лаура, она студентка и живёт в Гвадалахаре. У меня нет машины, поэтому я еду на работу на метро. Утром я пью кофе и читаю новости. Вечером я изучаю русский язык: читаю тексты и смотрю русские фильмы. В субботу я был в музее, а в воскресенье гулял в парке, потому что было тепло. Я люблю Москву: это очень красивый город!`,
-    questions: [
-      'Lectura y escritura. Escribe en cirílico: restaurante, estudiante, pasaporte, México, gracias, por favor. Luego explica cómo se pronuncia молоко y por qué.',
-      'Saludos. Escribe un diálogo formal de 6 líneas en el que dos personas se saludan, se presentan, dicen de dónde son y se despiden.',
-      'Género y posesivos. Completa: ___ (мой) мама, ___ (твой) письмо, ___ (наш) дом, ___ (ваш) ключи, ___ (мой) словарь, ___ (твой) тетрадь.',
-      'Números. Escribe con letras: 15, 43, 100, 268. Luego completa con год / года / лет: Ему 21 ___. Ей 33 ___. Мне 50 ___.',
-      'Verbos en presente. Completa: Я ___ (жить) в Лиме. Ты ___ (говорить) по-русски? Мы ___ (читать) журналы. Они ___ (хотеть) кофе. Она ___ (писать) письмо. Вы ___ (смотреть) телевизор?',
-      'Plural y adjetivos. Pasa al plural las frases completas: Это новый студент. / Это большое окно. / Это хороший друг. / Это интересная книга.',
-      'Preposicional. Completa con в o на y la terminación correcta: Я живу ___ Колумби__. Книга лежит ___ стол__. Он работает ___ почт__. Мы были ___ концерт__. Она учится ___ университет__.',
-      'Acusativo. Completa: Я люблю ___ (музыка). Он ждёт ___ (брат). Мы идём в ___ (школа). Она покупает ___ (рыба) и ___ (хлеб). Ты знаешь ___ (Мария)?',
-      'Comprensión. Lee el texto de Carlos y responde con frases completas: Сколько лет Карлосу? Кто он по профессии? Где живёт его сестра? Почему он едет на работу на метро? Что он делал в субботу?',
-      'Comprensión. Según el texto, di si es verdadero o falso y corrige lo falso en ruso: a) Карлос из Испании. b) У него есть старший брат. c) Вечером он изучает русский язык. d) В воскресенье было холодно.',
-      'Tener y no tener. Traduce: Tengo dos hermanos. Ella no tiene carro. ¿Tienen ustedes hijos? No tenemos tiempo. Él tiene los ojos verdes.',
-      'Pasado. Reescribe en pasado: Я читаю книгу. (habla una mujer) / Мы работаем в офисе. / Он дома. / У меня есть собака. / Они идут в кино.',
-      'Preguntas. Escribe la pregunta para cada respuesta: Меня зовут Олег. / Мне тридцать лет. / Я иду в магазин. / Это стоит двести рублей. / Сейчас пять часов. / Это моя сумка.',
-      'En el café. Escribe un diálogo de 8 líneas entre un mesero y un cliente: pedir comida y bebida, preguntar el precio y pagar.',
-      'Redacción. Escribe un texto de 12 a 15 frases titulado «Обо мне»: quién eres, de dónde eres, tu familia, dónde vives, tu trabajo o estudios, tu rutina, lo que te gusta y lo que hiciste el fin de semana pasado.',
-    ],
   },
-};
+];

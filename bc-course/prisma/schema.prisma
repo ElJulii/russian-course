@@ -10,7 +10,6 @@ datasource db {
 
 enum Role {
   STUDENT
-  INSTRUCTOR
   ADMIN
 }
 
@@ -36,9 +35,9 @@ enum EnrollmentStatus {
   DROPPED
 }
 
+// QUIZ es el test de una estación; EXAM, el examen final del curso.
 enum AssessmentType {
   QUIZ
-  ASSIGNMENT
   EXAM
 }
 
@@ -67,16 +66,13 @@ model User {
   updatedAt    DateTime @updatedAt
 
   enrollments Enrollment[]
-  // Inscripciones que este profe evalúa.
-  evaluating  Enrollment[] @relation("EnrollmentEvaluator")
-  gradesGiven Grade[]      @relation("GradeGrader")
 
   @@index([role])
   @@index([lastName])
 }
 
-// Los cursos son de la plataforma: los crea y edita un admin. Los profes no
-// son dueños de cursos; evalúan a los estudiantes que los eligen al inscribirse.
+// Los cursos son de la plataforma: los crea y edita un admin. No hay profes:
+// el estudiante avanza solo y los tests se califican automáticamente.
 model Course {
   id          String       @id @default(uuid())
   title       String
@@ -116,22 +112,17 @@ model Enrollment {
   id          String           @id @default(uuid())
   studentId   String
   courseId    String
-  // Profe que el estudiante eligió para que lo evalúe en este curso.
-  evaluatorId String
   status      EnrollmentStatus @default(ACTIVE)
   enrolledAt  DateTime         @default(now())
   completedAt DateTime?
 
-  student   User   @relation(fields: [studentId], references: [id], onDelete: Cascade)
-  evaluator User   @relation("EnrollmentEvaluator", fields: [evaluatorId], references: [id], onDelete: Restrict)
-  course    Course @relation(fields: [courseId], references: [id], onDelete: Restrict)
-  progress    LessonProgress[]
-  grades      Grade[]
-  submissions Submission[]
+  student  User             @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  course   Course           @relation(fields: [courseId], references: [id], onDelete: Restrict)
+  progress LessonProgress[]
+  attempts Attempt[]
 
   @@unique([studentId, courseId])
   @@index([courseId, status])
-  @@index([evaluatorId])
 }
 
 model LessonProgress {
@@ -146,10 +137,11 @@ model LessonProgress {
   @@unique([enrollmentId, lessonId])
 }
 
-// Evaluación de un curso. `weight` es el % que aporta a la nota final;
-// la suma de los pesos de un curso no puede superar 100.
-// Si tiene `questions`, el estudiante la responde en la plataforma y solo
-// recibe nota cuando el profe revisa su entrega.
+// Test de opción múltiple de un curso. `weight` es el % que aporta a la nota
+// final; la suma de los pesos de un curso no puede superar 100.
+// `questions` es una lista de { prompt, options, answer, explanation }, donde
+// `answer` es el índice de la opción correcta. Con `lessonId` es el test de esa
+// estación: aprobarlo la completa y abre la siguiente.
 model Assessment {
   id           String         @id @default(uuid())
   courseId     String
@@ -157,51 +149,36 @@ model Assessment {
   title        String
   type         AssessmentType
   instructions String?
-  questions    String[]
+  questions    Json           @default("[]")
   maxScore     Decimal        @db.Decimal(6, 2)
   weight       Decimal        @db.Decimal(5, 2)
   dueDate      DateTime?
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
 
-  course      Course       @relation(fields: [courseId], references: [id], onDelete: Cascade)
-  lesson      Lesson?      @relation(fields: [lessonId], references: [id], onDelete: SetNull)
-  grades      Grade[]
-  submissions Submission[]
+  course   Course    @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  lesson   Lesson?   @relation(fields: [lessonId], references: [id], onDelete: SetNull)
+  attempts Attempt[]
 
   @@index([courseId])
 }
 
-// Respuestas de un estudiante a una evaluación; `answers[i]` responde a `questions[i]`.
-model Submission {
+// Un intento de un estudiante en un test; `answers[i]` es la opción que eligió
+// en `questions[i]`. Se califica al enviarlo, se puede repetir sin límite y
+// cuenta el mejor. Guarda aciertos y total, no la nota, para que cambiar
+// `maxScore` no deje notas desfasadas.
+model Attempt {
   id           String   @id @default(uuid())
   assessmentId String
   enrollmentId String
-  answers      String[]
-  submittedAt  DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  answers      Int[]
+  correct      Int
+  total        Int
+  createdAt    DateTime @default(now())
 
   assessment Assessment @relation(fields: [assessmentId], references: [id], onDelete: Restrict)
   enrollment Enrollment @relation(fields: [enrollmentId], references: [id], onDelete: Cascade)
 
-  @@unique([assessmentId, enrollmentId])
-  @@index([enrollmentId])
-}
-
-model Grade {
-  id           String   @id @default(uuid())
-  assessmentId String
-  enrollmentId String
-  score        Decimal  @db.Decimal(6, 2)
-  feedback     String?
-  gradedById   String
-  gradedAt     DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-
-  assessment Assessment @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
-  enrollment Enrollment @relation(fields: [enrollmentId], references: [id], onDelete: Cascade)
-  gradedBy   User       @relation("GradeGrader", fields: [gradedById], references: [id], onDelete: Restrict)
-
-  @@unique([assessmentId, enrollmentId])
+  @@index([assessmentId, enrollmentId])
   @@index([enrollmentId])
 }

@@ -8,15 +8,13 @@ import {
   ParseUUIDPipe,
   Patch,
   Post,
-  Put,
 } from '@nestjs/common';
 import type { AuthUser } from '../common/decorators';
 import { CurrentUser, RequirePermissions } from '../common/decorators';
 import { Permission } from '../common/rbac/permissions';
 import {
+  AttemptDto,
   CreateAssessmentDto,
-  GradeDto,
-  SubmitDto,
   UpdateAssessmentDto,
 } from './grades.dto';
 import { GradesService } from './grades.service';
@@ -50,7 +48,7 @@ export class GradesController {
   }
 
   @Get('courses/:courseId/gradebook')
-  @RequirePermissions(Permission.GradeManage)
+  @RequirePermissions(Permission.CourseManage)
   gradebook(
     @CurrentUser() user: AuthUser,
     @Param('courseId', ParseUUIDPipe) courseId: string,
@@ -75,23 +73,15 @@ export class GradesController {
     return this.grades.findAssessment(user, assessmentId);
   }
 
-  @Put('assessments/:assessmentId/submission')
+  @Post('assessments/:assessmentId/attempts')
+  @HttpCode(200)
   @RequirePermissions(Permission.ProgressUpdate)
-  submit(
+  attempt(
     @CurrentUser() user: AuthUser,
     @Param('assessmentId', ParseUUIDPipe) assessmentId: string,
-    @Body() dto: SubmitDto,
+    @Body() dto: AttemptDto,
   ) {
-    return this.grades.submit(user, assessmentId, dto);
-  }
-
-  @Get('assessments/:assessmentId/submissions')
-  @RequirePermissions(Permission.GradeManage)
-  listSubmissions(
-    @CurrentUser() user: AuthUser,
-    @Param('assessmentId', ParseUUIDPipe) assessmentId: string,
-  ) {
-    return this.grades.listSubmissions(user, assessmentId);
+    return this.grades.attempt(user, assessmentId, dto);
   }
 
   @Patch('assessments/:assessmentId')
@@ -112,16 +102,5 @@ export class GradesController {
     @Param('assessmentId', ParseUUIDPipe) assessmentId: string,
   ) {
     return this.grades.removeAssessment(user, assessmentId);
-  }
-
-  @Put('assessments/:assessmentId/grades/:studentId')
-  @RequirePermissions(Permission.GradeManage)
-  gradeStudent(
-    @CurrentUser() user: AuthUser,
-    @Param('assessmentId', ParseUUIDPipe) assessmentId: string,
-    @Param('studentId', ParseUUIDPipe) studentId: string,
-    @Body() dto: GradeDto,
-  ) {
-    return this.grades.gradeStudent(user, assessmentId, studentId, dto);
   }
 }

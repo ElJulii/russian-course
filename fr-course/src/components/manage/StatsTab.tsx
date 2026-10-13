@@ -63,7 +63,7 @@ export function StatsTab({ courseId }: { courseId: string }) {
               <thead>
                 <tr>
                   <th>Evaluación</th>
-                  <th className="num">Calificados</th>
+                  <th className="num">Respondieron</th>
                   <th className="num">Promedio</th>
                   <th className="num">Más baja</th>
                   <th className="num">Más alta</th>

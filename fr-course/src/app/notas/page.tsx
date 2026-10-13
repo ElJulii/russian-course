@@ -10,12 +10,12 @@ import { useApi } from "@/lib/useApi";
 function verdict(card: ReportCard) {
   const { summary } = card;
   if (summary.totalWeight === 0) return "Este curso no tiene evaluaciones.";
-  if (summary.gradedWeight === 0) return "Aún no te han calificado nada.";
+  if (summary.gradedWeight === 0) return "Aún no has respondido ningún test.";
   if (summary.passed) return "Vas aprobando. Так держать!";
   if (summary.gradedWeight < summary.totalWeight) {
-    return `Falta por calificar el ${summary.totalWeight - summary.gradedWeight}% de la nota. En lo calificado llevas ${summary.currentAverage} de 100.`;
+    return `Te falta responder el ${summary.totalWeight - summary.gradedWeight}% de la nota. En lo respondido llevas ${summary.currentAverage} de 100.`;
   }
-  return "No alcanza para aprobar: se necesita 70.";
+  return "No alcanza para aprobar: se necesita 70. Repite los tests con peor nota.";
 }
 
 function Grades() {
@@ -27,8 +27,8 @@ function Grades() {
         <h1>Mis notas</h1>
         <p className="lede">
           Tu nota final es sobre 100 y cada evaluación pesa un porcentaje. Se
-          aprueba con 70. Los ejercicios y el examen reciben nota cuando el profe
-          revisa tu entrega.
+          aprueba con 70. Los tests y el examen se corrigen al momento y, si los
+          repites, cuenta tu mejor nota.
         </p>
       </header>
 
@@ -67,8 +67,8 @@ function Grades() {
                     <th>Evaluación</th>
                     <th>Tipo</th>
                     <th className="num">Peso</th>
-                    <th className="num">Tu nota</th>
-                    <th>Comentario del profe</th>
+                    <th className="num">Tu mejor nota</th>
+                    <th className="num">Intentos</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -86,13 +86,13 @@ function Grades() {
                       <td>{ASSESSMENT_TYPES[a.type]}</td>
                       <td className="num">{a.weight}%</td>
                       <td className="num">
-                        {a.score === null ? (
+                        {a.bestScore === null ? (
                           <span className="muted">{assessmentState(a)}</span>
                         ) : (
                           <strong>{assessmentState(a)}</strong>
                         )}
                       </td>
-                      <td style={{ whiteSpace: "normal" }}>{a.feedback}</td>
+                      <td className="num">{a.attempts}</td>
                     </tr>
                   ))}
                 </tbody>

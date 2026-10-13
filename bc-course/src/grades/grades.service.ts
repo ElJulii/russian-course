@@ -6,16 +6,24 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { AuthUser } from '../common/decorators';
-import { hasPermission, Permission } from '../common/rbac/permissions';
 import { CoursesService } from '../courses/courses.service';
+import { lessonTests, recordLessonCompleted } from '../enrollments/progress';
 import { Prisma } from '../generated/prisma/client';
 import { AssessmentType, EnrollmentStatus } from '../generated/prisma/enums';
 import { PrismaService } from '../prisma/prisma.service';
-import { PASSING_GRADE, summarizeGrades } from './grade-calc';
 import {
+  bestAttempt,
+  gradeAttempt,
+  PASSING_GRADE,
+  passes,
+  Question,
+  scoreOf,
+  summarizeGrades,
+} from './grade-calc';
+import {
+  AttemptDto,
   CreateAssessmentDto,
-  GradeDto,
-  SubmitDto,
+  QuestionDto,
   UpdateAssessmentDto,
 } from './grades.dto';
 
@@ -34,29 +42,60 @@ type AssessmentRow = Prisma.AssessmentGetPayload<{
   select: typeof ASSESSMENT_FIELDS;
 }>;
 
+const questionsOf = (assessment: { questions: Prisma.JsonValue }) =>
+  assessment.questions as unknown as Question[];
+
 // Los Decimal de Prisma se serializan como string; la API expone números.
-// Los listados solo dicen cuántos ejercicios hay; el enunciado se pide aparte.
+// Los listados solo dicen cuántas preguntas hay; el enunciado se pide aparte.
 const toApi = ({ questions, ...a }: AssessmentRow) => ({
   ...a,
   maxScore: a.maxScore.toNumber(),
   weight: a.weight.toNumber(),
-  questionCount: questions?.length ?? 0,
+  questionCount: (questions as unknown as Question[]).length,
 });
 
-const SUBMISSION_FIELDS = {
-  answers: true,
-  submittedAt: true,
-} satisfies Prisma.SubmissionSelect;
+interface AttemptRow {
+  assessmentId: string;
+  correct: number;
+  total: number;
+}
 
-const GRADE_FIELDS = {
-  score: true,
-  feedback: true,
-  gradedAt: true,
-} satisfies Prisma.GradeSelect;
+// Lo que un estudiante lleva en un test: cuántas veces lo intentó y su mejor nota.
+function standing(attempts: AttemptRow[], maxScore: number) {
+  const best = bestAttempt(attempts);
+  return {
+    attempts: attempts.length,
+    bestScore: best ? scoreOf(best.correct, best.total, maxScore) : null,
+    passed: !!best && passes(best.correct, best.total),
+  };
+}
 
-const gradeToApi = (
-  grade?: Prisma.GradeGetPayload<{ select: typeof GRADE_FIELDS }> | null,
-) => (grade ? { ...grade, score: grade.score.toNumber() } : null);
+function groupByAssessment<T extends AttemptRow>(attempts: T[]) {
+  const groups = new Map<string, T[]>();
+  for (const attempt of attempts) {
+    const group = groups.get(attempt.assessmentId);
+    if (group) group.push(attempt);
+    else groups.set(attempt.assessmentId, [attempt]);
+  }
+  return groups;
+}
+
+// Mejor nota de cada test, para ponderar la nota final del curso.
+function bestScores(
+  assessments: { id: string; maxScore: number }[],
+  attempts: AttemptRow[],
+) {
+  const groups = groupByAssessment(attempts);
+  const scores = new Map<string, number>();
+  for (const assessment of assessments) {
+    const { bestScore } = standing(
+      groups.get(assessment.id) ?? [],
+      assessment.maxScore,
+    );
+    if (bestScore !== null) scores.set(assessment.id, bestScore);
+  }
+  return scores;
+}
 
 export interface AssessmentStatsRow {
   id: string;
@@ -88,24 +127,25 @@ export class GradesService {
     await this.assertLessonInCourse(courseId, dto.lessonId);
     await this.assertWeightFits(courseId, dto.weight);
     const assessment = await this.prisma.assessment.create({
-      data: { ...dto, courseId },
+      data: {
+        ...dto,
+        questions: this.toStoredQuestions(dto.questions),
+        courseId,
+      },
       select: ASSESSMENT_FIELDS,
     });
     return toApi(assessment);
   }
 
-  // Quien gestiona el curso ve cuántas entregas esperan nota; el estudiante,
-  // el estado de la suya.
+  // Quien gestiona el curso ve cuántos estudiantes respondieron cada test; el
+  // estudiante, sus intentos y su mejor nota.
   async listAssessments(user: AuthUser, courseId: string) {
     await this.courses.getVisible(user, courseId);
-    const enrollment = this.courses.canGrade(user)
+    const enrollment = this.courses.canManage(user)
       ? null
       : await this.getCurrentEnrollment(user, courseId);
-    const current = enrollment
-      ? { enrollmentId: enrollment.id }
-      : { enrollment: this.courses.gradingScope(user) };
 
-    const [assessments, submissions, grades] = await Promise.all([
+    const [assessments, attempts] = await Promise.all([
       this.prisma.assessment.findMany({
         where: { courseId },
         select: ASSESSMENT_FIELDS,
@@ -114,41 +154,37 @@ export class GradesService {
           { createdAt: 'asc' },
         ],
       }),
-      this.prisma.submission.findMany({
-        where: { assessment: { courseId }, ...current },
-        select: { assessmentId: true, enrollmentId: true, submittedAt: true },
-      }),
-      this.prisma.grade.findMany({
-        where: { assessment: { courseId }, ...current },
-        select: { assessmentId: true, enrollmentId: true, score: true },
+      this.prisma.attempt.findMany({
+        where: {
+          assessment: { courseId },
+          ...(enrollment
+            ? { enrollmentId: enrollment.id }
+            : { enrollment: { status: { not: EnrollmentStatus.DROPPED } } }),
+        },
+        select: {
+          assessmentId: true,
+          enrollmentId: true,
+          correct: true,
+          total: true,
+        },
       }),
     ]);
-    const graded = new Map(
-      grades.map((g) => [`${g.assessmentId}:${g.enrollmentId}`, g.score]),
-    );
+    const byAssessment = groupByAssessment(attempts);
 
-    return assessments.map((assessment) => {
-      const own = submissions.filter((s) => s.assessmentId === assessment.id);
-      if (enrollment) {
-        return {
-          ...toApi(assessment),
-          submittedAt: own[0]?.submittedAt ?? null,
-          score:
-            graded.get(`${assessment.id}:${enrollment.id}`)?.toNumber() ?? null,
-        };
-      }
-      return {
-        ...toApi(assessment),
-        submitted: own.length,
-        pendingReview: own.filter(
-          (s) => !graded.has(`${s.assessmentId}:${s.enrollmentId}`),
-        ).length,
-      };
+    return assessments.map((row) => {
+      const assessment = toApi(row);
+      const own = byAssessment.get(assessment.id) ?? [];
+      return enrollment
+        ? { ...assessment, ...standing(own, assessment.maxScore) }
+        : {
+            ...assessment,
+            attempted: new Set(own.map((a) => a.enrollmentId)).size,
+          };
     });
   }
 
-  // Enunciado completo. Al estudiante se le añade su entrega y su nota; el
-  // examen final no muestra las preguntas hasta completar todas las lecciones.
+  // Enunciado completo. El estudiante recibe las preguntas sin la respuesta
+  // correcta, y bloqueadas mientras no le toque ese test.
   async findAssessment(user: AuthUser, assessmentId: string) {
     const assessment = await this.prisma.assessment.findUnique({
       where: { id: assessmentId },
@@ -164,44 +200,45 @@ export class GradesService {
     const { courseId, course, lesson, instructions, ...row } = assessment;
     await this.courses.getVisible(user, courseId);
     const base = { ...toApi(row), instructions, course, lesson };
+    const questions = questionsOf(row);
 
-    if (this.courses.canGrade(user)) {
+    if (this.courses.canManage(user)) {
       return {
         ...base,
-        questions: row.questions ?? [],
+        questions,
         viewer: {
-          canGrade: true,
+          canManage: true,
           lockedReason: null,
-          submission: null,
-          grade: null,
+          attempts: 0,
+          bestScore: null,
+          passed: false,
         },
       };
     }
 
     const enrollment = await this.getCurrentEnrollment(user, courseId);
-    const key = {
-      assessmentId_enrollmentId: { assessmentId, enrollmentId: enrollment.id },
-    };
-    const [lockedReason, submission, grade] = await Promise.all([
+    const [lockedReason, attempts] = await Promise.all([
       this.lockedReason(assessment, enrollment.id),
-      this.prisma.submission.findUnique({
-        where: key,
-        select: SUBMISSION_FIELDS,
+      this.prisma.attempt.findMany({
+        where: { assessmentId, enrollmentId: enrollment.id },
+        select: { assessmentId: true, correct: true, total: true },
       }),
-      this.prisma.grade.findUnique({ where: key, select: GRADE_FIELDS }),
     ]);
     return {
       ...base,
-      questions: lockedReason ? [] : (row.questions ?? []),
+      questions: lockedReason
+        ? []
+        : questions.map(({ prompt, options }) => ({ prompt, options })),
       viewer: {
-        canGrade: false,
+        canManage: false,
         lockedReason,
-        submission,
-        grade: gradeToApi(grade),
+        ...standing(attempts, base.maxScore),
       },
     };
   }
 
+  // Las preguntas se pueden corregir aunque ya haya intentos: cada intento
+  // guarda sus aciertos y no se vuelve a calificar.
   async updateAssessment(
     user: AuthUser,
     assessmentId: string,
@@ -209,36 +246,15 @@ export class GradesService {
   ) {
     const current = await this.getManageableAssessment(user, assessmentId);
     await this.assertLessonInCourse(current.courseId, dto.lessonId);
-    if (
-      dto.questions !== undefined &&
-      JSON.stringify(dto.questions) !== JSON.stringify(current.questions ?? [])
-    ) {
-      const submissions = await this.prisma.submission.count({
-        where: { assessmentId },
-      });
-      if (submissions > 0) {
-        throw new ConflictException(
-          `Ya hay ${submissions} entrega(s); los ejercicios no se pueden cambiar porque las respuestas dejarían de corresponder`,
-        );
-      }
-    }
     if (dto.weight !== undefined) {
       await this.assertWeightFits(current.courseId, dto.weight, assessmentId);
     }
-    if (dto.maxScore !== undefined) {
-      const { _max } = await this.prisma.grade.aggregate({
-        where: { assessmentId },
-        _max: { score: true },
-      });
-      if (_max.score?.greaterThan(dto.maxScore)) {
-        throw new ConflictException(
-          `Ya hay calificaciones de hasta ${_max.score.toString()} puntos; maxScore no puede ser menor`,
-        );
-      }
-    }
     const assessment = await this.prisma.assessment.update({
       where: { id: assessmentId },
-      data: dto,
+      data: {
+        ...dto,
+        questions: dto.questions && this.toStoredQuestions(dto.questions),
+      },
       select: ASSESSMENT_FIELDS,
     });
     return toApi(assessment);
@@ -246,30 +262,33 @@ export class GradesService {
 
   async removeAssessment(user: AuthUser, assessmentId: string) {
     await this.getManageableAssessment(user, assessmentId);
-    const [grades, submissions] = await Promise.all([
-      this.prisma.grade.count({ where: { assessmentId } }),
-      this.prisma.submission.count({ where: { assessmentId } }),
-    ]);
-    if (grades > 0) {
+    const attempts = await this.prisma.attempt.count({
+      where: { assessmentId },
+    });
+    if (attempts > 0) {
       throw new ConflictException(
-        `La evaluación tiene ${grades} calificación(es) registrada(s) y no se puede eliminar`,
-      );
-    }
-    if (submissions > 0) {
-      throw new ConflictException(
-        `La evaluación tiene ${submissions} entrega(s) de estudiantes y no se puede eliminar`,
+        `La evaluación ya tiene ${attempts} intento(s) de estudiantes y no se puede eliminar`,
       );
     }
     await this.prisma.assessment.delete({ where: { id: assessmentId } });
   }
 
-  // --- Entregas ---
+  // --- Intentos ---
 
-  // El estudiante puede corregir su entrega hasta que el profe la califica.
-  async submit(user: AuthUser, assessmentId: string, dto: SubmitDto) {
+  // Corrige el intento al momento y devuelve, pregunta por pregunta, cuál era
+  // la opción correcta y su explicación. Se puede repetir sin límite; aprobar
+  // el test de una estación la completa.
+  async attempt(user: AuthUser, assessmentId: string, dto: AttemptDto) {
     const assessment = await this.prisma.assessment.findUnique({
       where: { id: assessmentId },
-      select: { id: true, courseId: true, type: true, questions: true },
+      select: {
+        id: true,
+        courseId: true,
+        lessonId: true,
+        type: true,
+        maxScore: true,
+        questions: true,
+      },
     });
     if (!assessment) throw new NotFoundException('Evaluación no encontrada');
     const enrollment = await this.getCurrentEnrollment(
@@ -277,152 +296,80 @@ export class GradesService {
       assessment.courseId,
     );
 
-    const questions = assessment.questions ?? [];
+    const questions = questionsOf(assessment);
     if (questions.length === 0) {
       throw new BadRequestException(
-        'Esta evaluación no se responde en la plataforma',
+        'Esta evaluación todavía no tiene preguntas',
       );
     }
     if (dto.answers.length !== questions.length) {
       throw new BadRequestException(
-        `Se esperan ${questions.length} respuestas, una por ejercicio`,
+        `Responde las ${questions.length} preguntas antes de enviar`,
       );
     }
-    const answers = dto.answers.map((answer) => answer.trim());
-    if (answers.every((answer) => answer === '')) {
-      throw new BadRequestException('Responde al menos un ejercicio');
+    if (dto.answers.some((a, i) => a >= questions[i].options.length)) {
+      throw new BadRequestException('Hay una respuesta que no es una opción');
     }
     const lockedReason = await this.lockedReason(assessment, enrollment.id);
     if (lockedReason) throw new ConflictException(lockedReason);
 
-    const key = {
-      assessmentId_enrollmentId: { assessmentId, enrollmentId: enrollment.id },
-    };
-    const graded = await this.prisma.grade.findUnique({
-      where: key,
-      select: { id: true },
-    });
-    if (graded) {
-      throw new ConflictException(
-        'Tu entrega ya fue calificada y no se puede cambiar',
-      );
-    }
-    return this.prisma.submission.upsert({
-      where: key,
-      create: { assessmentId, enrollmentId: enrollment.id, answers },
-      update: { answers, submittedAt: new Date() },
-      select: SUBMISSION_FIELDS,
-    });
-  }
+    const { correct, total, results } = gradeAttempt(questions, dto.answers);
+    const passed = passes(correct, total);
+    const maxScore = assessment.maxScore.toNumber();
+    const lessonId = assessment.lessonId;
 
-  // Bandeja del profe: primero lo que espera nota, luego lo calificado y al
-  // final quienes no han entregado.
-  async listSubmissions(user: AuthUser, assessmentId: string) {
-    const assessment = await this.getGradableAssessment(user, assessmentId);
-    const enrollments = await this.prisma.enrollment.findMany({
-      where: {
-        courseId: assessment.courseId,
-        ...this.courses.gradingScope(user),
-      },
-      select: {
-        id: true,
-        student: { select: { id: true, name: true, email: true } },
-        submissions: { where: { assessmentId }, select: SUBMISSION_FIELDS },
-        grades: { where: { assessmentId }, select: GRADE_FIELDS },
-      },
-    });
-    const entries = enrollments.map(({ id, student, submissions, grades }) => ({
-      enrollmentId: id,
-      student,
-      submission: submissions[0] ?? null,
-      grade: gradeToApi(grades[0]),
-    }));
-    const priority = (entry: (typeof entries)[number]) =>
-      !entry.submission ? 2 : entry.grade ? 1 : 0;
-
-    return {
-      assessment: {
-        id: assessment.id,
-        title: assessment.title,
-        type: assessment.type,
-        maxScore: assessment.maxScore.toNumber(),
-        instructions: assessment.instructions,
-        questions: assessment.questions ?? [],
-      },
-      entries: entries.sort(
-        (a, b) =>
-          priority(a) - priority(b) ||
-          a.student.name.localeCompare(b.student.name),
-      ),
-    };
-  }
-
-  // --- Calificaciones ---
-
-  async gradeStudent(
-    user: AuthUser,
-    assessmentId: string,
-    studentId: string,
-    dto: GradeDto,
-  ) {
-    const assessment = await this.getGradableAssessment(user, assessmentId);
-    if (assessment.maxScore.lessThan(dto.score)) {
-      throw new BadRequestException(
-        `La nota no puede superar el máximo de la evaluación (${assessment.maxScore.toString()})`,
-      );
-    }
-    const enrollment = await this.prisma.enrollment.findUnique({
-      where: {
-        studentId_courseId: { studentId, courseId: assessment.courseId },
-      },
-      select: { id: true, status: true, evaluatorId: true },
-    });
-    if (!enrollment || enrollment.status === EnrollmentStatus.DROPPED) {
-      throw new BadRequestException(
-        'El estudiante no tiene una inscripción vigente en este curso',
-      );
-    }
-    if (
-      enrollment.evaluatorId !== user.id &&
-      !hasPermission(user.role, Permission.GradeManageAny)
-    ) {
-      throw new ForbiddenException(
-        'Este estudiante eligió a otro profe para que lo evalúe',
-      );
-    }
-    // Lo que se responde en la plataforma solo se califica una vez entregado.
-    if (assessment.questions?.length) {
-      const submission = await this.prisma.submission.findUnique({
-        where: {
-          assessmentId_enrollmentId: {
-            assessmentId,
-            enrollmentId: enrollment.id,
-          },
-        },
-        select: { id: true },
-      });
-      if (!submission) {
-        throw new BadRequestException(
-          'El estudiante todavía no ha entregado esta evaluación; solo se califica lo entregado',
-        );
-      }
-    }
-
-    const data = { ...dto, gradedById: user.id };
-    const grade = await this.prisma.grade.upsert({
-      where: {
-        assessmentId_enrollmentId: {
+    return this.prisma.$transaction(async (tx) => {
+      await tx.attempt.create({
+        data: {
           assessmentId,
           enrollmentId: enrollment.id,
+          answers: dto.answers,
+          correct,
+          total,
         },
-      },
-      create: { ...data, assessmentId, enrollmentId: enrollment.id },
-      update: { ...data, gradedAt: new Date() },
+      });
+      const attempts = await tx.attempt.findMany({
+        where: { assessmentId, enrollmentId: enrollment.id },
+        select: { assessmentId: true, correct: true, total: true },
+      });
+
+      // La estación se completa cuando ya no le queda ningún test por aprobar.
+      let lessonCompleted = false;
+      if (passed && lessonId) {
+        const done = await tx.lessonProgress.findUnique({
+          where: {
+            enrollmentId_lessonId: { enrollmentId: enrollment.id, lessonId },
+          },
+          select: { id: true },
+        });
+        const { pending } = await lessonTests(tx, enrollment.id, lessonId);
+        if (!done && pending.length === 0) {
+          await recordLessonCompleted(tx, enrollment, lessonId);
+          lessonCompleted = true;
+        }
+      }
+
+      // `passed` es de este intento; `bestScore`, de todos los que lleva.
+      const { bestScore } = standing(attempts, maxScore);
+      return {
+        correct,
+        total,
+        score: scoreOf(correct, total, maxScore),
+        maxScore,
+        passed,
+        passingGrade: PASSING_GRADE,
+        results,
+        lessonCompleted,
+        attempts: attempts.length,
+        bestScore,
+      };
     });
-    return { ...grade, score: grade.score.toNumber() };
   }
 
-  // Boletín del estudiante: sus notas y la nota final de cada curso.
+  // --- Notas ---
+
+  // Boletín del estudiante: su mejor nota en cada test y la nota final de
+  // cada curso.
   async myReport(user: AuthUser) {
     const enrollments = await this.prisma.enrollment.findMany({
       where: { studentId: user.id },
@@ -440,51 +387,45 @@ export class GradesService {
             },
           },
         },
-        grades: {
+        attempts: {
           select: {
             assessmentId: true,
-            score: true,
-            feedback: true,
-            gradedAt: true,
+            correct: true,
+            total: true,
+            createdAt: true,
           },
+          orderBy: { createdAt: 'asc' },
         },
-        submissions: { select: { assessmentId: true, submittedAt: true } },
       },
       orderBy: { enrolledAt: 'desc' },
     });
 
-    return enrollments.map(({ course, grades, submissions, ...enrollment }) => {
+    return enrollments.map(({ course, attempts, ...enrollment }) => {
       const assessments = course.assessments.map(toApi);
-      const byAssessment = new Map(grades.map((g) => [g.assessmentId, g]));
-      const submittedAt = new Map(
-        submissions.map((s) => [s.assessmentId, s.submittedAt]),
-      );
+      const byAssessment = groupByAssessment(attempts);
       return {
         enrollmentId: enrollment.id,
         status: enrollment.status,
         course: { id: course.id, title: course.title, level: course.level },
         assessments: assessments.map((a) => {
-          const grade = byAssessment.get(a.id);
+          const own = byAssessment.get(a.id) ?? [];
           return {
             ...a,
-            score: grade?.score.toNumber() ?? null,
-            feedback: grade?.feedback ?? null,
-            gradedAt: grade?.gradedAt ?? null,
-            submittedAt: submittedAt.get(a.id) ?? null,
+            ...standing(own, a.maxScore),
+            lastAttemptAt: own.at(-1)?.createdAt ?? null,
           };
         }),
         summary: summarizeGrades(
           assessments,
-          new Map(grades.map((g) => [g.assessmentId, g.score.toNumber()])),
+          bestScores(assessments, attempts),
         ),
       };
     });
   }
 
   // Libro de calificaciones: matriz estudiantes × evaluaciones con ranking.
-  // El profe solo ve a los estudiantes que lo eligieron.
   async gradebook(user: AuthUser, courseId: string) {
-    await this.courses.getGradable(user, courseId);
+    await this.courses.getManageable(user, courseId);
     const [assessmentRows, enrollments] = await Promise.all([
       this.prisma.assessment.findMany({
         where: { courseId },
@@ -492,33 +433,29 @@ export class GradesService {
         orderBy: { createdAt: 'asc' },
       }),
       this.prisma.enrollment.findMany({
-        where: { courseId, ...this.courses.gradingScope(user) },
+        where: { courseId, status: { not: EnrollmentStatus.DROPPED } },
         select: {
           id: true,
           status: true,
           student: { select: { id: true, name: true, email: true } },
-          evaluator: { select: { id: true, name: true } },
-          grades: { select: { assessmentId: true, score: true } },
-          submissions: { select: { assessmentId: true } },
+          attempts: {
+            select: { assessmentId: true, correct: true, total: true },
+          },
         },
       }),
     ]);
     const assessments = assessmentRows.map(toApi);
 
     const students = enrollments
-      .map(({ grades, submissions, student, evaluator, ...enrollment }) => {
-        const scores = new Map(
-          grades.map((g) => [g.assessmentId, g.score.toNumber()]),
-        );
+      .map(({ attempts, student, ...enrollment }) => {
+        const scores = bestScores(assessments, attempts);
         return {
           enrollmentId: enrollment.id,
           status: enrollment.status,
           student,
-          evaluator,
           scores: Object.fromEntries(
             assessments.map((a) => [a.id, scores.get(a.id) ?? null]),
           ),
-          submitted: submissions.map((s) => s.assessmentId),
           ...summarizeGrades(assessments, scores),
         };
       })
@@ -554,8 +491,8 @@ export class GradesService {
   }
 
   // Estadísticas agregadas del curso. La distribución por evaluación se calcula
-  // en SQL: normalizar cada nota a porcentaje y filtrar por umbral dentro del
-  // agregado no se puede expresar con groupBy de Prisma.
+  // en SQL sobre el mejor intento de cada estudiante: eso no se puede expresar
+  // con groupBy de Prisma.
   async courseStats(user: AuthUser, courseId: string) {
     await this.courses.getManageable(user, courseId);
     const [byStatus, totalLessons, lessonCompletion, assessments] =
@@ -590,22 +527,27 @@ export class GradesService {
             a."title",
             a."type"::text AS "type",
             a."weight"::float AS "weight",
-            COUNT(g."id")::int AS "graded",
-            ROUND(AVG(g."score" / a."maxScore" * 100), 2)::float AS "avgPercent",
-            ROUND(MIN(g."score" / a."maxScore" * 100), 2)::float AS "minPercent",
-            ROUND(MAX(g."score" / a."maxScore" * 100), 2)::float AS "maxPercent",
+            COUNT(b."percent")::int AS "graded",
+            ROUND(AVG(b."percent"), 2)::float AS "avgPercent",
+            ROUND(MIN(b."percent"), 2)::float AS "minPercent",
+            ROUND(MAX(b."percent"), 2)::float AS "maxPercent",
             ROUND(
-              100.0 * COUNT(g."id") FILTER (
-                WHERE g."score" / a."maxScore" * 100 >= ${PASSING_GRADE}
-              ) / NULLIF(COUNT(g."id"), 0),
+              100.0 * COUNT(b."percent") FILTER (
+                WHERE b."percent" >= ${PASSING_GRADE}
+              ) / NULLIF(COUNT(b."percent"), 0),
               2
             )::float AS "passRate"
           FROM "Assessment" a
           LEFT JOIN (
-            "Grade" g
+            SELECT
+              t."assessmentId",
+              MAX(100.0 * t."correct" / t."total") AS "percent"
+            FROM "Attempt" t
             JOIN "Enrollment" e
-              ON e."id" = g."enrollmentId" AND e."status" <> 'DROPPED'
-          ) ON g."assessmentId" = a."id"
+              ON e."id" = t."enrollmentId" AND e."status" <> 'DROPPED'
+            WHERE t."total" > 0
+            GROUP BY t."assessmentId", t."enrollmentId"
+          ) b ON b."assessmentId" = a."id"
           WHERE a."courseId" = ${courseId}
           GROUP BY a."id"
           ORDER BY a."createdAt" ASC
@@ -648,19 +590,10 @@ export class GradesService {
     return assessment;
   }
 
-  private async getGradableAssessment(user: AuthUser, assessmentId: string) {
-    const assessment = await this.prisma.assessment.findUnique({
-      where: { id: assessmentId },
-    });
-    if (!assessment) throw new NotFoundException('Evaluación no encontrada');
-    await this.courses.getGradable(user, assessment.courseId);
-    return assessment;
-  }
-
   private async getCurrentEnrollment(user: AuthUser, courseId: string) {
     const enrollment = await this.prisma.enrollment.findUnique({
       where: { studentId_courseId: { studentId: user.id, courseId } },
-      select: { id: true, status: true },
+      select: { id: true, status: true, courseId: true },
     });
     if (!enrollment || enrollment.status === EnrollmentStatus.DROPPED) {
       throw new ForbiddenException(
@@ -670,21 +603,61 @@ export class GradesService {
     return enrollment;
   }
 
-  // El examen se abre al completar todas las lecciones del curso.
+  // El examen se abre al completar todas las estaciones; el test de una
+  // estación, al completar las anteriores.
   private async lockedReason(
-    assessment: { type: AssessmentType; courseId: string },
+    assessment: {
+      type: AssessmentType;
+      courseId: string;
+      lessonId: string | null;
+    },
     enrollmentId: string,
   ) {
-    if (assessment.type !== AssessmentType.EXAM) return null;
-    const pending = await this.prisma.lesson.count({
+    const notDone = { progress: { none: { enrollmentId } } };
+    if (assessment.type === AssessmentType.EXAM) {
+      const pending = await this.prisma.lesson.count({
+        where: { courseId: assessment.courseId, ...notDone },
+      });
+      return pending === 0
+        ? null
+        : `El examen se abre cuando completes todas las estaciones; te faltan ${pending}`;
+    }
+    if (!assessment.lessonId) return null;
+    const lesson = await this.prisma.lesson.findUnique({
+      where: { id: assessment.lessonId },
+      select: { order: true },
+    });
+    if (!lesson) return null;
+    const previous = await this.prisma.lesson.findFirst({
       where: {
         courseId: assessment.courseId,
-        progress: { none: { enrollmentId } },
+        order: { lt: lesson.order },
+        ...notDone,
       },
+      select: { order: true, title: true },
+      orderBy: { order: 'asc' },
     });
-    return pending === 0
-      ? null
-      : `El examen se abre cuando completes todas las estaciones; te faltan ${pending}`;
+    return previous
+      ? `Este test se abre cuando completes la estación ${previous.order}: «${previous.title}»`
+      : null;
+  }
+
+  // Pasa las preguntas validadas a JSON plano y comprueba que la respuesta
+  // correcta sea una de las opciones.
+  private toStoredQuestions(questions: QuestionDto[] = []) {
+    return questions.map(({ prompt, options, answer, explanation }, index) => {
+      if (answer >= options.length) {
+        throw new BadRequestException(
+          `La pregunta ${index + 1} marca como correcta una opción que no existe`,
+        );
+      }
+      return {
+        prompt: prompt.trim(),
+        options: options.map((option) => option.trim()),
+        answer,
+        ...(explanation?.trim() && { explanation: explanation.trim() }),
+      };
+    });
   }
 
   private async assertWeightFits(

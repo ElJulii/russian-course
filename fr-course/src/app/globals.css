@@ -834,7 +834,7 @@ tr + tr td {
   }
 }
 
-/* ---------- Ejercicios y entregas ---------- */
+/* ---------- Ejercicios ---------- */
 
 .exercises {
   display: grid;
@@ -1073,4 +1073,120 @@ a.filter {
   background: var(--ink);
   border-color: var(--ink);
   color: #fff;
+}
+
+/* ---------- Tests de opción múltiple ---------- */
+
+.question {
+  display: grid;
+  gap: 0.75rem;
+  min-width: 0;
+  border: 0;
+}
+
+.question legend {
+  padding: 0;
+  margin-bottom: 0.75rem;
+  white-space: pre-wrap;
+}
+
+.options {
+  display: grid;
+  gap: 0.5rem;
+  max-width: 44rem;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 0.9rem;
+  border: 2px solid var(--rule);
+  border-radius: 12px;
+  background: var(--card);
+  cursor: pointer;
+}
+
+.option > span {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.option input {
+  flex: none;
+  width: 1.15rem;
+  height: 1.15rem;
+  accent-color: var(--ink);
+}
+
+.option:hover,
+.option:has(input:checked) {
+  border-color: var(--ink);
+}
+
+.option:has(input:checked) {
+  background: var(--yellow);
+}
+
+/* Corregido: ya no se elige; se marca la correcta y, si falló, la elegida. */
+.option:has(input:disabled) {
+  cursor: default;
+  background: var(--card);
+}
+
+.option:has(input:disabled):hover {
+  border-color: var(--rule);
+}
+
+/* Con .options delante para ganarle a las reglas de :has() de arriba. */
+.options .option[data-state="correct"],
+.options .option[data-state="correct"]:hover {
+  border-color: var(--ok);
+  background: #e6f6ea;
+}
+
+.options .option[data-state="wrong"],
+.options .option[data-state="wrong"]:hover {
+  border-color: var(--red);
+  background: #fdeaec;
+}
+
+.explanation {
+  max-width: 44rem;
+  padding: 0.65rem 0.9rem;
+  border-radius: 12px;
+  background: var(--paper);
+  font-size: 0.95rem;
+}
+
+.quiz {
+  /* Al volver arriba tras corregir, la barra fija no tapa el resultado. */
+  scroll-margin-top: 5.5rem;
+}
+
+/* Editor de preguntas del admin. */
+.question-editor {
+  min-width: 0;
+  padding: 1rem;
+  border: 2px solid var(--rule);
+  border-radius: 16px;
+}
+
+.question-editor legend {
+  width: 100%;
+  padding: 0;
+}
+
+.option-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.option-row input[type="radio"] {
+  flex: none;
+  width: 1.15rem;
+  height: 1.15rem;
+  accent-color: var(--ok);
 }

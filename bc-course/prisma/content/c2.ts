@@ -1,14 +1,13 @@
-import type { CourseContent } from './course-content';
+import type { LessonContent } from './course-content';
 
 // Temario C2 (equivalente a ТРКИ-4): estilística, historia de la lengua,
 // variedades sociales, análisis de poesía y prosa, traducción, edición de
 // textos y discurso académico.
-export const C2: CourseContent = {
-  lessons: [
-    {
-      title: 'Estilística: tropos y figuras',
-      durationMinutes: 60,
-      content: `En C2 se espera que no solo entiendas un texto, sino que expliques cómo produce su efecto. La estilística rusa distingue тропы (cambio de sentido de la palabra) y фигуры речи (organización sintáctica).
+export const C2: LessonContent[] = [
+  {
+    title: 'Estilística: tropos y figuras',
+    durationMinutes: 60,
+    content: `En C2 se espera que no solo entiendas un texto, sino que expliques cómo produce su efecto. La estilística rusa distingue тропы (cambio de sentido de la palabra) y фигуры речи (organización sintáctica).
 
 1. TROPOS (тропы)
 Эпитет: adjetivo artístico. «парус одинокой», «весёлый ветер», «мёртвая тишина». Постоянный эпитет del folclore: красна девица, добрый молодец, чисто поле, синее море, сыра земля, белы руки.
@@ -60,18 +59,11 @@ TEXTO PARA ANALIZAR (Pushkin, «Зимнее утро», 1829, comienzo)
 Открой сомкнуты негой взоры
 Навстречу северной Авроры,
 Звездою севера явись!`,
-      exercises: [
-        'Nombra el tropo o la figura y explica su efecto: «Горит восток зарёю новой». / «Я три тарелки съел». / «живой труп» / «В сто сорок солнц закат пылал». / «Не жалею, не зову, не плачу». / «Он пришёл. Поздно. Один.» / «Улыбнулись сонные берёзки». / «Швед, русский — колет, рубит, режет». / «Шипенье пенистых бокалов».',
-        'Escribe un ejemplo propio en ruso de cada recurso: эпитет, сравнение (dos formas: con как y con instrumental), развёрнутая метафора (dos frases), метонимия, оксюморон, антитеза, градация, парцелляция, аллитерация.',
-        'En la estrofa de «Зимнее утро» identifica: la oración nominal inicial y su efecto, los vocativos, los imperativos, los arcaísmos y formas truncadas («сомкнуты», «взоры», «негой»), la perífrasis mitológica, el instrumental de comparación y la inversión. Explica cada uno.',
-        'Reescribe en prosa neutra la estrofa de Pushkin y comenta en 5 frases qué se pierde y por qué.',
-        'Escribe un análisis estilístico completo (18 a 20 frases en ruso) de un texto breve de tu elección: una estrofa, un párrafo de prosa o un anuncio publicitario ruso. Sigue el esquema del punto 5 y explica el efecto de al menos seis recursos.',
-      ],
-    },
-    {
-      title: 'Historia de la lengua: de Kíev a Pushkin',
-      durationMinutes: 60,
-      content: `Muchas «irregularidades» del ruso actual dejan de serlo cuando se conoce su historia. Esta estación da las claves para leer textos antiguos y entender las alternancias.
+  },
+  {
+    title: 'Historia de la lengua: de Kíev a Pushkin',
+    durationMinutes: 60,
+    content: `Muchas «irregularidades» del ruso actual dejan de serlo cuando se conoce su historia. Esta estación da las claves para leer textos antiguos y entender las alternancias.
 
 1. PERIODOS
 · Protoeslavo (hasta el s. VI): lengua común de los eslavos.
@@ -122,18 +114,11 @@ Observa: се (вот), ѣ, ъ final, perfecto con auxiliar (есть пошла
 
 TEXTO
 Когда школьник спрашивает, почему в слове «день» гласная исчезает в форме «дня», а в слове «тень» остаётся, учитель обычно отвечает: «Так принято». Между тем ответ существует, и ему почти тысяча лет. В первом слове на месте «е» когда-то стоял сверхкраткий звук, который в XII веке либо исчез, либо прояснился; во втором — обычный гласный. Язык, как геологический разрез, хранит следы давно ушедших эпох: достаточно знать, где искать.`,
-      exercises: [
-        'Explica históricamente cada irregularidad: la vocal fugitiva en сон / сна y отец / отца; la alternancia друг / дружба / друзья; пишу (de писать) y люблю (de любить); свеча frente a освещение; el acento de «два часа́» frente a «до ча́са»; el prepositivo «в лесу́»; que el pasado concuerde en género; мать / матери; имя / имени.',
-        'Para cada pareja, di cuál es la forma eslavónica y cuál la rusa, qué fenómeno las separa y da dos palabras actuales con cada raíz: град / город, глава / голова, вождь / вожак, нощь / ночь, единый / один, прах / порох.',
-        'Clasifica por lengua de origen y, si puedes, por época: тетрадь, деньги, матрос, пальто, бутерброд, икона, базар, вокзал, опера, галстук, шедевр, сундук, компьютер, ангел, шторм. Añade tres calcos y explica su modelo.',
-        'Lee el comienzo de la «Повесть временных лет» y comenta en ruso (8 a 10 frases) cinco rasgos que lo distinguen del ruso actual: grafía, fonética, morfología verbal, léxico y sintaxis.',
-        'Escribe un texto divulgativo de 14 a 16 frases en ruso para estudiantes de nivel B1 titulado «Почему в русском языке есть беглые гласные?» o «Откуда в русском языке слова-близнецы (город и град)?», con ejemplos y sin tecnicismos innecesarios.',
-      ],
-    },
-    {
-      title: 'Variedades de la lengua: dialectos, просторечие, jerga y red',
-      durationMinutes: 55,
-      content: `El ruso literario (литературный язык) es solo una de las formas de existencia de la lengua nacional. Un hablante C2 reconoce las demás, las sitúa socialmente y sabe cuándo aparecen en la literatura y en la calle.
+  },
+  {
+    title: 'Variedades de la lengua: dialectos, просторечие, jerga y red',
+    durationMinutes: 55,
+    content: `El ruso literario (литературный язык) es solo una de las formas de existencia de la lengua nacional. Un hablante C2 reconoce las demás, las sitúa socialmente y sabe cuándo aparecen en la literatura y en la calle.
 
 1. EL MAPA
 литературный язык (codificado: estilos libresco y coloquial) · территориальные диалекты (говоры) · просторечие (habla urbana no normativa) · жаргоны / сленг (de grupo) · арго (críptico, del hampa) · профессиональные языки · мат (léxico obsceno, tabú público)
@@ -180,18 +165,11 @@ Estilización: Babel («Одесские рассказы») y el habla de Odesa
 
 TEXTO (estilización)
 — Слышь, командир, до вокзала не подбросишь? — А чё ж не подбросить. Только у меня тачка барахлит, еле едет. — Да мне без разницы, лишь бы доехать. Опаздываю, блин, на электричку. — Садись. Сам-то откудова будешь? — С Рязани. К тёще ездил, дюже соскучилась. — Понятно. Ну, тады поехали.`,
-      exercises: [
-        'En el diálogo del texto, clasifica cada rasgo no normativo (просторечие, jerga, dialectismo, eufemismo) y «tradúcelo» al ruso literario neutro. Después describe en 4 frases quiénes son, probablemente, los hablantes.',
-        'Sitúa cada rasgo en el dialecto del norte o del sur: оканье, г fricativa, «идёть», цоканье, яканье («сястра»), «дом-от», «у мене», «знат». Explica por qué la norma de Moscú es un compromiso.',
-        'Pasa al registro neutro: «Ихний препод вааще не въезжает». «Щас сгоняю в магаз, бабки есть?» «Чё ты паришься? Забей». «Он меня кинул на бабки». «Комп завис, глюк какой-то». «Это такой кринж, я рофлю». Indica a qué variedad pertenece cada expresión.',
-        'Explica qué es el сказ y analiza en 8 a 10 frases esta apertura de Zóschenko: «Я, братцы мои, не люблю баб, которые в шляпках». ¿Qué sabemos del narrador por su lengua? ¿De dónde nace el humor?',
-        'Escribe un ensayo de 16 a 18 frases en ruso: «Портит ли интернет русский язык?». Presenta ejemplos de al menos cuatro fenómenos de esta lección, la postura purista y la descriptivista, y tu conclusión.',
-      ],
-    },
-    {
-      title: 'Análisis de poesía: métrica, rima y sentido',
-      durationMinutes: 60,
-      content: `La poesía ocupa en la cultura rusa un lugar que no tiene en otras: se aprende de memoria en la escuela y se cita en la conversación. Un C2 debe saber leer un poema técnicamente.
+  },
+  {
+    title: 'Análisis de poesía: métrica, rima y sentido',
+    durationMinutes: 60,
+    content: `La poesía ocupa en la cultura rusa un lugar que no tiene en otras: se aprende de memoria en la escuela y se cita en la conversación. Un C2 debe saber leer un poema técnicamente.
 
 1. EL SISTEMA SILABOTÓNICO
 Desde Trediakovski y Lomonósov (1735–1739), el verso ruso clásico alterna sílabas tónicas (—) y átonas (∪) en pies (стопы).
@@ -261,18 +239,11 @@ Lérmontov, «Тучи» (1840), comienzo:
 Степью лазурною, цепью жемчужною
 Мчитесь вы, будто, как я же, изгнанники,
 С милого севера в сторону южную.`,
-      exercises: [
-        'Determina el metro y el número de pies de cada verso y marca las sílabas tónicas: «Буря мглою небо кроет». / «Мой дядя самых честных правил». / «Тучки небесные, вечные странники!» / «Как ныне сбирается вещий Олег». / «Я тебе ничего не скажу». / «Умом Россию не понять».',
-        'Para el poema «Я вас любил», señala el esquema de rimas con letras, clasifica cada rima (masculina o femenina, exacta o no) y localiza dos pirriquios. Explica en 3 frases cómo contribuye la cesura al tono.',
-        'Analiza la cuarteta de Tiútchev en 12 a 14 frases en ruso: metro y rima, los cuatro infinitivos y la construcción impersonal, el historicismo «аршин», la forma «у ней», la raya, y el sentido de la oposición entre «понять / измерить» y «верить». ¿Por qué se ha convertido en tópico?',
-        'Analiza los cuatro versos de «Тучи» en 12 frases: metro y tipo de rima, vocativo y personificación, instrumentales («степью», «цепью»), formas adjetivales en -ою, la comparación con el yo lírico y el contexto biográfico (el destierro al Cáucaso).',
-        'Escribe el análisis completo (22 a 25 frases en ruso), siguiendo el esquema del punto 5, de un poema ruso breve de tu elección de un autor anterior a 1930 (Pushkin, Lérmontov, Tiútchev, Fet, Blok, Esenin, Ajmátova temprana…). Copia el poema antes del análisis.',
-      ],
-    },
-    {
-      title: 'Análisis de prosa: narrador, voz y punto de vista',
-      durationMinutes: 60,
-      content: `La gran prosa rusa es, ante todo, un trabajo con la voz: quién cuenta, desde dónde, con qué palabras. Las categorías de esta estación proceden de la filología rusa (Bajtín, Vinográdov, Uspenski) y son las que se esperan en un comentario de nivel C2.
+  },
+  {
+    title: 'Análisis de prosa: narrador, voz y punto de vista',
+    durationMinutes: 60,
+    content: `La gran prosa rusa es, ante todo, un trabajo con la voz: quién cuenta, desde dónde, con qué palabras. Las categorías de esta estación proceden de la filología rusa (Bajtín, Vinográdov, Uspenski) y son las que se esperan en un comentario de nivel C2.
 
 1. AUTOR, NARRADOR, PERSONAJE
 автор (biográfico) ≠ образ автора (la conciencia que organiza el texto) ≠ повествователь (narrador en tercera persona, fuera del mundo narrado) ≠ рассказчик (narrador en primera persona o con rostro propio: Grinióv, Maksim Maksímych, Rudi Pankó).
@@ -321,18 +292,11 @@ B) Gógol, «Шинель» (1842):
 
 C) Tolstói, «Война и мир» (1869), el cielo de Austerlitz:
 «Над ним не было ничего уже, кроме неба, — высокого неба, не ясного, но всё-таки неизмеримо высокого, с тихо ползущими по нём серыми облаками. „Как тихо, спокойно и торжественно, совсем не так, как я бежал, — подумал князь Андрей, — не так, как мы бежали, кричали и дрались…“»`,
-      exercises: [
-        'Transforma este pasaje en estilo indirecto y luego en несобственно-прямая речь: Он подумал: «Неужели я опоздал? Нет, не может быть! Ведь поезд уходит только завтра. Я ещё успею всё исправить». Explica qué marcas distinguen la tercera versión.',
-        'Analiza el final de «Дама с собачкой» (10 a 12 frases): la construcción impersonal «казалось», la polisíndeton con «и», la repetición «далеко-далеко», los dos «только ещё», el contraste entre la esperanza y la certeza, y por qué es un «открытый финал».',
-        'Analiza la apertura de «Шинель» (10 a 12 frases): quién habla, la reticencia inicial, el tono, la enumeración, la palabra «сердитее» aplicada a instituciones y lo que anuncia sobre el narrador gogoliano.',
-        'Analiza el fragmento de Tolstói (12 a 14 frases): el cambio de punto de vista, la repetición de «небо» y «высокого», las negaciones («не ясного», «не так»), el paso de «я» a «мы», la sintaxis y el significado del episodio para el príncipe Andréi. ¿Dónde ves остранение?',
-        'Escribe una escena narrativa propia en ruso (20 a 22 frases) en tercera persona con punto de vista limitado a un personaje: debe contener un tramo de несобственно-прямая речь, un diálogo con cinco verbos de acotación distintos, un detalle significativo y un final abierto. Añade una nota de 4 frases explicando tus decisiones.',
-      ],
-    },
-    {
-      title: 'Traducción español–ruso: transformaciones y trampas',
-      durationMinutes: 60,
-      content: `Traducir es la prueba más exigente del dominio de dos lenguas. La escuela rusa de traducción (Chukovski, Barjudárov, Komissárov, Nora Gal) ofrece un aparato muy útil para el hispanohablante.
+  },
+  {
+    title: 'Traducción español–ruso: transformaciones y trampas',
+    durationMinutes: 60,
+    content: `Traducir es la prueba más exigente del dominio de dos lenguas. La escuela rusa de traducción (Chukovski, Barjudárov, Komissárov, Nora Gal) ofrece un aparato muy útil para el hispanohablante.
 
 1. EQUIVALENCIA Y ADECUACIÓN
 эквивалентность (igualdad de sentido en algún nivel) · адекватность (cumplir la función del original en la cultura de llegada) · буквализм (calco servil: «Он взял своё пальто и надел его на свои плечи») · вольный перевод · единица перевода (la unidad no es la palabra, sino el sentido).
@@ -382,18 +346,11 @@ Lista: sentido completo · registro · rección · aspecto · orden de palabras 
 
 TEXTO PARA TRADUCIR AL RUSO
 «Cuando llegó a la estación, el tren ya se había ido. Se quedó un rato en el andén, sin saber qué hacer. No era la primera vez que le pasaba algo así, pero esa tarde tenía la sensación de que había perdido algo más que un tren. Un hombre mayor, que estaba barriendo, le preguntó si esperaba a alguien. —A nadie —respondió—. Solo quería irme.»`,
-      exercises: [
-        'Traduce al ruso el texto final de la lección. Después explica en español seis decisiones: cómo resolviste los artículos, los cuatro tiempos de pasado, el gerundio «sin saber», «estaba barriendo», la pregunta indirecta y la puntuación del diálogo.',
-        'Traduce al ruso evitando el calco y nombra la transformación usada en cada caso (concreción, traducción antonímica, modulación, omisión del posesivo, descripción…): «Puso el libro en la mesa y el abrigo en el armario». «No es nada tonto». «Se lavó las manos y se puso su chaqueta». «Acaba de llegar y ya quiere volver a irse». «Madrugué para aprovechar el puente». «Se me olvidó decírtelo».',
-        'Transcribe al ruso según la norma: Javier Hernández, Guillermo Muñoz, Jorge Luis Borges, Valladolid, Guadalajara, Chihuahua, Cádiz, Quetzaltenango, Enrique VIII, Juana de Arco, don Quijote de la Mancha. Indica cuáles tienen forma tradicional que no sigue la transcripción.',
-        'Traduce al español de forma natural y comenta la dificultad principal de cada frase: «Он взял да и уехал». «Мне не спится». «Авось пронесёт». «Сутки мы ехали без остановок». «Ну и погодка!» «Он ведь не знал». «Присядем на дорожку». «Душа болит за него».',
-        'Traduce al ruso un texto periodístico o literario en español de 120 a 150 palabras elegido por ti (cópialo antes de la traducción) y añade un comentario de traductor de 10 frases en ruso: registro, tres problemas concretos, las soluciones adoptadas y qué se perdió inevitablemente.',
-      ],
-    },
-    {
-      title: 'Norma y variación: los casos discutidos',
-      durationMinutes: 55,
-      content: `En C1 aprendiste la norma. En C2 debes conocer sus zonas grises: dónde los diccionarios discrepan, dónde la norma está cambiando y cómo se argumenta una elección. La palabra clave es вариантность.
+  },
+  {
+    title: 'Norma y variación: los casos discutidos',
+    durationMinutes: 55,
+    content: `En C1 aprendiste la norma. En C2 debes conocer sus zonas grises: dónde los diccionarios discrepan, dónde la norma está cambiando y cómo se argumenta una elección. La palabra clave es вариантность.
 
 1. QUIÉN FIJA LA NORMA
 Instituto de la Lengua Rusa Vinográdov (Academia de Ciencias) · diccionarios normativos: el ortográfico (Lopatin), el ortoépico (Avanésov; Reznichenko), el explicativo (Ózhegov y Shvédova; Ushakov; el «Gran Diccionario Académico»), el de dificultades (Rozental; Graudina) · «Правила русской орфографии и пунктуации» (1956; código completo de 2006) · el portal Грамота.ру y su servicio de consultas.
@@ -442,18 +399,11 @@ Modelo: «Нормативным является ударение звонИт 
 
 TEXTO
 Вопрос о том, какого рода слово «кофе», давно перестал быть грамматическим и превратился в социальный. Формально средний род допустим уже несколько десятилетий, но стоит кому-нибудь сказать «чёрное кофе», как собеседник мысленно ставит ему диагноз. Норма, таким образом, служит не только общению, но и опознаванию «своих». Язык между тем живёт по собственным законам: то, что вчера считалось грубой ошибкой, сегодня допускается словарями, а завтра, возможно, станет единственно верным.`,
-      exercises: [
-        'Indica el estatus de cada variante (normativa, admisible, coloquial, anticuada o errónea) y, donde corresponda, la diferencia de sentido: звонИт / звОнит · творОг / твОрог · договОры / договорА · в отпуске / в отпуску · по приезде / по приезду · килограммов / килограмм · хлебы / хлеба · характЕрный / харАктерный · кофе (м.) / кофе (ср.) · скучаю по вам / по вас.',
-        'Elige y argumenta según los criterios de la lección: Большинство депутатов (поддержал_) закон. Ряд вопросов (остал_) без ответа. Те, кто (опоздал_), ждали в коридоре. Брат с сестрой (уехал_) в Москву. В зале (собрал_) около ста человек. Наш врач Петрова (сказал_), что всё в порядке.',
-        'Redacta respuestas de consulta normativa (4 o 5 frases cada una, siguiendo el modelo del punto 7) a estas dudas: ¿«в городе Москве» o «в городе Москва»? / ¿«на Украине» o «в Украине»? / ¿«надеть» u «одеть» un abrigo? / ¿Se puede decir «крайний раз»?',
-        'Reescribe eliminando muletillas y modas discutidas: «Ну, как бы, на самом деле, я хочу озвучить то, что по итогу мы, в принципе, имеем место быть в сложной ситуации от слова совсем». Después enumera qué fenómenos has corregido.',
-        'Escribe un ensayo de 18 a 20 frases en ruso: «Норма — это закон или договор?». Comenta el caso de «кофе» del texto, da dos ejemplos de cambios ya consumados y dos en curso, contrasta la postura prescriptiva y la descriptiva, y explica cuál debería guiar a un extranjero que aprende ruso.',
-      ],
-    },
-    {
-      title: 'Edición y redacción: pulir un texto',
-      durationMinutes: 55,
-      content: `Escribir bien es, sobre todo, corregir. La tradición rusa de литературное редактирование (Rozental, Nora Gal en «Слово живое и мёртвое», hoy Ilyajov en «Пиши, сокращай») ofrece un catálogo de vicios y remedios.
+  },
+  {
+    title: 'Edición y redacción: pulir un texto',
+    durationMinutes: 55,
+    content: `Escribir bien es, sobre todo, corregir. La tradición rusa de литературное редактирование (Rozental, Nora Gal en «Слово живое и мёртвое», hoy Ilyajov en «Пиши, сокращай») ofrece un catálogo de vicios y remedios.
 
 1. ERRORES LÓGICOS
 Нарушение причинно-следственной связи: «Шёл дождь и два студента: один в университет, другой в пальто» (zeugma cómico).
@@ -514,18 +464,11 @@ Signos del corrector y verbos del oficio: вычеркнуть, вставить
 
 TEXTO PARA EDITAR
 «В настоящее время на сегодняшний день в нашем городе имеет место быть проблема с транспортом. Приехавшие жители на работу в центр вынуждены тратить много периода времени. Администрацией города было принято решение о проведении мероприятий по улучшению уровня работы автобусов, которые начнутся в мае месяце. Согласно плана, будет оказано внимание и новым маршрутам. Подводя итоги, у жителей появилась надежда.»`,
-      exercises: [
-        'Clasifica y corrige cada error: «Он оплатил за проезд». «Мы впервые познакомились в мае месяце». «Чтение Маяковского произвело сильное впечатление». «Он любит читать и футбол». «Подняв голову, мне стало ясно». «Климат Сибири суровее, чем Европа». «В музее повесили Репина». «Это играет большое значение». «Проливной ливень шёл весь день». «Согласно распоряжения директора».',
-        'Reescribe en ruso claro cada frase canceleresca: «Нами была осуществлена проверка качества выполнения работ». «В целях недопущения опозданий необходимо осуществлять выход из дома заблаговременно». «Имеет место отсутствие понимания между сторонами». «Данный вопрос находится в стадии рассмотрения». «Произошло увеличение количества обращений граждан».',
-        'Resuelve la ambigüedad de dos maneras cada una y explica la causa: «Мать любит дочь». «Приглашение директора всех удивило». «Он попросил его принести свой портфель». «Встреча с друзьями из Москвы прошла хорошо». «Лошадь казака, которая была в мыле, остановилась».',
-        'Pon la puntuación y justifica cada signo: Я опоздал сломался автобус. / Вернёшься позвони. / Он однако не пришёл. / Однако он не пришёл. / Москва столица России. / Я знаю он согласится. / Наконец он заговорил. / Во-первых это дорого во-вторых долго наконец это опасно. / Он работает как переводчик. / Руки холодные как лёд.',
-        'Edita por capas el «Texto para editar» de la lección: entrega la versión final (5 o 6 frases) y debajo una lista comentada de al menos doce correcciones, clasificadas como lógicas, léxicas, gramaticales o de estilo.',
-      ],
-    },
-    {
-      title: 'Juego lingüístico, ironía y subtexto',
-      durationMinutes: 55,
-      content: `Entender un chiste, una alusión o un silencio es la última frontera del dominio de una lengua. El humor ruso es verbal, alusivo y, a menudo, defensivo.
+  },
+  {
+    title: 'Juego lingüístico, ironía y subtexto',
+    durationMinutes: 55,
+    content: `Entender un chiste, una alusión o un silencio es la última frontera del dominio de una lengua. El humor ruso es verbal, alusivo y, a menudo, defensivo.
 
 1. EL JUEGO LINGÜÍSTICO (языковая игра)
 Каламбур por homonimia o polisemia: «Я приду в четыре, — сказала Мария. Восемь. Девять. Десять» (Maiakovski, tensión, no chiste). · «Защитник вольности и прав в сём случае совсем не прав» (Pushkin). · «Хорошо излагает, собака. — Учитесь, Киса» (Ilf y Petrov).
@@ -578,18 +521,11 @@ Fórmulas: Комический эффект основан на + prep. · Зд
 
 TEXTO (diálogo de ejemplo)
 — Как живёте? — Нормально. — А конкретнее? — Нормально, спасибо. — То есть плохо? — Я же сказал: нормально. — Понятно. Держитесь.`,
-      exercises: [
-        'Explica el mecanismo del juego en cada caso siguiendo los cuatro pasos del punto 7: el chiste de Штирлиц y «голубые ели»; «Пил чай с женой, с лимоном и с удовольствием»; «гусеница — жена гуся»; «Защитник вольности и прав в сём случае совсем не прав»; «Доктор, меня все игнорируют. — Следующий!».',
-        'Di qué significa realmente cada réplica y qué marca lo revela: «Ну ты и молодец!» (tras un error) · «Интересное решение…» · «Как-нибудь созвонимся». · «Тоже мне специалист!» · «Я вас больше не задерживаю». · «Ага, щас». · «Я, конечно, не специалист, но…».',
-        'Analiza el diálogo del texto final (10 a 12 frases en ruso): qué significa «нормально» en cada aparición, qué presupone «Держитесь», qué dice del modo ruso de responder a «Как живёте?» y de dónde nace la comicidad.',
-        'Explica la «глокая куздра» de Scherba: analiza morfológicamente cada palabra (parte de la oración, género, número, caso, tiempo, aspecto) y di qué podemos «saber» de la escena. ¿Qué demuestra el experimento?',
-        'Escribe en ruso: a) tres anécdotas breves propias o adaptadas, cada una basada en un mecanismo distinto (homonimia, expectativa rota, registro); b) un diálogo de 10 líneas en el que lo importante se diga solo en el subtexto, seguido de una explicación de 5 frases.',
-      ],
-    },
-    {
-      title: 'El discurso académico: artículo, tesis y defensa',
-      durationMinutes: 55,
-      content: `El ТРКИ-4 certifica que puedes investigar, publicar y enseñar en ruso. Esta estación cubre los géneros de la vida universitaria rusa y su etiqueta.
+  },
+  {
+    title: 'El discurso académico: artículo, tesis y defensa',
+    durationMinutes: 55,
+    content: `El ТРКИ-4 certifica que puedes investigar, publicar y enseñar en ruso. Esta estación cubre los géneros de la vida universitaria rusa y su etiqueta.
 
 1. EL SISTEMA ACADÉMICO RUSO
 бакалавр · магистр · аспирант (doctorando) · кандидат наук (≈ doctor) · доктор наук (habilitación, grado superior) · доцент · профессор · член-корреспондент и академик РАН · кафедра · учёный совет · диссертационный совет · ВАК (Comisión Superior de Acreditación) · научный руководитель / консультант · оппонент · рецензент · автореферат (resumen publicado de la tesis) · защита · предзащита · антиплагиат · РИНЦ, Scopus · грант · монография · сборник статей · тезисы докладов · научный журнал · импакт-фактор
@@ -638,18 +574,11 @@ Cerrar: С уважением, / С глубоким уважением и бл�
 
 TEXTO (fragmento de introducción)
 Актуальность настоящего исследования обусловлена возросшим интересом к проблемам межкультурной коммуникации. Несмотря на значительное число работ, посвящённых русско-испанским языковым контактам, вопрос о передаче категории определённости при переводе остаётся недостаточно изученным. Объектом исследования являются испанские именные группы с артиклем, предметом — способы их передачи в русских переводах художественной прозы. Цель работы — выявить и классифицировать эти способы. Материалом послужили три романа и их опубликованные переводы; общий объём выборки составил 2400 контекстов.`,
-      exercises: [
-        'En el texto final, identifica cada apartado obligatorio de la introducción (актуальность, степень изученности, объект, предмет, цель, материал). Añade en el mismo estilo lo que falta: tres задачи, la гипотеза, los методы y la научная новизна.',
-        'Explica con un ejemplo propio la diferencia entre объект y предмет исследования, y entre цель y задачи. Formula ambos pares para una investigación sobre «el uso de anglicismos en la prensa rusa actual».',
-        'Reformula con prudencia académica y sin «я»: «Я думаю, что все студенты делают эту ошибку из-за испанского языка». «Очевидно, что метод Иванова неправильный». «Никто никогда не изучал эту тему». «Мои результаты доказывают, что теория верна». «Петров ошибается».',
-        'Redacta la respuesta de un doctorando (10 a 12 frases) a estas dos observaciones del oponente: 1) la muestra es demasiado pequeña para generalizar; 2) no se ha tenido en cuenta la obra de un autor importante. Acepta una parcialmente y defiende tu posición en la otra.',
-        'Escribe la introducción completa (20 a 25 frases) de un trabajo de investigación sobre un tema de tu especialidad o de lingüística, literatura o enseñanza del ruso, con todos los apartados obligatorios en su orden y con sus fórmulas, y al final un párrafo de «Перспективы исследования».',
-      ],
-    },
-    {
-      title: 'Retórica: géneros de la oratoria rusa',
-      durationMinutes: 55,
-      content: `La retórica volvió a la escuela y la universidad rusas en los años noventa. Su aparato procede de la tradición clásica, pasada por Lomonósov («Краткое руководство к красноречию», 1748) y renovada hoy.
+  },
+  {
+    title: 'Retórica: géneros de la oratoria rusa',
+    durationMinutes: 55,
+    content: `La retórica volvió a la escuela y la universidad rusas en los años noventa. Su aparato procede de la tradición clásica, pasada por Lomonósov («Краткое руководство к красноречию», 1748) y renovada hoy.
 
 1. EL CANON RETÓRICO
 инвенция (изобретение: hallar qué decir) · диспозиция (расположение: ordenar) · элокуция (выражение: vestir de palabras) · мемория (запоминание) · акция (произнесение: voz, gesto)
@@ -692,18 +621,11 @@ Fórmulas de contacto: Как вы понимаете… · Согласитес
 Turguénev, poema en prosa «Русский язык» (1882):
 «Во дни сомнений, во дни тягостных раздумий о судьбах моей родины, — ты один мне поддержка и опора, о великий, могучий, правдивый и свободный русский язык! Не будь тебя — как не впасть в отчаяние при виде всего, что совершается дома? Но нельзя верить, чтобы такой язык не был дан великому народу!»
 Observa: anáfora («во дни… во дни…»), forma arcaica «во дни», apóstrofe con «о», gradación de cuatro epítetos, condición sin «если» («Не будь тебя»), pregunta retórica, doble negación afirmativa («нельзя верить, чтобы… не был дан»), periodo ascendente y cierre exclamativo.`,
-      exercises: [
-        'Analiza el poema en prosa de Turguénev (14 a 16 frases en ruso): situación del autor en 1882, destinatario del apóstrofe, composición en tres frases, figuras, formas arcaicas y sintaxis, y cómo se combinan логос, этос y пафос. ¿Por qué se sigue citando?',
-        'Explica el mecanismo retórico de la defensa de Plevako: qué hace el fiscal, cómo lo aprovecha el abogado, qué figuras usa y por qué convence. Nombra en ruso los recursos (8 a 10 frases).',
-        'Identifica la trampa (уловка) y redacta una respuesta de dos frases que la desmonte: «Вы молоды, поэтому не можете судить об этом». «Все нормальные люди с этим согласны». «Вы против реформы? Значит, вы за хаос». «Либо мы повышаем налоги, либо закрываем больницы». «Вам, как образованному человеку, конечно, известно, что это доказано».',
-        'Escribe tres зачины distintos (3 frases cada uno) para un mismo discurso sobre la importancia de aprender lenguas: uno con pregunta, uno con paradoja o cifra y uno con anécdota personal. Di cuál elegirías para un público de adolescentes y cuál para uno de empresarios, y por qué.',
-        'Escribe un discurso completo de 25 a 28 frases en uno de estos géneros: похвальное слово a un maestro que se jubila; discurso persuasivo ante el consejo de una universidad para mantener una asignatura de humanidades; palabras de bienvenida a un congreso de hispanistas rusos. Usa el orden homérico de argumentos, al menos seis figuras y una objeción anticipada.',
-      ],
-    },
-    {
-      title: 'Síntesis: el ensayo crítico',
-      durationMinutes: 60,
-      content: `La última estación reúne todo el recorrido. El ensayo crítico de nivel C2 no demuestra que sabes ruso: demuestra que piensas en ruso, con matices, con voz propia y con dominio de la tradición.
+  },
+  {
+    title: 'Síntesis: el ensayo crítico',
+    durationMinutes: 60,
+    content: `La última estación reúne todo el recorrido. El ensayo crítico de nivel C2 no demuestra que sabes ruso: demuestra que piensas en ruso, con matices, con voz propia y con dominio de la tradición.
 
 1. QUÉ ES UN ЭССЕ EN LA TRADICIÓN RUSA
 Género libre, entre la filosofía, la crítica y la literatura. Maestros: Herzen («Былое и думы»), Rózanov («Опавшие листья»), Tsvetáieva («Мой Пушкин»), Mandelshtam («Разговор о Данте»), Brodski («Полторы комнаты», «Меньше единицы»), Lijachov («Письма о добром»), Lotman («Беседы о русской культуре»), Averíntsev, Bitov, Tolstáia.
@@ -745,52 +667,5 @@ Adecuación al género y al destinatario · profundidad y originalidad del pensa
 Так что перевести можно всё. Нельзя только перевезти через границу полку книг, которая стоит за словом. Впрочем, и это поправимо: достаточно начать читать.
 
 OBSERVA en el modelo: título que plantea un problema; apertura con lugar común que se desmonta enseguida; tesis en el segundo párrafo («Непереводимо не слово — …»); ejemplo en la lengua del lector; objeción asumida en parte («Это справедливо — в известной мере»); giro («слово… навязывает»); imagen organizadora (ярлык → библиотека → полка книг); tres ejemplos literarios en una sola frase; juego final перевести / перевезти; cierre que abre a la acción.`,
-      exercises: [
-        'Analiza el texto modelo (16 a 18 frases en ruso): tesis, estructura por párrafos, cómo trata la objeción, la imagen organizadora, tres recursos de voz, dos figuras retóricas, el juego final y el tipo de cierre. Señala también un punto en el que no estés de acuerdo y por qué.',
-        'Convierte estas tesis triviales en tesis discutibles y esboza en dos frases el desarrollo de cada una: «Чтение полезно». «Технологии изменили нашу жизнь». «Каждый язык уникален». «Традиции нужно уважать».',
-        'Escribe tres finales distintos (3 o 4 frases cada uno) para un ensayo titulado «Зачем взрослому человеку учить трудный язык?»: uno con imagen, uno con pregunta y uno que vuelva a una anécdota inicial que inventes. Explica en una frase el efecto de cada uno.',
-        'Reescribe este párrafo escolar con voz ensayística, eliminando sus defectos (8 a 10 frases): «Во-первых, язык очень важен для культуры. Во-вторых, без языка нельзя понять народ. В-третьих, многие великие писатели говорили о языке. Таким образом, язык играет большую роль в жизни каждого человека и общества в целом».',
-        'Escribe un ensayo crítico de 35 a 40 frases en ruso sobre uno de estos temas: «Перевод: предательство или единственная форма понимания?» / «Что я увидел в России (или в русской литературе) благодаря языку и чего не увидел бы без него» / «Нужна ли языку норма?». Debe tener tesis discutible, al menos una cita integrada, una objeción asumida, una imagen organizadora y un final que no resuma.',
-      ],
-    },
-  ],
-  exam: {
-    title: 'Examen final C2',
-    instructions: `Este examen cubre las doce estaciones del curso y sigue el espíritu del ТРКИ-4: análisis filológico, traducción, edición y producción de textos de alto nivel. Responde en ruso salvo donde se pida otra lengua. Puedes corregir tu entrega mientras el profe no la haya calificado. Vale 100 puntos y se aprueba con 70.
-
-TEXTO A (Tiútchev, 1830; dominio público)
-Silentium!
-Молчи, скрывайся и таи
-И чувства и мечты свои —
-Пускай в душевной глубине
-Встают и заходят оне
-Безмолвно, как звезды в ночи, —
-Любуйся ими — и молчи.
-
-Как сердцу высказать себя?
-Другому как понять тебя?
-Поймёт ли он, чем ты живёшь?
-Мысль изречённая есть ложь.
-Взрывая, возмутишь ключи, —
-Питайся ими — и молчи.
-
-TEXTO B (Chéjov, «Студент», 1894; dominio público, fragmento final)
-«И радость вдруг заволновалась в его душе, и он даже остановился на минуту, чтобы перевести дух. Прошлое, думал он, связано с настоящим непрерывною цепью событий, вытекавших одно из другого. И ему казалось, что он только что видел оба конца этой цепи: дотронулся до одного конца, как дрогнул другой.»`,
-    questions: [
-      'Estilística. En el Texto A identifica y explica el efecto de: los imperativos y su aspecto, la gradación del primer verso, la polisíndeton, la comparación, las preguntas retóricas, la inversión («Другому как понять тебя?»), la antítesis implícita entre palabra y silencio, el estribillo y la composición. (14 a 16 frases)',
-      'Métrica. Determina el metro dominante del Texto A y señala los versos que lo rompen («Встают и заходят оне», «Безмолвно, как звезды в ночи»). ¿Qué pies aparecen en ellos y qué efecto tiene la ruptura? Describe el esquema de rimas y su tipo.',
-      'Historia de la lengua. Explica: la forma «оне»; el acento «звезды́» (nominativo plural antiguo) frente al actual «звёзды»; la cópula «есть» y el participio «изречённая» (raíz, prefijo eslavónico, doblete con «сказанная»); «таи» (verbo таить y su familia: тайна, тайком, утаить); «ключи» en su sentido de «manantiales» y la homonimia con «llaves».',
-      'Aforismo. «Мысль изречённая есть ложь» se ha convertido en palabra alada. Explica su sentido, la paradoja de que lo diga un poema, y escribe una réplica de 8 a 10 frases en la que discrepes en parte, con una cita o ejemplo propio.',
-      'Prosa. Analiza el Texto B (14 a 16 frases): punto de vista, formas de reproducir el pensamiento («думал он», «ему казалось»), la metáfora de la cadena y su desarrollo, la forma «непрерывною», el participio «вытекавших», la polisíndeton inicial, el ritmo y la función de este pasaje como culminación del relato. ¿Hay несобственно-прямая речь?',
-      'Comparación. Los dos textos tratan de la posibilidad de comunicar la vida interior, uno negándola y otro afirmando un vínculo entre los seres humanos a través del tiempo. Compáralos en 12 a 14 frases: tesis implícita, tono, recursos y época.',
-      'Traducción al español. Traduce el Texto B a un español literario y añade un comentario de 6 frases (en ruso) sobre tres problemas: los tiempos verbales y el aspecto, «перевести дух» y el orden de palabras de la última oración.',
-      'Traducción al ruso. Traduce: «Dicen que cada lengua es una manera de mirar el mundo. No lo sé. Lo que sí sé es que, cuando por fin entendí aquel poema sin diccionario, tuve la sensación de que alguien me había abierto una puerta que llevaba años cerrada. No había nada extraordinario al otro lado: una habitación, una ventana, nieve. Pero era la primera vez que la veía con mis propios ojos.» Comenta en 5 frases cómo resolviste los artículos, el subjuntivo ausente, el pluscuamperfecto y «lo que sí sé».',
-      'Variedades y norma. a) Pasa a ruso literario neutro y clasifica cada rasgo: «Слышь, ихний начальник вааще не въезжает, я ему звОню-звОню, а он, типа, занят. Ложи трубку, говорит». b) Redacta una respuesta de consulta normativa (5 frases) sobre «звонИт / звОнит» y otra sobre «в городе Москве / в городе Москва».',
-      'Edición. Corrige por capas y entrega la versión final con una lista de al menos diez cambios clasificados: «На сегодняшний день в настоящее время имеет место быть рост количества числа людей, изучающих иностранные языки, что играет большое значение. Приехавшие студенты в Россию из-за рубежа отмечают то, что русский язык более труднее, чем они думали. Согласно опроса, оплатив за курсы, у многих пропадает мотивация».',
-      'Juego y subtexto. a) Explica el mecanismo: «Его ставили в пример. Он стоял и мёрз». / «Какой он специалист!» (con entonación de desprecio) / «Интересное решение…» b) Explica qué es un прецедентный текст y comenta dos ejemplos que hayas encontrado en titulares, anuncios o conversación.',
-      'Discurso académico. Redacta la introducción (14 a 16 frases) de un artículo titulado «Образ молчания в русской лирике XIX века: от Тютчева к Фету», con актуальность, степень изученности, объект, предмет, цель, tres задачи, материал, методы y новизна, usando prudencia epistémica y las fórmulas del género.',
-      'Retórica. Escribe un discurso de 18 a 20 frases para inaugurar un congreso de estudiantes de ruso de América Latina. Parte de la cita de Turguénev sobre el «великий, могучий, правдивый и свободный русский язык», pero no te limites al elogio: incluye una objeción anticipada, el orden homérico de argumentos y una llamada final.',
-      'Ensayo crítico. Escribe un ensayo de 35 a 40 frases con el título «Мысль изречённая есть ложь? Заметки человека, выучившего чужой язык». Debe tener una tesis discutible, diálogo con los dos textos del examen, al menos una experiencia personal narrada, una objeción asumida, una imagen organizadora y un final que no resuma. Se valorarán la voz propia, la precisión léxica, la variedad sintáctica, los recursos expresivos y la corrección normativa.',
-    ],
   },
-};
+];

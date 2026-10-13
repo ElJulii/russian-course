@@ -25,8 +25,9 @@ export default function TermsPage() {
 
       <h2>2. El servicio</h2>
       <p>
-        Ofrecemos cursos organizados por niveles, con lecciones, ejercicios y
-        exámenes que califica el profe que elijas. El acceso es gratuito. Los
+        Ofrecemos cursos autónomos organizados por niveles: lecciones, tests de
+        opción múltiple y un examen final que la plataforma corrige de forma
+        automática, sin profesores ni tutorías. El acceso es gratuito. Los
         niveles siguen como referencia el Marco Común Europeo, pero los cursos y
         sus notas son orientativos: no equivalen a un título ni a una
         certificación oficial de idioma, y no garantizamos que alcances un nivel
@@ -50,7 +51,10 @@ export default function TermsPage() {
       <h2>4. Uso permitido</h2>
       <p>Al usar la plataforma te comprometes a no:</p>
       <ul>
-        <li>entregar como propias respuestas que no lo son;</li>
+        <li>
+          responder los tests con ayuda de programas o hacer que otra persona
+          los responda por ti;
+        </li>
         <li>
           publicar contenido ilegal, ofensivo, discriminatorio o que vulnere
           derechos de otras personas;
@@ -74,12 +78,13 @@ export default function TermsPage() {
         crear obras derivadas sin nuestro permiso por escrito.
       </p>
 
-      <h2>6. Lo que tú entregas</h2>
+      <h2>6. Tests y notas</h2>
       <p>
-        Las respuestas que escribes siguen siendo tuyas. Nos das permiso para
-        guardarlas y mostrarlas a tu profe y a los administradores con el único
-        fin de evaluarte y prestarte el servicio. Podemos retirar cualquier
-        contenido que incumpla estos términos.
+        Los tests y el examen se corrigen de forma automática comparando tus
+        respuestas con las correctas. Puedes repetirlos sin límite y cuenta tu
+        mejor nota. Guardamos tus intentos para calcular tus notas y tu avance.
+        Si crees que una pregunta o su respuesta están mal, escríbenos y la
+        revisaremos; podemos corregir preguntas en cualquier momento.
       </p>
 
       <h2>7. Disponibilidad y cambios</h2>
@@ -92,10 +97,19 @@ export default function TermsPage() {
 
       <h2>8. Suspensión y baja</h2>
       <p>
-        Puedes pedir la baja de tu cuenta cuando quieras escribiendo a{" "}
-        <a href={`mailto:${LEGAL.email}`}>{LEGAL.email}</a>. Podemos suspender o
-        cerrar una cuenta que incumpla estos términos; salvo en casos graves, te
-        avisaremos antes y te explicaremos el motivo.
+        Puedes eliminar tu cuenta cuando quieras, sin coste y sin dar
+        explicaciones, con el botón «Eliminar mi cuenta» de{" "}
+        <Link href="/perfil">Tu cuenta</Link>. Al hacerlo se borran de inmediato
+        y de forma definitiva tus datos, tus inscripciones, tu avance y tus
+        notas: no podremos recuperarlos, aunque puedes registrarte de nuevo y
+        empezar de cero. Si no puedes entrar, pide la baja escribiendo a{" "}
+        <a href={`mailto:${LEGAL.email}`}>{LEGAL.email}</a> desde el correo de
+        tu cuenta.
+      </p>
+      <p>
+        Por nuestra parte, podemos bloquear o eliminar una cuenta que incumpla
+        estos términos; salvo en casos graves, te avisaremos antes y te
+        explicaremos el motivo.
       </p>
 
       <h2>9. Responsabilidad</h2>

@@ -78,6 +78,15 @@ export class UpdateProfileDto {
   currentPassword?: string;
 }
 
+// Baja de la propia cuenta. La contraseña confirma que la pide su dueño; las
+// cuentas que solo entran con Google no tienen, y eso lo comprueba el servicio.
+export class DeleteAccountDto {
+  @IsOptional()
+  @IsString()
+  @MaxLength(72)
+  currentPassword?: string;
+}
+
 export class UpdateRoleDto {
   @IsEnum(Role)
   role: Role;

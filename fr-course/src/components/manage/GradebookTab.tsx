@@ -1,33 +1,20 @@
 "use client";
 
-import { Loading, Notice, useAction } from "@/components/ui";
-import { api, type Gradebook } from "@/lib/api";
+import { Loading } from "@/components/ui";
+import type { Gradebook } from "@/lib/api";
 import { ENROLLMENT_STATUS } from "@/lib/labels";
 import { useApi } from "@/lib/useApi";
 
 export function GradebookTab({ courseId }: { courseId: string }) {
   const book = useApi<Gradebook>(`/courses/${courseId}/gradebook`);
-  const action = useAction();
-
-  const save = (assessmentId: string, studentId: string, raw: string, previous: number | null) => {
-    if (raw.trim() === "" || Number(raw) === previous) return;
-    void action.run(async () => {
-      await api(`/assessments/${assessmentId}/grades/${studentId}`, {
-        method: "PUT",
-        body: { score: Number(raw) },
-      });
-      book.reload();
-    });
-  };
-
   if (!book.data) return <Loading loading={book.loading} error={book.error} />;
   const { assessments, students, classSummary } = book.data;
 
   if (assessments.length === 0) {
     return (
       <p className="muted">
-        Primero crea evaluaciones en la pestaña Evaluaciones; después podrás poner
-        notas aquí.
+        Primero crea evaluaciones en la pestaña Evaluaciones; aquí verás la mejor
+        nota de cada estudiante.
       </p>
     );
   }
@@ -38,14 +25,12 @@ export function GradebookTab({ courseId }: { courseId: string }) {
   return (
     <div className="stack">
       <p className="small muted">
-        Escribe la nota y sal de la casilla para guardarla. Los ejercicios y
-        exámenes que se responden en la plataforma se califican en la pestaña
-        Entregas, una vez que el estudiante entrega. Se aprueba con{" "}
+        Las notas se calculan solas: es la mejor de los intentos de cada
+        estudiante. Se aprueba con{" "}
         {classSummary.passingGrade}; van {classSummary.passed} de{" "}
         {classSummary.students} y el promedio del grupo es{" "}
         {classSummary.averageFinalGrade ?? 0}.
       </p>
-      <Notice>{action.error}</Notice>
       <div className="table-wrap">
         <table>
           <thead>
@@ -70,40 +55,18 @@ export function GradebookTab({ courseId }: { courseId: string }) {
                 <td>
                   <strong>{row.student.name}</strong>
                   <div className="small muted">
-                    {row.student.email}, {ENROLLMENT_STATUS[row.status].toLowerCase()}, lo
-                    evalúa {row.evaluator.name}
+                    {row.student.email}, {ENROLLMENT_STATUS[row.status].toLowerCase()}
                   </div>
                 </td>
                 {assessments.map((a) => {
                   const score = row.scores[a.id];
-                  if (a.questionCount > 0) {
-                    return (
-                      <td key={a.id} className="num">
-                        {score !== null ? (
-                          <strong>{score}</strong>
-                        ) : (
-                          <span className="small muted">
-                            {row.submitted.includes(a.id) ? "Por calificar" : "Sin entregar"}
-                          </span>
-                        )}
-                      </td>
-                    );
-                  }
                   return (
                     <td key={a.id} className="num">
-                      <input
-                        // La clave incluye la nota para refrescar la casilla tras guardar.
-                        key={`${a.id}-${score}`}
-                        className="input input-cell"
-                        type="number"
-                        min={0}
-                        max={a.maxScore}
-                        step="0.01"
-                        defaultValue={score ?? ""}
-                        aria-label={`Nota de ${row.student.name} en ${a.title}`}
-                        onBlur={(e) => save(a.id, row.student.id, e.target.value, score)}
-                        onKeyDown={(e) => e.key === "Enter" && e.currentTarget.blur()}
-                      />
+                      {score !== null ? (
+                        <strong>{score}</strong>
+                      ) : (
+                        <span className="small muted">Sin responder</span>
+                      )}
                     </td>
                   );
                 })}

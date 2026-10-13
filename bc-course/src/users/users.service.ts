@@ -17,7 +17,12 @@ import {
 } from '../generated/prisma/enums';
 import { PrismaService } from '../prisma/prisma.service';
 import { fullName } from './names';
-import { CreateUserDto, ListUsersDto, UpdateProfileDto } from './users.dto';
+import {
+  CreateUserDto,
+  DeleteAccountDto,
+  ListUsersDto,
+  UpdateProfileDto,
+} from './users.dto';
 
 const PUBLIC_USER = {
   id: true,
@@ -33,15 +38,6 @@ const PUBLIC_USER = {
 @Injectable()
 export class UsersService {
   constructor(private readonly prisma: PrismaService) {}
-
-  // Profes disponibles para que un estudiante elija quién lo evalúa.
-  listInstructors() {
-    return this.prisma.user.findMany({
-      where: { role: Role.INSTRUCTOR, isActive: true },
-      select: { id: true, name: true },
-      orderBy: [{ lastName: 'asc' }, { firstName: 'asc' }],
-    });
-  }
 
   // Alta por un admin. La contraseña inicial es aleatoria y solo se devuelve
   // esta vez, para que el admin se la entregue a la persona.
@@ -80,7 +76,7 @@ export class UsersService {
         where,
         select: {
           ...PUBLIC_USER,
-          _count: { select: { evaluating: true, enrollments: true } },
+          _count: { select: { enrollments: true } },
         },
         orderBy: [{ lastName: 'asc' }, { firstName: 'asc' }],
         skip: (query.page - 1) * query.limit,
@@ -149,9 +145,6 @@ export class UsersService {
     const user = await this.findOne(id);
     if (user.role === role) return user;
 
-    if (user.role === Role.INSTRUCTOR) {
-      await this.assertNoActiveStudents(id);
-    }
     if (user.role === Role.STUDENT) {
       const active = await this.prisma.enrollment.count({
         where: { studentId: id, status: EnrollmentStatus.ACTIVE },
@@ -173,10 +166,7 @@ export class UsersService {
     if (actor.id === id) {
       throw new ForbiddenException('No puedes desactivar tu propia cuenta');
     }
-    const user = await this.findOne(id);
-    if (!isActive && user.role === Role.INSTRUCTOR) {
-      await this.assertNoActiveStudents(id);
-    }
+    await this.findOne(id);
     return this.prisma.user.update({
       where: { id },
       data: { isActive },
@@ -184,16 +174,40 @@ export class UsersService {
     });
   }
 
-  // Un estudiante en curso no puede quedarse sin quien lo evalúe.
-  private async assertNoActiveStudents(evaluatorId: string) {
-    const active = await this.prisma.enrollment.count({
-      where: { evaluatorId, status: EnrollmentStatus.ACTIVE },
+  // Baja que pide el propio estudiante: borra su cuenta con sus inscripciones,
+  // avance e intentos, sin vuelta atrás.
+  async removeSelf(userId: string, dto: DeleteAccountDto) {
+    const user = await this.prisma.user.findUniqueOrThrow({
+      where: { id: userId },
     });
-    if (active > 0) {
-      throw new ConflictException(
-        `El profe evalúa a ${active} estudiante(s) con el curso en marcha; deben terminar o cambiar de profe primero`,
+    // Así siempre queda al menos un admin; a un admin lo da de baja otro.
+    if (user.role !== Role.STUDENT) {
+      throw new ForbiddenException(
+        'Una cuenta de administrador no se puede eliminar desde el perfil',
       );
     }
+    const matches =
+      user.passwordHash === null ||
+      (await bcrypt.compare(dto.currentPassword ?? '', user.passwordHash));
+    if (!matches) {
+      throw new BadRequestException('La contraseña no es correcta');
+    }
+    await this.prisma.user.delete({ where: { id: userId } });
+  }
+
+  // Borra la cuenta de un estudiante con sus inscripciones, avance e intentos.
+  // Un admin no se borra: primero hay que quitarle el rol.
+  async remove(actor: AuthUser, id: string) {
+    if (actor.id === id) {
+      throw new ForbiddenException('No puedes eliminar tu propia cuenta');
+    }
+    const user = await this.findOne(id);
+    if (user.role !== Role.STUDENT) {
+      throw new ConflictException(
+        'Solo se pueden eliminar cuentas de estudiantes',
+      );
+    }
+    await this.prisma.user.delete({ where: { id } });
   }
 
   async platformStats() {

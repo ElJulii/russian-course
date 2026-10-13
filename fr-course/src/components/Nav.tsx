@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { canTeach, useAuth } from "@/lib/auth";
+import { isAdmin, useAuth } from "@/lib/auth";
 
 export function Nav() {
   const { user, loading, logout } = useAuth();
@@ -13,12 +13,8 @@ export function Nav() {
     { href: "/", label: "Líneas", show: true },
     { href: "/mi-ruta", label: "Mi ruta", show: user?.role === "STUDENT" },
     { href: "/notas", label: "Mis notas", show: user?.role === "STUDENT" },
-    {
-      href: "/ensenar",
-      label: user?.role === "ADMIN" ? "Cursos" : "Evaluar",
-      show: canTeach(user),
-    },
-    { href: "/admin", label: "Usuarios", show: user?.role === "ADMIN" },
+    { href: "/ensenar", label: "Cursos", show: isAdmin(user) },
+    { href: "/admin", label: "Usuarios", show: isAdmin(user) },
   ].filter((link) => link.show);
 
   const isCurrent = (href: string) =>

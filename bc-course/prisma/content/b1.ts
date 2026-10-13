@@ -1,14 +1,13 @@
-import type { CourseContent } from './course-content';
+import type { LessonContent } from './course-content';
 
 // Temario B1 (equivalente a ТРКИ-1): el plural de todos los casos, los verbos
 // de movimiento con prefijos, participios y gerundios, el condicional, la
 // oración compuesta y el estilo indirecto.
-export const B1: CourseContent = {
-  lessons: [
-    {
-      title: 'Los casos en plural y el repaso del sistema',
-      durationMinutes: 60,
-      content: `En A2 dominaste el singular. En B1 se espera que declines sin pensar también en plural, con adjetivos y pronombres.
+export const B1: LessonContent[] = [
+  {
+    title: 'Los casos en plural y el repaso del sistema',
+    durationMinutes: 60,
+    content: `En A2 dominaste el singular. En B1 se espera que declines sin pensar también en plural, con adjetivos y pronombres.
 
 EL PLURAL DE LOS SEIS CASOS
             sustantivos                    adjetivos
@@ -46,18 +45,11 @@ Preposicional: участвовать в, нуждаться в, сомнева�
 
 TEXTO
 В наших больших городах живут люди разных национальностей и профессий. Многим молодым специалистам приходится снимать квартиры, потому что цены на новое жильё остаются высокими. Городские власти гордятся новыми парками и современными станциями метро, однако жители часто жалуются на пробки и нуждаются в удобных дорогах. Благодаря новым технологиям многие теперь работают из дома и встречаются с коллегами только по пятницам.`,
-      exercises: [
-        'Declina en los seis casos del plural: эти новые студенты / мои старшие сёстры / большие окна.',
-        'Pon en la forma correcta: Я познакомился с ___ (интересные люди). Мы помогаем ___ (наши дети). Он рассказывал о ___ (свои друзья). У ___ (все студенты) есть учебники. Я вижу ___ (эти красивые девушки) и ___ (высокие здания).',
-        'Completa con el caso que exige el verbo o la preposición: Он гордится ___ (свои дети). Я сомневаюсь в ___ (его слова). Благодаря ___ (ваша помощь) мы успели. Она боится ___ (большие собаки). Этот дом принадлежит ___ (мои родители). Мы пользуемся ___ (новые программы).',
-        'Declina en singular: время, путь, дочь, имя. Luego escribe una frase con cada una en un caso oblicuo.',
-        'Escribe un texto de 10 frases sobre los habitantes de tu ciudad (jóvenes, mayores, turistas, estudiantes) usando al menos una vez cada caso del plural.',
-      ],
-    },
-    {
-      title: 'Verbos de movimiento sin prefijo: los ocho pares',
-      durationMinutes: 60,
-      content: `En A2 conociste идти / ходить y ехать / ездить. El sistema completo tiene más pares. El primero de cada par es UNIDIRECCIONAL (un movimiento concreto, en una dirección); el segundo es MULTIDIRECCIONAL (ida y vuelta, repetido, sin rumbo, o la capacidad de moverse).
+  },
+  {
+    title: 'Verbos de movimiento sin prefijo: los ocho pares',
+    durationMinutes: 60,
+    content: `En A2 conociste идти / ходить y ехать / ездить. El sistema completo tiene más pares. El primero de cada par es UNIDIRECCIONAL (un movimiento concreto, en una dirección); el segundo es MULTIDIRECCIONAL (ida y vuelta, repetido, sin rumbo, o la capacidad de moverse).
 
 MOVERSE UNO MISMO
 идти / ходить — ir a pie
@@ -99,18 +91,11 @@ SENTIDOS FIGURADOS (siempre con el verbo indicado)
 
 TEXTO
 Каждое утро Андрей бегает в парке, а потом везёт детей в школу на машине. Сегодня машина сломалась, поэтому он ведёт сына за руку, а дочь несёт на руках: она ещё маленькая и ходит медленно. По дороге они видят, как над рекой летают чайки, а по воде плывёт белый теплоход. «Папа, а куда он плывёт?» — спрашивает сын. «В Казань. Летом мы тоже поплывём туда», — отвечает Андрей.`,
-      exercises: [
-        'Elige el verbo correcto y ponlo en la forma adecuada: Смотри, как быстро ___ (бежать / бегать) эта собака! По утрам я ___ (бежать / бегать) в парке. Вчера мы ___ (лететь / летать) в Петербург и уже вернулись. Самолёт ___ (лететь / летать) на высоте десять километров. Он хорошо ___ (плыть / плавать).',
-        'Completa con нести / носить, везти / возить o вести / водить: Официант ___ нам кофе. Каждый день отец ___ детей в школу на машине. Экскурсовод ___ туристов по музею. Она всегда ___ очки. Грузовик ___ мебель в новый дом. Кто ___ собрание сегодня?',
-        'Explica la diferencia de significado: a) Вчера я шёл в театр. / Вчера я ходил в театр. b) Он ведёт машину. / Он водит машину. c) Мы поплавали в море. / Мы поплыли к берегу.',
-        'Traduce al ruso: Llueve desde la mañana. Este vestido te queda bien. El tiempo vuela. Tuve suerte: encontré trabajo. Lleva gafas. La profesora dirige la clase.',
-        'Describe en 10 frases lo que ves desde una ventana o en una estación: gente, vehículos, animales en movimiento. Usa al menos seis pares de verbos distintos.',
-      ],
-    },
-    {
-      title: 'Verbos de movimiento con prefijos',
-      durationMinutes: 65,
-      content: `Al añadir un prefijo espacial, el verbo unidireccional se vuelve PERFECTIVO y el multidireccional pasa a ser su pareja IMPERFECTIVA. Ya no hay oposición una dirección / varias.
+  },
+  {
+    title: 'Verbos de movimiento con prefijos',
+    durationMinutes: 65,
+    content: `Al añadir un prefijo espacial, el verbo unidireccional se vuelve PERFECTIVO y el multidireccional pasa a ser su pareja IMPERFECTIVA. Ya no hay oposición una dirección / varias.
 прийти (perf.) / приходить (imperf.) · принести / приносить · привезти / привозить · прилететь / прилетать
 Atención a las raíces que cambian: идти → -йти (прийти, уйти, войти); ездить → -езжать (приезжать); плавать → -плывать (приплывать); бегать → -бегать con acento desplazado (прибегАть).
 
@@ -145,18 +130,11 @@ SENTIDOS FIGURADOS FRECUENTES
 
 TEXTO
 Вчера я вышел из дома рано, дошёл до остановки и сел в автобус. Мы проехали мост, и я вышел у вокзала. Мне нужно было встретить сестру: она приезжала к нам на праздники. Поезд пришёл вовремя. Сестра сошла с поезда, подошла ко мне, и мы обнялись. Она привезла подарки всей семье. По дороге домой мы зашли в кафе, а потом обошли весь центр. Через неделю она уехала, и я отвёз её на вокзал.`,
-      exercises: [
-        'Añade el prefijo adecuado (при-, у-, в-, вы-, под-, от-, до-, пере-, про-, за-, об-, с-): Он ___шёл в комнату и поздоровался. Мы ___шли улицу на зелёный свет. ___йди к доске! Я ___ехал свою остановку. По дороге я ___шёл в аптеку. Она ___ехала в другую страну навсегда. Как ___ехать до аэропорта? Он ___шёл от окна. Мы ___шли вокруг озера.',
-        'Elige el aspecto y explica por qué: Пока тебя не было, (приходил / пришёл) сосед. Иди скорее, (приходил / пришёл) твой брат, он ждёт на кухне. Летом мы (уезжали / уехали) на море на две недели. Она (выходила / вышла) замуж и теперь живёт в Казани. Кто (брал / взял) мой словарь? Он лежит не на месте.',
-        'Completa con принести, привезти, привести, отнести, отвезти u отвести en la forma correcta: Что тебе ___ из Мексики? Официант ___ нам меню. ___, пожалуйста, эти документы директору. Каждое утро я ___ сына в детский сад на машине. ___ пример из жизни. Она ___ на вечеринку своего нового друга.',
-        'Traduce usando sentidos figurados: ¿Cómo fue el examen? Llegué a la conclusión de que tienes razón. ¿Qué ha pasado? Este horario no me conviene. Se me ocurrió una idea. No puedo arreglármelas sin tu ayuda.',
-        'Explica por escrito a un turista cómo llegar desde la estación de tu ciudad hasta un museo o plaza (10 a 12 frases) usando al menos ocho verbos de movimiento con prefijos distintos.',
-      ],
-    },
-    {
-      title: 'El aspecto a fondo: infinitivo, imperativo y negación',
-      durationMinutes: 60,
-      content: `En A2 aprendiste la oposición proceso / resultado en pasado y futuro. Ahora vemos el aspecto donde más dudas produce.
+  },
+  {
+    title: 'El aspecto a fondo: infinitivo, imperativo y negación',
+    durationMinutes: 60,
+    content: `En A2 aprendiste la oposición proceso / resultado en pasado y futuro. Ahora vemos el aspecto donde más dudas produce.
 
 1. EL ASPECTO DEL INFINITIVO
 Imperfectivo obligatorio:
@@ -206,18 +184,11 @@ Duración del RESULTADO → на + acus. con perfectivo: Он приехал н�
 
 TEXTO
 — Входите, садитесь! Чай будете? — Спасибо, не откажусь. — Берите печенье, не стесняйтесь. Ну, рассказывайте, как вы сдавали экзамен. — Сдавал я его три раза и наконец сдал! Весь месяц я готовился: вставал в шесть, перестал смотреть сериалы и даже привык заниматься по ночам. — Молодец! Только смотрите не заболейте от такой жизни. Теперь вам надо отдохнуть.`,
-      exercises: [
-        'Elige el infinitivo correcto y escribe la frase: Он начал (писать / написать) диссертацию. Я забыл (выключать / выключить) свет. Мне надоело (повторять / повторить) одно и то же. Нам удалось (покупать / купить) билеты. Не стоит (спорить / поспорить) с ним. Она привыкла (обедать / пообедать) дома.',
-        'Explica la diferencia: a) Здесь нельзя переходить улицу. / Здесь нельзя перейти улицу. b) Не открывай дверь! / Смотри не открой дверь! c) Он сдавал экзамен. / Он сдал экзамен. d) Она приехала на месяц. / Она ехала месяц.',
-        'Forma el imperativo adecuado (вы) y escribe la frase: (Входить / войти), пожалуйста, и (садиться / сесть)! (Записывать / записать) мой номер телефона. Не (забывать / забыть) зонтик, будет дождь! Не (говорить / сказать) ей об этом, это секрет. Осторожно, не (падать / упасть)!',
-        'Completa con el verbo en el aspecto correcto (pasado): Он ___ (работать / проработать) в этой фирме двадцать лет и ушёл на пенсию. Я ___ (читать / прочитать) этот текст два раза, но ничего не понял. Мы ___ (решать / решить) задачу целый час и наконец ___ (решать / решить) её. Ребёнок вдруг ___ (плакать / заплакать).',
-        'Escribe un diálogo de 12 líneas: recibes en casa a un invitado ruso (invitaciones corteses en imperfectivo), le pides dos favores concretos (perfectivo) y le haces dos advertencias (не + perfectivo).',
-      ],
-    },
-    {
-      title: 'Participios activos',
-      durationMinutes: 55,
-      content: `El participio (причастие) es una forma del verbo que funciona como adjetivo: concuerda con el sustantivo y se declina como adjetivo. Es propio del lenguaje escrito; al hablar se prefiere который.
+  },
+  {
+    title: 'Participios activos',
+    durationMinutes: 55,
+    content: `El participio (причастие) es una forma del verbo que funciona como adjetivo: concuerda con el sustantivo y se declina como adjetivo. Es propio del lenguaje escrito; al hablar se prefiere который.
 
 Студент, читающий книгу, сидит у окна. = Студент, который читает книгу, сидит у окна.
 
@@ -260,18 +231,11 @@ Pasado perfectivo: acción terminada → Студенты, сдавшие экз
 
 TEXTO
 Учёные, изучающие климат, предупреждают: число людей, страдающих от жары, растёт с каждым годом. Города, находящиеся у моря, особенно уязвимы. Специалисты, участвовавшие в прошлогодней конференции, предложили программу, уже получившую поддержку многих стран. Однако жители регионов, пострадавших от наводнений, считают, что помощь приходит слишком медленно.`,
-      exercises: [
-        'Forma el participio activo de presente y de pasado (masculino): читать, говорить, жить, писать, заниматься, работать, идти, нести, учиться, любить.',
-        'Sustituye который por un participio activo: Девушка, которая сидит у окна, — моя сестра. Я знаю человека, который написал эту книгу. Мы говорили со студентами, которые изучают русский язык. Туристы, которые приехали вчера, живут в гостинице. Он подошёл к детям, которые играли в парке.',
-        'Sustituye el participio por una oración con который: Люди, живущие на севере, привыкли к холоду. Поезд, прибывший на первый путь, следует до Казани. Я встретил друга, вернувшегося из экспедиции. Мы помогаем семьям, нуждающимся в поддержке.',
-        'Pon el participio en el caso correcto: Я получил письмо от друга, ___ (живущий) в Чили. Мы поздравили студентов, ___ (сдавший) экзамен. Она работает с детьми, ___ (изучающий) музыку. Он рассказал о людях, ___ (построивший) этот город.',
-        'Escribe una noticia breve (8 a 10 frases) sobre un suceso de tu ciudad usando al menos seis participios activos, tres antes y tres después del sustantivo, con las comas correctas.',
-      ],
-    },
-    {
-      title: 'Participios pasivos y forma corta',
-      durationMinutes: 60,
-      content: `El participio pasivo describe al objeto que recibe la acción. Solo lo forman los verbos transitivos.
+  },
+  {
+    title: 'Participios pasivos y forma corta',
+    durationMinutes: 60,
+    content: `El participio pasivo describe al objeto que recibe la acción. Solo lo forman los verbos transitivos.
 Книга, написанная Толстым. = Книга, которую написал Толстой.
 Quien realiza la acción va en INSTRUMENTAL.
 
@@ -309,18 +273,11 @@ Quién lo hizo → instrumental: открыт Колумбом. · De qué está
 
 TEXTO
 Москва была основана в 1147 году князем Юрием Долгоруким. Кремль, окружённый высокими красными стенами, расположен в самом центре города. Многие здания, построенные в XIX веке, сегодня отреставрированы и открыты для посетителей. Третьяковская галерея, названная в честь своего основателя, известна картинами, написанными лучшими русскими художниками. Билеты продаются в кассе, но по понедельникам музей закрыт.`,
-      exercises: [
-        'Forma el participio pasivo de pasado, largo y corto (masculino): написать, сделать, построить, купить, открыть, забыть, получить, пригласить, взять, перевести, найти, принять.',
-        'Transforma a pasiva con participio corto: Эту книгу написал Чехов. Университет основали в 1755 году. Все билеты уже продали. Письмо отправят завтра. Этот фильм сняли в Сибири. Проблему решили быстро.',
-        'Sustituye который por un participio pasivo: Письмо, которое я получил вчера, было от брата. Дом, который построили в прошлом году, уже продан. Мы говорили о книге, которую перевели на испанский язык. Задача, которую решил студент, была трудной.',
-        'Elige entre forma larga y corta y ponla en la forma correcta: Магазин уже ___ (закрытый). Я подошёл к ___ (закрытый) двери. Этот собор ___ (построенный) в XVI веке. В ___ (построенный) недавно доме ещё никто не живёт. Все места ___ (занятый).',
-        'Describe un monumento, edificio o museo de tu país en 10 frases: cuándo fue fundado o construido, por quién, de qué está hecho, a quién está dedicado, qué se conserva en él. Usa al menos seis participios pasivos.',
-      ],
-    },
-    {
-      title: 'Los gerundios (деепричастия)',
-      durationMinutes: 50,
-      content: `El gerundio (деепричастие) expresa una acción secundaria del MISMO sujeto que la principal. No se declina ni se conjuga. Es propio del lenguaje escrito y cuidado.
+  },
+  {
+    title: 'Los gerundios (деепричастия)',
+    durationMinutes: 50,
+    content: `El gerundio (деепричастие) expresa una acción secundaria del MISMO sujeto que la principal. No se declina ni se conjuga. Es propio del lenguaje escrito y cuidado.
 
 1. GERUNDIO IMPERFECTIVO: acción simultánea, "haciendo"
 Forma они sin la terminación + -я (o -а tras ж, ш, щ, ч).
@@ -357,18 +314,11 @@ Excepción: los que funcionan como adverbios fijos: молча (en silencio), с
 
 TEXTO
 Окончив университет, Марина решила переехать в Петербург. Не имея там ни друзей, ни работы, она сначала чувствовала себя одинокой. Гуляя по городу, она часто заходила в маленькие кафе и, сидя у окна, писала письма домой. Найдя наконец работу в издательстве и познакомившись с коллегами, она поняла, что сделала правильный выбор. Честно говоря, теперь она не представляет себе жизни в другом городе.`,
-      exercises: [
-        'Forma el gerundio: (imperfectivo) читать, говорить, жить, заниматься, вставать, смотреть, возвращаться · (perfectivo) прочитать, сказать, вернуться, увидеть, прийти, войти, написать, проснуться.',
-        'Sustituye la oración subordinada por un gerundio: Когда я возвращался домой, я встретил соседа. Когда она закончила работу, она пошла гулять. Так как он не знал русского языка, он ничего не понял. Если вы будете читать каждый день, вы быстро выучите слова. После того как мы пообедали, мы поехали в центр.',
-        'Sustituye el gerundio por una oración subordinada (когда, так как, если, хотя): Выйдя из дома, я вспомнил, что забыл телефон. Не имея денег, он не мог купить билет. Читая газету, отец пил кофе. Зная об опасности, он всё-таки поехал.',
-        'Di cuáles frases son incorrectas y corrígelas: a) Читая письмо, у меня зазвонил телефон. b) Войдя в комнату, он включил свет. c) Возвращаясь домой, начался дождь. d) Посмотрев фильм, мне стало грустно. e) Гуляя по лесу, мы собирали грибы.',
-        'Cuenta en 10 frases cómo fue tu primer día en un lugar nuevo (ciudad, trabajo, universidad) usando al menos seis gerundios, tres de cada aspecto, y dos expresiones fijas.',
-      ],
-    },
-    {
-      title: 'El condicional y el subjuntivo: бы, если бы, чтобы',
-      durationMinutes: 55,
-      content: `El ruso tiene un solo modo para lo hipotético, lo deseado y lo irreal: la partícula БЫ + verbo en PASADO. No distingue tiempo: el contexto dice si es presente, pasado o futuro.
+  },
+  {
+    title: 'El condicional y el subjuntivo: бы, если бы, чтобы',
+    durationMinutes: 55,
+    content: `El ruso tiene un solo modo para lo hipotético, lo deseado y lo irreal: la partícula БЫ + verbo en PASADO. No distingue tiempo: el contexto dice si es presente, pasado o futuro.
 
 1. FORMACIÓN
 Я пошёл бы. / Я бы пошёл. — Iría. / Habría ido.
@@ -422,18 +372,11 @@ d) вместо того чтобы (en lugar de) · для того чтобы 
 
 TEXTO
 Если бы мне предложили выбрать любую страну, я бы уехал в Аргентину. Я хотел бы жить у океана и работать переводчиком. Родители, конечно, хотят, чтобы я остался дома и стал врачом. «Ты бы подумал о будущем», — говорит отец. Но я учу языки именно для того, чтобы увидеть мир. Что бы ни говорили другие, я попробую. А если бы не попробовал, то жалел бы об этом всю жизнь.`,
-      exercises: [
-        'Transforma en condición irreal. Modelo: У меня нет времени, поэтому я не приду. → Если бы у меня было время, я бы пришёл. — Он не знает языка, поэтому не работает за границей. / Шёл дождь, поэтому мы не поехали на дачу. / Я опоздал, потому что не услышал будильник. / У неё нет денег, поэтому она не покупает машину.',
-        'Completa con что o чтобы y la forma correcta del verbo: Мама хочет, ___ я ___ (стать) врачом. Он сказал, ___ завтра ___ (прийти) вовремя. Я знаю, ___ ты ___ (быть) прав. Учитель попросил, ___ мы ___ (принести) словари. Я встал рано, ___ ___ (успеть) на поезд. Говори тише, ___ дети не ___ (проснуться).',
-        'Haz más corteses estas frases con бы: Я хочу поговорить с вами. / Помогите мне! / Отдохни. / Позвони родителям. / Можно мне чаю?',
-        'Completa con tus ideas: Если бы я был президентом, … / Если бы не интернет, … / Что бы ни случилось, … / Я учу русский язык, чтобы … / Мои родители хотят, чтобы … / На твоём месте я бы …',
-        'Escribe 12 frases sobre el tema «Если бы я мог начать жизнь сначала»: qué cambiarías, qué harías igual y qué quieres que hagan los demás. Usa если бы, чтобы con sujeto distinto y una construcción con бы ни.',
-      ],
-    },
-    {
-      title: 'La oración compuesta: который, tiempo, causa, concesión',
-      durationMinutes: 60,
-      content: `1. КОТОРЫЙ EN TODOS LOS CASOS
+  },
+  {
+    title: 'La oración compuesta: который, tiempo, causa, concesión',
+    durationMinutes: 60,
+    content: `1. КОТОРЫЙ EN TODOS LOS CASOS
 Género y número: los del sustantivo al que se refiere. Caso: el que pide su función dentro de la subordinada. La preposición va delante.
 Nom. Это врач, который лечит мою мать.
 Gen. Это врач, у которого я был вчера. · Это книга, без которой я не могу работать.
@@ -482,18 +425,11 @@ Con sustantivo: из-за + gen. (por culpa de): из-за дождя · бла�
 
 TEXTO
 Город, в котором я вырос, сильно изменился с тех пор, как я уехал. Улица, по которой я ходил в школу, теперь закрыта для машин, а на месте кинотеатра, куда мы бегали по воскресеньям, построили торговый центр. Хотя многое мне нравится, я скучаю по тому, что было раньше. Чем старше я становлюсь, тем чаще вспоминаю людей, с которыми провёл детство. Как только у меня появится отпуск, я поеду туда, несмотря на то что билеты стоят дорого.`,
-      exercises: [
-        'Completa con который en la forma correcta, con preposición si hace falta: Это друг, ___ я учился в школе. Вот книга, ___ я тебе говорил. Это врач, ___ я хожу каждый месяц. Мы живём в доме, ___ нет лифта. Это студенты, ___ я преподаю испанский. Это писатель, романы ___ переведены на многие языки.',
-        'Une las frases con который: Это мой коллега. Я ездил с ним в командировку. / Вчера я встретил женщину. Её сын учится со мной. / Мы были в деревне. В этой деревне родился мой дед. / Он купил машину. Он давно мечтал об этой машине.',
-        'Completa con la conjunción adecuada (пока, пока не, как только, после того как, перед тем как, с тех пор как): ___ уйти, закрой окно. Я подожду здесь, ___ ты ___ вернёшься. ___ я приеду, я сразу позвоню. ___ мы переехали, мы редко видимся. ___ ты готовишь ужин, я схожу в магазин.',
-        'Elige la preposición causal (из-за, благодаря, от, по): Мы опоздали ___ пробок. ___ вашей помощи я сдал экзамен. Ребёнок заплакал ___ страха. Я взял чужой зонт ___ ошибке. Она не пришла ___ болезни. Рейс отменили ___ тумана.',
-        'Escribe un texto de 12 a 14 frases sobre el lugar donde creciste y cómo ha cambiado. Usa который en al menos cuatro casos distintos, dos conjunciones de tiempo, una de causa, una de concesión y la construcción чем…, тем….',
-      ],
-    },
-    {
-      title: 'Estilo indirecto, pronombres indefinidos y negativos',
-      durationMinutes: 55,
-      content: `1. EL ESTILO INDIRECTO
+  },
+  {
+    title: 'Estilo indirecto, pronombres indefinidos y negativos',
+    durationMinutes: 55,
+    content: `1. EL ESTILO INDIRECTO
 A diferencia del español, el ruso NO cambia el tiempo verbal: se conserva el tiempo de la frase original. Solo cambian las personas.
 Он сказал: «Я приду завтра». → Он сказал, что придёт завтра. (Dijo que vendría.)
 Она ответила: «Я не знаю». → Она ответила, что не знает. (…que no sabía.)
@@ -546,18 +482,11 @@ Positivo: Мне есть что сказать. · Есть с кем посо�
 
 TEXTO
 Вчера мне кто-то позвонил и сказал, что я выиграл поездку в Сочи. Я спросил, откуда у них мой номер и нужно ли что-нибудь платить. Мужчина ответил, что платить ничего не нужно, но попросил, чтобы я сообщил номер своей карты. Я сказал, что мне некогда и что я никому никогда не даю таких сведений. Потом я рассказал об этом соседу, и он признался, что с ним когда-то случилось то же самое.`,
-      exercises: [
-        'Pasa a estilo indirecto: Анна сказала: «Я завтра уезжаю в Казань». / Он спросил меня: «Где ты купил этот словарь?» / Мама спросила: «Ты уже пообедал?» / Врач сказал больному: «Принимайте это лекарство два раза в день». / Она спросила: «Есть ли у вас билеты на вечер?» / Друг попросил: «Позвони мне в субботу».',
-        'Completa con -то, -нибудь o кое-: Тебе ___ (кто) звонил, но не сказал своё имя. Ты ___ (когда) был в России? Дай мне ___ (что) почитать. Он ___ (почему) не пришёл на урок. Я должен тебе ___ (что) рассказать, это важно. Если ___ (кто) придёт, скажи, что я скоро вернусь.',
-        'Responde negativamente con ни-: С кем ты говорил? О чём вы думаете? У кого есть вопросы? Куда вы ездили летом? Кому ты рассказал об этом? Какой фильм тебе понравился?',
-        'Transforma con не- + infinitivo. Modelo: У меня нет времени. → Мне некогда. — Здесь нет места, чтобы сесть. / У него нет никого, с кем можно поговорить. / В этом городе нет мест, куда можно пойти вечером. / У нас нет ничего, что можно есть. / Не было причины спорить.',
-        'Cuenta en estilo indirecto una conversación reciente (12 frases): quién dijo qué, qué preguntó, qué pidió y qué respondiste. Incluye dos preguntas con ли, una petición con чтобы y tres verbos introductores distintos de сказать.',
-      ],
-    },
-    {
-      title: 'Numerales, fechas y adjetivos cortos',
-      durationMinutes: 55,
-      content: `1. LOS NUMERALES SE DECLINAN
+  },
+  {
+    title: 'Numerales, fechas y adjetivos cortos',
+    durationMinutes: 55,
+    content: `1. LOS NUMERALES SE DECLINAN
 один se declina como adjetivo: одного, одному, одним, об одном; fem. одной, одну.
 два / две: двух, двум, двумя, о двух · три: трёх, трём, тремя, о трёх · четыре: четырёх, четырём, четырьмя, о четырёх
 5–20 y 30 se declinan como ночь: пять → пяти, пяти, пять, пятью, о пяти · восемь → восьми, восемью
@@ -612,18 +541,11 @@ Solo o casi solo cortos: рад, должен, готов, согласен, п�
 
 TEXTO
 Санкт-Петербург был основан двадцать седьмого мая тысяча семьсот третьего года. Сегодня в нём живёт более пяти миллионов человек, а в городе около трёхсот сорока мостов. Мы приехали туда вчетвером и провели там двое суток. Поезд отправлялся в половине двенадцатого ночи, поэтому без четверти одиннадцать мы уже были на вокзале. Оба мои брата были довольны поездкой, хотя гостиница оказалась слишком мала для нас четверых.`,
-      exercises: [
-        'Escribe con letras, en el caso que pide el contexto: Я вернусь к (5) часам. В классе нет (3) студентов. Он пришёл с (2) друзьями. Мы были в (4) странах. Это стоит около (200) рублей. Он уехал без (10) рублей в кармане. Она живёт в (25) километрах от города.',
-        'Escribe con letras las fechas completas: tu fecha de nacimiento (Я родился / родилась…), la fecha de hoy, 12/06/1990, 01/01/2000, y los siglos XIX y XXI en la frase «в … веке».',
-        'Escribe la hora de forma coloquial: 3:10, 4:15, 6:30, 7:45, 8:50, 12:05, 1:30, 10:40. Luego responde: В котором часу вы обычно обедаете и ложитесь спать?',
-        'Completa con двое, трое, оба, обе o полтора / полторы: У них ___ детей (3). ___ сестры учатся в Москве. Нас было ___ (2). Мы ждали ___ часа. ___ брата женаты. Поезд идёт ___ суток (2). Купи ___ килограмма сыра.',
-        'Elige entre forma larga y corta y explica: Он сегодня (больной / болен). Эта задача слишком (трудная / трудна) для первого курса. Я (согласный / согласен) с тобой. Она очень (похожая / похожа) на отца. У нас (интересная / интересна) работа. Брюки мне (короткие / коротки).',
-      ],
-    },
-    {
-      title: 'Trabajo, estudios y biografía: textos formales',
-      durationMinutes: 60,
-      content: `El examen ТРКИ-1 pide desenvolverse en las esferas social, cultural y profesional básica: hablar de estudios y trabajo, contar una biografía, escribir una carta formal y una solicitud.
+  },
+  {
+    title: 'Trabajo, estudios y biografía: textos formales',
+    durationMinutes: 60,
+    content: `El examen ТРКИ-1 pide desenvolverse en las esferas social, cultural y profesional básica: hablar de estudios y trabajo, contar una biografía, escribir una carta formal y una solicitud.
 
 1. LA EDUCACIÓN
 детский сад · начальная / средняя школа · гимназия · колледж · университет · факультет · кафедра (departamento) · курс (año de carrera): Я учусь на третьем курсе. · семестр · сессия (periodo de exámenes) · зачёт (prueba de apto) · диплом · бакалавриат · магистратура · аспирантура (doctorado) · стипендия (beca) · общежитие (residencia)
@@ -665,37 +587,5 @@ Apartados: личные данные · образование · опыт ра�
 
 TEXTO
 Антон Павлович Чехов родился в 1860 году в Таганроге в семье мелкого купца. В детстве он помогал отцу в лавке и пел в церковном хоре. Окончив гимназию, он поступил на медицинский факультет Московского университета. Ещё будучи студентом, Чехов начал писать юмористические рассказы, чтобы помочь семье. Получив диплом врача, он не оставил литературу и вскоре прославился как автор рассказов и пьес. В 1901 году он женился на актрисе Ольге Книппер. Чехов умер в 1904 году в возрасте сорока четырёх лет и похоронен в Москве.`,
-      exercises: [
-        'Responde con frases completas: Где и на кого вы учились или учитесь? Кем и где вы работаете? Что входит в ваши обязанности? Какой у вас опыт работы? Чем вы хотели бы заниматься через пять лет?',
-        'Responde sobre el texto de Chéjov: В какой семье он родился? Чем он занимался в детстве? Какое образование он получил? Почему он начал писать? На ком он женился? В каком возрасте он умер?',
-        'Escribe una solicitud (заявление) con el formato completo: pides al decano que te permita presentar un examen antes de la fecha por un viaje de trabajo.',
-        'Escribe una carta formal de 10 a 12 frases a una escuela de idiomas de Moscú: te presentas, preguntas por los cursos de verano, precios, alojamiento y visado, y pides que te envíen el programa.',
-        'Escribe la biografía de una persona conocida de tu país o tu autobiografía (14 a 16 frases) en orden cronológico, con fechas escritas con letras, al menos dos participios, dos gerundios y cuatro marcadores temporales.',
-      ],
-    },
-  ],
-  exam: {
-    title: 'Examen final B1',
-    instructions: `Este examen cubre las doce estaciones del curso y sigue el formato del ТРКИ-1: gramática, lectura y escritura. Responde en ruso salvo que el ejercicio pida otra cosa. Puedes corregir tu entrega mientras el profe no la haya calificado. Vale 100 puntos y se aprueba con 70.
-
-TEXTO PARA LOS EJERCICIOS 11 Y 12
-Когда Елена окончила университет, ей предложили работу в крупной московской компании. Родители хотели, чтобы она согласилась: зарплата была высокая, а должность — престижная. Однако Елена, с детства мечтавшая стать учителем, отказалась и уехала в небольшой сибирский город, где не хватало преподавателей. Сначала ей было трудно. Квартира, которую ей дали, находилась далеко от школы, и зимой, выходя из дома в семь утра, она шла по тёмным улицам при тридцатиградусном морозе. Ученики, привыкшие к строгим учителям, не сразу поверили молодой учительнице, никогда не повышавшей голос. Но Елена не сдавалась. Она организовала школьный театр, в который записалось больше сорока детей, и стала водить ребят в походы. Через два года её класс был признан лучшим в области. Когда журналист спросил её, не жалеет ли она о своём решении, Елена ответила, что, если бы ей пришлось выбирать снова, она поступила бы точно так же. «Чем больше отдаёшь, тем больше получаешь», — сказала она.`,
-    questions: [
-      'Casos en plural. Completa: Он гордится ___ (свои взрослые дети). Мы написали ___ (все наши друзья). Она рассказывала о ___ (далёкие страны). У ___ (эти молодые специалисты) мало опыта. Я встретил ___ (старые знакомые) и ___ (их жёны).',
-      'Verbos de movimiento sin prefijo. Completa con el verbo adecuado en la forma correcta (идти / ходить, ехать / ездить, лететь / летать, нести / носить, везти / возить, вести / водить): Каждое лето мы ___ на море. Смотри, мальчик ___ тяжёлый рюкзак. Мой отец ___ автобус уже двадцать лет. Сейчас мы ___ над океаном. Вчера я ___ к врачу и уже вернулся. Она ___ сына за руку.',
-      'Verbos de movimiento con prefijos. Completa con el prefijo y la forma adecuados: Он ___шёл из комнаты и закрыл дверь. Мы ___ехали мост и повернули направо. ___ходите, пожалуйста, садитесь! По дороге домой я ___шёл в аптеку. Она ___ехала из Киева три года назад и больше там не была. ___йдите к карте и покажите Волгу. Что тебе ___везти из Парижа?',
-      'Aspecto. Elige y justifica brevemente cada elección: Не (открывайте / откройте) окно, мне холодно. Осторожно, не (падай / упади)! Он начал (учить / выучить) китайский язык. Мне не удалось (покупать / купить) билеты. Здесь нельзя (проходить / пройти): идёт ремонт. Пока меня не было, ко мне (приходил / пришёл) почтальон и оставил записку.',
-      'Participios. a) Sustituye por un participio: Студенты, которые сдали экзамен, уехали домой. / Я читаю роман, который написал Достоевский. / Люди, которые живут в этом доме, очень дружные. b) Sustituye por который: Письмо, полученное вчера, лежит на столе. / Мы говорили с учёным, изучающим климат.',
-      'Pasiva. Transforma con participio corto: Этот собор построили в XV веке. / Роман перевели на тридцать языков. / Магазин откроют в сентябре. / Проблему уже решили. Luego escribe dos frases propias con «был основан» y «расположен».',
-      'Gerundios. Sustituye por un gerundio: Когда он вошёл в комнату, он поздоровался. / Так как она не знала дороги, она заблудилась. / Когда мы гуляли по городу, мы фотографировали. / После того как я закончил работу, я пошёл домой. Luego corrige: «Возвращаясь домой, у меня сломалась машина».',
-      'Condicional y чтобы. a) Transforma en condición irreal: Я не знал о концерте, поэтому не пошёл. / У неё нет визы, поэтому она не едет. b) Completa: Родители хотят, чтобы я ___ (поступить) в университет. Он попросил, чтобы мы ___ (подождать). Я пришёл, чтобы ___ (поговорить) с вами. Что бы ни ___ (случиться), звони.',
-      'Который y conjunciones. a) Completa: Это город, ___ я мечтаю поехать. Вот человек, ___ я тебе рассказывал. Это писатель, книги ___ я очень люблю. b) Une con la conjunción adecuada: Шёл сильный дождь. Мы пошли гулять. (concesión) / Я приеду. Я сразу позвоню. (tiempo) / Больше читаешь. Больше знаешь. (чем…, тем…)',
-      'Estilo indirecto y pronombres. a) Pasa a estilo indirecto: Он спросил: «Вы говорите по-русски?» / Она сказала: «Я вернусь через час». / Учитель сказал нам: «Откройте учебники». b) Completa con -то, -нибудь, ни- o не-: Тебе ___ (кто) звонил утром. Купи ___ (что) на ужин. Я ___ (с кем) не разговаривал. Мне ___ (когда) отдыхать.',
-      'Comprensión. Lee el texto sobre Elena y responde con frases completas: Чего хотели её родители и почему? Почему она отказалась от работы в Москве? Какие трудности были у неё сначала? Как относились к ней ученики и почему? Что она сделала для школы? Что она ответила журналисту?',
-      'Análisis del texto. Copia del texto: dos participios activos, un participio pasivo corto, un gerundio, una oración con который con preposición, una condición irreal, una pregunta indirecta con ли y la construcción чем…, тем…. Explica en español qué significa cada una.',
-      'Numerales. Escribe con letras: «Он родился (23.04.1985)». «Поезд отправляется (в 2:45, forma coloquial)». «Мы встретились с (3) друзьями в (5) километрах от города». «У них (4, colectivo) детей». «В городе живёт около (500 000) человек».',
-      'Escritura formal. Escribe una solicitud (заявление) completa al director de una empresa pidiendo vacaciones del 1 al 14 de agosto, y debajo una carta formal de 8 frases a un hotel de Sochi para reservar habitación en esas fechas.',
-      'Redacción. Escribe un texto de 18 a 20 frases sobre el tema «Работа мечты: что для меня важнее — зарплата или призвание?». Expón tu opinión, da dos argumentos y un ejemplo (puedes referirte al texto de Elena), y concluye. Usa al menos un participio, un gerundio, una condición irreal y tres conjunciones distintas.',
-    ],
   },
-};
+];

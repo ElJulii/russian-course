@@ -40,9 +40,16 @@ function LessonView() {
   const enrollment = viewer.enrollment;
   const isDone = !!enrollment?.completedLessonIds.includes(lessonId);
   const next = lessons.find((l) => l.order === lesson.data!.order + 1);
-  const exercises =
+  const tests =
     assessments.data?.filter((a) => a.lessonId === lessonId && a.questionCount > 0) ??
     [];
+  // Con test, la estación se completa al aprobarlo; sin test, a mano.
+  const canMarkDone =
+    !!enrollment &&
+    enrollment.status !== "DROPPED" &&
+    !isDone &&
+    !!assessments.data &&
+    tests.every((test) => test.passed);
 
   const complete = () =>
     action.run(async () => {
@@ -67,32 +74,28 @@ function LessonView() {
 
       <article className="lesson-body">{lesson.data.content}</article>
 
-      {exercises.map((exercise) => (
-        <section key={exercise.id} className="panel stack">
+      {tests.map((test) => (
+        <section key={test.id} className="panel stack">
           <div className="row spread">
-            <h2>Ejercicios de esta estación</h2>
-            {!viewer.canGrade && (
-              <span className={exercise.score === null ? "chip" : "chip chip-sun"}>
-                {assessmentState(exercise)}
+            <h2>Test de esta estación</h2>
+            {!viewer.canManage && (
+              <span className={test.passed ? "chip chip-sun" : "chip"}>
+                {assessmentState(test)}
               </span>
             )}
           </div>
           <p className="muted">
-            {plural(exercise.questionCount, "ejercicio", "ejercicios")}. Valen{" "}
-            {exercise.weight}% de tu nota final y los califica el profe cuando los
-            entregas.
+            {plural(test.questionCount, "pregunta", "preguntas")} de opción múltiple
+            que se corrigen al momento. Aprobarlo con 70 % completa la estación y
+            abre la siguiente; puedes repetirlo las veces que quieras y cuenta tu
+            mejor nota.
           </p>
-          <Link
-            href={`/cursos/${id}/evaluaciones/${exercise.id}`}
-            className="btn btn-sun"
-          >
-            {viewer.canGrade
-              ? "Ver los ejercicios"
-              : exercise.score !== null
-                ? "Ver mi nota"
-                : exercise.submittedAt
-                  ? "Revisar mi entrega"
-                  : "Hacer los ejercicios"}
+          <Link href={`/cursos/${id}/evaluaciones/${test.id}`} className="btn btn-sun">
+            {viewer.canManage
+              ? "Ver el test"
+              : test.attempts > 0
+                ? "Repetir el test"
+                : "Hacer el test"}
           </Link>
         </section>
       ))}
@@ -100,13 +103,13 @@ function LessonView() {
       <Notice>{action.error}</Notice>
 
       <div className="row">
-        {enrollment && !isDone && enrollment.status !== "DROPPED" && (
+        {canMarkDone && (
           <button className="btn btn-primary" onClick={complete} disabled={action.busy}>
             Marcar como completada
           </button>
         )}
         {isDone && <span className="chip chip-sun">Completada</span>}
-        {next && (isDone || viewer.canGrade) && (
+        {next && (isDone || viewer.canManage) && (
           <Link href={`/cursos/${id}/lecciones/${next.id}`} className="btn">
             Siguiente estación: {next.title}
           </Link>

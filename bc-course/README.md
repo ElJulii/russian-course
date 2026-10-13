@@ -19,17 +19,17 @@ juntos, en minúsculas y sin espacios ni tildes:
 | Correo | Rol | Contraseña |
 | ------ | --- | ---------- |
 | `admin@ruso.dev` | Admin | `adminplataforma` |
-| `olga@ruso.dev` | Profe | `olgaivanova` |
-| `dmitri@ruso.dev` | Profe | `dmitrisokolov` |
-| `ana@ruso.dev` | Estudiante | `anatorres` |
-| `luis@ruso.dev` | Estudiante | `luismendez` |
-| `sofia@ruso.dev` | Estudiante | `sofiarojas` |
+| `ana@ruso.dev` | Estudiante (terminó el A1) | `anatorres` |
+| `luis@ruso.dev` | Estudiante (va por la estación 3) | `luismendez` |
+| `sofia@ruso.dev` | Estudiante (recién inscrita) | `sofiarojas` |
 
-El seed crea además los seis cursos de la plataforma, de A1 a C2. Su contenido
-está en `prisma/content/` (un archivo por nivel) y el catálogo en
-`prisma/courses.ts`: doce lecciones por curso, un bloque de ejercicios por
-lección (5 % de la nota cada uno) y un examen final (40 %). El seed borra todo
-lo que haya en la base.
+El seed crea además los seis cursos de la plataforma, de A1 a C2. El catálogo
+está en `prisma/courses.ts` y el contenido en `prisma/content/`, dos archivos
+por nivel: `a1.ts` (el texto de las doce lecciones) y `a1.tests.ts` (sus
+preguntas). Cada lección tiene un test de 10 preguntas de opción múltiple
+(5 % de la nota cada uno) y el curso cierra con un examen de 15 (40 %). En los
+archivos de tests la opción correcta se escribe primero; `q()` la reparte entre
+las demás de forma fija. El seed borra todo lo que haya en la base.
 
 Para añadir solo los cursos del catálogo que falten, sin tocar usuarios,
 inscripciones ni notas: `npm run db:courses`.
@@ -87,15 +87,15 @@ se vincula con ella y conserva su rol.
 
 ## Roles y permisos
 
-Los permisos por rol están en `src/common/rbac/permissions.ts` y cada ruta declara
-lo que exige con `@RequirePermissions(...)`. Los cursos son de la plataforma: no
-pertenecen a ningún profe. Al inscribirse, el estudiante elige qué profe lo evalúa.
+La plataforma es autónoma: no hay profes. Los tests son de opción múltiple y la
+API los corrige al momento. Los permisos por rol están en
+`src/common/rbac/permissions.ts` y cada ruta declara lo que exige con
+`@RequirePermissions(...)`.
 
-| Rol        | Puede                                                                 |
-| ---------- | --------------------------------------------------------------------- |
-| STUDENT    | Inscribirse eligiendo profe, completar lecciones, entregar ejercicios y exámenes, ver sus notas |
-| INSTRUCTOR | Ver los cursos y calificar las entregas de los estudiantes que lo eligieron |
-| ADMIN      | Crear y editar cursos, lecciones y evaluaciones; crear usuarios; calificar a cualquiera; estadísticas |
+| Rol     | Puede                                                                 |
+| ------- | --------------------------------------------------------------------- |
+| STUDENT | Inscribirse, leer las lecciones, responder tests y exámenes, ver sus notas |
+| ADMIN   | Crear y editar cursos, lecciones y tests; crear usuarios; ver las notas de todos y las estadísticas |
 
 ## Endpoints (prefijo `/api`)
 
@@ -105,48 +105,46 @@ pertenecen a ningún profe. Al inscribirse, el estudiante elige qué profe lo ev
 | POST | `/auth/verify-email`, `/auth/resend-verification` | Público (confirmar el correo y pedir otro enlace) |
 | POST | `/auth/google` | Público (entra o crea la cuenta con un ID token de Google) |
 | GET, PATCH | `/users/me` | Autenticado |
-| GET | `/users/instructors` | Autenticado (profes activos para elegir) |
+| DELETE | `/users/me` | Estudiante (pide `currentPassword` si la cuenta tiene contraseña) |
 | GET | `/users`, `/users/:id`, `/users/stats` | Admin |
 | POST | `/users` | Admin (devuelve una contraseña inicial aleatoria, una sola vez) |
 | PATCH | `/users/:id/role`, `/users/:id/status` | Admin |
+| DELETE | `/users/:id` | Admin (solo estudiantes) |
 | GET | `/courses`, `/courses/:id` | Público (solo publicados) |
 | GET | `/courses/manage` | Admin |
-| GET | `/courses/teaching` | Instructor (cursos con estudiantes suyos) / Admin |
 | POST | `/courses` | Admin |
 | PATCH, DELETE | `/courses/:id` | Admin |
 | POST | `/courses/:id/publish`, `/courses/:id/archive` | Admin |
-| GET | `/courses/:id/lessons/:lessonId` | Inscritos, instructores, admin |
+| GET | `/courses/:id/lessons/:lessonId` | Inscritos, admin |
 | POST | `/courses/:id/lessons` | Admin |
 | PUT | `/courses/:id/lessons/order` | Admin |
 | PATCH, DELETE | `/courses/:id/lessons/:lessonId` | Admin |
-| POST | `/courses/:id/enroll` | Estudiante (body: `evaluatorId`) |
-| POST | `/courses/:id/lessons/:lessonId/complete` | Estudiante inscrito |
+| POST | `/courses/:id/enroll` | Estudiante |
+| POST | `/courses/:id/lessons/:lessonId/complete` | Estudiante inscrito (solo estaciones sin test) |
 | GET | `/enrollments/me` | Estudiante |
-| GET | `/enrollments/evaluating` | Instructor (estudiantes que lo eligieron, con curso, avance y entregas) / Admin |
 | POST | `/enrollments/:id/drop` | Estudiante (propia) |
 | GET | `/courses/:id/enrollments` | Admin |
-| GET | `/courses/:id/assessments` | Inscritos, instructores, admin |
+| GET | `/courses/:id/assessments` | Inscritos (con sus intentos y su mejor nota), admin |
 | POST | `/courses/:id/assessments` | Admin |
-| GET | `/assessments/:id` | Inscritos (con su entrega y su nota), instructores, admin |
+| GET | `/assessments/:id` | Inscritos (preguntas sin la respuesta), admin (con respuesta y explicación) |
 | PATCH, DELETE | `/assessments/:id` | Admin |
-| PUT | `/assessments/:id/submission` | Estudiante inscrito |
-| GET | `/assessments/:id/submissions` | Instructor (solo sus estudiantes) / Admin |
-| PUT | `/assessments/:id/grades/:studentId` | Instructor elegido por el estudiante / Admin |
-| GET | `/courses/:id/gradebook` | Instructor (solo sus estudiantes) / Admin |
+| POST | `/assessments/:id/attempts` | Estudiante inscrito (body: `answers`, un índice de opción por pregunta; devuelve la corrección) |
+| GET | `/courses/:id/gradebook` | Admin |
 | GET | `/courses/:id/stats` | Admin |
 | GET | `/grades/me` | Estudiante |
 
 ## Reglas de negocio
 
 - Cada usuario tiene nombre (`firstName`) y apellido (`lastName`); `name` es el nombre completo que arma el servidor. El registro pide ambos y el estudiante elige su contraseña.
-- El registro público solo crea estudiantes. Un admin crea las demás cuentas (p. ej. profes) con `POST /users`; la API genera una contraseña inicial aleatoria y la devuelve una sola vez para que el admin la entregue. Un admin no puede cambiar su propio rol ni desactivarse.
-- Para inscribirse hay que elegir un profe activo; solo ese profe (o un admin) ve y califica las entregas de ese estudiante. Un profe con estudiantes en curso no se puede desactivar ni cambiar de rol.
-- Un curso se publica solo si tiene al menos una lección y, si tiene evaluaciones, sus pesos suman 100.
+- El registro público solo crea estudiantes. Un admin crea las demás cuentas con `POST /users`; la API genera una contraseña inicial aleatoria y la devuelve una sola vez para que el admin la entregue. Un admin no puede cambiar su propio rol ni desactivarse.
+- Un estudiante puede eliminar su propia cuenta (`DELETE /users/me`) y un admin la de cualquier estudiante: se borran con ella sus inscripciones, avance e intentos. Las cuentas de admin no se eliminan; antes hay que quitarles el rol.
+- Un curso se publica solo si tiene al menos una lección, sus evaluaciones tienen preguntas y, si hay evaluaciones, sus pesos suman 100.
 - Un curso con inscripciones no se elimina, se archiva; archivado no admite inscripciones nuevas.
-- Las lecciones se completan en orden; al terminar la última, la inscripción pasa a `COMPLETED`.
-- Los pesos de las evaluaciones de un curso no superan 100 y una nota no supera el `maxScore`.
-- Solo se califica a estudiantes con inscripción vigente; una evaluación con notas o entregas no se elimina.
-- Una evaluación con `questions` se responde en la plataforma: no hay nota automática, el instructor califica cada entrega a mano y no puede calificar a quien no ha entregado.
-- El estudiante puede corregir su entrega hasta que se califica; después queda cerrada. Los ejercicios de una evaluación no se cambian si ya tiene entregas.
-- El examen (`type: EXAM`) solo se abre al completar todas las lecciones del curso.
-- Nota final = suma de `nota / maxScore × peso`; se aprueba con 70.
+- Cada evaluación es una lista de preguntas `{ prompt, options, answer, explanation }` (`answer` es el índice de la opción correcta). El estudiante nunca recibe `answer` ni `explanation` antes de responder.
+- Un intento (`POST /assessments/:id/attempts`) se corrige al momento y devuelve, pregunta por pregunta, la opción correcta y su explicación. Se puede repetir sin límite y cuenta el mejor intento.
+- Un test se aprueba con 70 % de aciertos. Con `lessonId` es el test de esa estación: aprobarlo la completa y abre la siguiente; el de una estación no se puede responder hasta completar las anteriores. Las estaciones sin test se marcan a mano, en orden.
+- Al completar la última estación, la inscripción pasa a `COMPLETED`.
+- El examen (`type: EXAM`) solo se abre al completar todas las estaciones del curso.
+- Cada intento guarda sus aciertos, no la nota: las preguntas y `maxScore` se pueden corregir aunque ya haya intentos, que no se vuelven a calificar. Una evaluación con intentos no se elimina.
+- Los pesos de las evaluaciones de un curso no superan 100.
+- Nota final = suma de `mejor nota / maxScore × peso`; se aprueba con 70.

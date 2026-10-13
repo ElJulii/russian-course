@@ -1,0 +1,890 @@
+import { q, type CourseTests } from './course-content';
+
+// Tests del A1: uno por estación, en el orden de ./a1, y el examen final.
+export const A1_TESTS: CourseTests = {
+  lessons: [
+    // 1. El alfabeto cirílico
+    [
+      q(
+        '¿Cómo suena la letra В?',
+        'v',
+        ['b', 'u', 'f'],
+        'В es una falsa amiga: se parece a la B latina, pero suena v, como en вот.',
+      ),
+      q(
+        '¿Cómo suena la letra Н?',
+        'n',
+        ['h', 'j', 'i'],
+        'Н suena n, como en нет. La j española se escribe Х.',
+      ),
+      q(
+        '¿Cómo se lee la palabra ресторан?',
+        'restorán',
+        ['pectopán', 'restopán', 'pestorán'],
+        'Р = r, С = s, Н = n: ресторан se lee casi igual que en español.',
+      ),
+      q(
+        '¿Qué letra suena como la j de «jamón»?',
+        'Х',
+        ['Ж', 'Г', 'Ш'],
+        'Х = j, como en сахар. Ж es la j francesa de «bonjour» y Г siempre suena como en «gato».',
+      ),
+      q(
+        '¿Qué significa сок?',
+        'jugo',
+        ['azúcar', 'gato', 'casa'],
+        'сок = jugo. Azúcar es сахар, gato es кот y casa es дом.',
+      ),
+      q(
+        '¿Para qué sirve el signo blando Ь?',
+        'Suaviza la consonante anterior',
+        [
+          'Separa una consonante de la vocal siguiente',
+          'Marca la sílaba acentuada',
+          'Suena como una i breve',
+        ],
+        'Ь no suena solo: ablanda la consonante anterior, como en мать o день. Separar consonante y vocal es tarea de Ъ.',
+      ),
+      q(
+        '¿Cómo se escribe «taxi» en ruso?',
+        'такси',
+        ['тахи', 'такхи', 'таски'],
+        'El sonido ks se escribe кс: такси. La letra х suena j.',
+      ),
+      q(
+        '¿Qué letra suena «ch»?',
+        'Ч',
+        ['Ц', 'Щ', 'Ш'],
+        'Ч = ch, como en чай. Ц suena ts, Ш suena sh y Щ es una sh larga y suave.',
+      ),
+      q(
+        '¿Cuántas letras tiene el alfabeto ruso?',
+        '33',
+        ['26', '30', '36'],
+        'El alfabeto ruso tiene 33 letras, de la А a la Я.',
+      ),
+      q(
+        '¿Cuál de estas letras suena siempre como la g de «gato»?',
+        'Г',
+        ['Ж', 'Д', 'З'],
+        'Г suena siempre g, como en «gato». Д es d, З es una z sonora y Ж es la j francesa.',
+      ),
+    ],
+    // 2. Pronunciación
+    [
+      q(
+        '¿Cómo se pronuncia молоко?',
+        '[malakó]',
+        ['[molokó]', '[málako]', '[mólaka]'],
+        'La о sin acento suena casi como a; solo la última о, que lleva el acento, suena o.',
+      ),
+      q(
+        '¿Cómo suena la última consonante de хлеб?',
+        'p',
+        ['b', 'v', 'f'],
+        'Al final de palabra las sonoras se ensordecen: б suena п, por eso хлеб se dice [jlep].',
+      ),
+      q(
+        '¿Cómo se pronuncia что?',
+        '[shto]',
+        ['[chto]', '[cho]', '[sto]'],
+        'En что la ч se pronuncia sh: [shto].',
+      ),
+      q(
+        '¿Cómo se pronuncia la г de сегодня?',
+        'Como una v',
+        ['Como una g', 'Como una j', 'No se pronuncia'],
+        'En его, сегодня y la terminación -ого la г se dice v: [sivódnia].',
+      ),
+      q(
+        '¿Qué distingue a зАмок de замОк?',
+        'El acento: «castillo» y «cerradura»',
+        [
+          'Nada: son dos formas de escribir lo mismo',
+          'El género: masculino y femenino',
+          'El número: singular y plural',
+        ],
+        'El acento puede cambiar el significado: зАмок es castillo y замОк, cerradura.',
+      ),
+      q(
+        '¿Cómo se convierte «Это дом.» en una pregunta al hablar?',
+        'Subiendo el tono en la palabra clave',
+        [
+          'Cambiando el orden de las palabras',
+          'Añadiendo una partícula al final',
+          'Poniendo el verbo al principio',
+        ],
+        'El orden no cambia: la entonación hace la pregunta. Это дом? se dice subiendo el tono en дом.',
+      ),
+      q(
+        '¿En cuál de estas palabras la última consonante es blanda?',
+        'мать',
+        ['мат', 'брат', 'лук'],
+        'El signo ь ablanda la consonante anterior: мать («madre») frente a мат.',
+      ),
+      q(
+        '¿Cómo se pronuncia друг?',
+        '[druk]',
+        ['[drug]', '[druj]', '[druz]'],
+        'Al final de palabra г suena к: друг se dice [druk].',
+      ),
+      q(
+        '¿Cuántas sílabas acentuadas tiene una palabra rusa?',
+        'Una sola',
+        ['Dos', 'Ninguna', 'Depende de su longitud'],
+        'Cada palabra tiene una sola sílaba fuerte, y hay que aprenderla con la palabra porque no se marca al escribir.',
+      ),
+      q(
+        '¿Cómo se pronuncia машина?',
+        '[mashýna], con el sonido de ы',
+        ['[mashína], con una i clara', '[machína]', '[masína]'],
+        'жи y ши se escriben con и pero suenan con ы.',
+      ),
+    ],
+    // 3. Saludos, despedidas y cortesía
+    [
+      q(
+        '¿Cuál es el saludo adecuado para un desconocido mayor que tú?',
+        'Здравствуйте!',
+        ['Привет!', 'Пока!', 'Здравствуй!'],
+        'Здравствуйте es la forma de вы. Привет y Здравствуй son para quien tratas de ты, y Пока es una despedida.',
+      ),
+      q(
+        '¿Qué significa «До завтра!»?',
+        'Hasta mañana',
+        ['Buenos días', 'Hasta luego', 'Buenas noches'],
+        'завтра = mañana; до завтра = hasta mañana.',
+      ),
+      q(
+        '¿Qué dices al irte a dormir?',
+        'Спокойной ночи!',
+        ['Добрый вечер!', 'Доброе утро!', 'Добрый день!'],
+        'Спокойной ночи se dice al irse a dormir. Добрый вечер es un saludo al llegar por la tarde-noche.',
+      ),
+      q(
+        'Te dicen «Спасибо!». ¿Qué respondes?',
+        'Пожалуйста.',
+        ['Извините.', 'Привет.', 'Плохо.'],
+        'Пожалуйста significa «por favor» y también «de nada».',
+      ),
+      q(
+        '¿Cómo le preguntas a un amigo cómo está?',
+        'Как дела?',
+        ['Как вы поживаете?', 'Как вас зовут?', 'Кто это?'],
+        'Как дела? es la pregunta informal. Как вы поживаете? es para quien tratas de вы.',
+      ),
+      q(
+        '¿Qué significa «Так себе»?',
+        'Más o menos',
+        ['Excelente', 'Muy mal', 'Igualmente'],
+        'Так себе = más o menos. Excelente es отлично y mal es плохо.',
+      ),
+      q(
+        'Pisas a alguien en el metro. ¿Qué dices?',
+        'Извините!',
+        ['Не за что.', 'Отлично!', 'До свидания!'],
+        'Извините es «disculpe». Не за что significa «no hay de qué».',
+      ),
+      q(
+        '¿Qué significa «Я не понимаю»?',
+        'No entiendo',
+        ['No sé', 'No quiero', 'No hablo'],
+        'понимать = entender; Я не понимаю = no entiendo.',
+      ),
+      q(
+        '¿Con quién usas вы?',
+        'Con desconocidos, mayores y en el trabajo',
+        [
+          'Solo con varios amigos a la vez',
+          'Con niños y familiares',
+          'Solo por escrito',
+        ],
+        'вы es «usted» y también «ustedes». ты se reserva para amigos, familia y niños.',
+      ),
+      q(
+        '¿Qué son Петрович y Сергеевна en «Иван Петрович» y «Анна Сергеевна»?',
+        'Patronímicos, formados con el nombre del padre',
+        ['Apellidos', 'Segundos nombres', 'Títulos de cortesía'],
+        'En situaciones formales se usa nombre y patronímico: el nombre del padre más -ович / -овна.',
+      ),
+    ],
+    // 4. Presentarse
+    [
+      q(
+        '¿Cómo se dice «Me llamo Ana»?',
+        'Меня зовут Ана.',
+        ['Я зовут Ана.', 'Мне зовут Ана.', 'Моя зовут Ана.'],
+        'Literalmente es «a mí me llaman Ana»: меня зовут.',
+      ),
+      q(
+        '¿Cómo se dice «Soy estudiante» (habla un hombre)?',
+        'Я студент.',
+        ['Я есть студент.', 'Я быть студент.', 'Меня студент.'],
+        'En presente no se dice «ser»: basta con Я студент.',
+      ),
+      q(
+        '¿Con qué pregunta se pide el nombre de una cosa?',
+        'Что это?',
+        ['Кто это?', 'Как это?', 'Где это?'],
+        'Что это? es para cosas; Кто это? es para personas y animales.',
+      ),
+      q(
+        '¿Cómo se dice «No soy médico»?',
+        'Я не врач.',
+        ['Я нет врач.', 'Не я врач.', 'Я врач не.'],
+        'La negación es не delante de lo que se niega: Я не врач.',
+      ),
+      q(
+        '¿Qué significa «Откуда вы?»?',
+        '¿De dónde es usted?',
+        ['¿Cómo se llama usted?', '¿Dónde vive usted?', '¿Quién es usted?'],
+        'Откуда = de dónde. Se responde con из: Я из Колумбии.',
+      ),
+      q(
+        '¿Cómo se dice «Ella se llama María»?',
+        'Её зовут Мария.',
+        ['Его зовут Мария.', 'Она зовут Мария.', 'Меня зовут Мария.'],
+        'её es «a ella»; его es «a él».',
+      ),
+      q(
+        'Completa: «Я студент, ___ он врач.»',
+        'а',
+        ['тоже', 'из', 'не'],
+        'а marca contraste entre dos cosas: «yo soy estudiante y él, en cambio, médico».',
+      ),
+      q(
+        '¿Qué pronombre significa «nosotros»?',
+        'мы',
+        ['вы', 'они', 'он'],
+        'мы = nosotros, вы = usted o ustedes, они = ellos.',
+      ),
+      q(
+        '¿Qué responde una mujer a «Вы студентка?» si no lo es?',
+        'Нет, я не студентка.',
+        ['Нет, я не студент.', 'Да, я не студентка.', 'Нет, она не студентка.'],
+        'Se niega con не y se mantiene la forma femenina студентка.',
+      ),
+      q(
+        '¿Qué significa «Очень приятно!»?',
+        '¡Mucho gusto!',
+        ['¡Muchas gracias!', '¡Muy bien!', '¡Hasta pronto!'],
+        'Очень приятно se dice al conocer a alguien.',
+      ),
+    ],
+    // 5. El género y los posesivos
+    [
+      q(
+        '¿De qué género es окно?',
+        'Neutro',
+        ['Masculino', 'Femenino', 'No tiene género'],
+        'Los sustantivos en -о y -е son neutros: окно, письмо, море.',
+      ),
+      q(
+        '¿De qué género es папа?',
+        'Masculino, aunque termine en -а',
+        ['Femenino', 'Neutro', 'Puede ser masculino o femenino'],
+        'папа, дядя, дедушка y мужчина terminan en -а / -я pero son masculinos.',
+      ),
+      q(
+        'Completa: «___ мама»',
+        'моя',
+        ['мой', 'моё', 'мои'],
+        'мама es femenino: моя мама. El posesivo concuerda con lo poseído.',
+      ),
+      q(
+        'Completa: «___ письмо»',
+        'твоё',
+        ['твой', 'твоя', 'твои'],
+        'письмо es neutro: твоё письмо.',
+      ),
+      q(
+        '«Где книга?» — «Вот ___.»',
+        'она',
+        ['он', 'оно', 'они'],
+        'книга es femenino, así que se sustituye por она.',
+      ),
+      q(
+        '¿Cómo se dice «la casa de él»?',
+        'его дом',
+        ['её дом', 'их дом', 'ваш дом'],
+        'его = de él. No cambia nunca: его дом, его мама, его письмо.',
+      ),
+      q(
+        '¿Qué palabra interrogativa corresponde? «___ это сумка?»',
+        'Чья',
+        ['Чей', 'Чьё', 'Чьи'],
+        'сумка es femenino: Чья это сумка?',
+      ),
+      q(
+        '¿De qué género es тетрадь?',
+        'Femenino',
+        ['Masculino', 'Neutro', 'Solo existe en plural'],
+        'Las palabras en -ь se aprenden una a una: тетрадь, ночь, дверь y площадь son femeninas.',
+      ),
+      q(
+        'Completa: «___ книга моя.» (Este libro es mío.)',
+        'Эта',
+        ['Это', 'Этот', 'Эти'],
+        'Como adjetivo concuerda con книга: эта книга. «Это книга» significa «Esto es un libro».',
+      ),
+      q(
+        'Completa: «___ ключи»',
+        'наши',
+        ['наш', 'наша', 'наше'],
+        'ключи está en plural: наши ключи.',
+      ),
+    ],
+    // 6. Los números, la edad y los precios
+    [
+      q(
+        '¿Cómo se dice 15?',
+        'пятнадцать',
+        ['пятьдесят', 'пять', 'пятьсот'],
+        'Del 11 al 19 se añade -надцать. пятьдесят es 50 y пятьсот, 500.',
+      ),
+      q(
+        '¿Cómo se dice 40?',
+        'сорок',
+        ['четырнадцать', 'четыреста', 'четыре'],
+        '40 es irregular: сорок. четырнадцать es 14 y четыреста, 400.',
+      ),
+      q(
+        '¿Cómo se dice 21?',
+        'двадцать один',
+        ['один двадцать', 'двадцать и один', 'двенадцать'],
+        'Los compuestos se dicen en orden y sin «y». двенадцать es 12.',
+      ),
+      q(
+        'Completa: «Мне двадцать один ___.»',
+        'год',
+        ['года', 'лет', 'годы'],
+        'Con los números terminados en 1 (salvo 11) se dice год.',
+      ),
+      q(
+        'Completa: «Ему тридцать два ___.»',
+        'года',
+        ['год', 'лет', 'годы'],
+        'Con los terminados en 2, 3 y 4 (salvo 12–14) se dice года.',
+      ),
+      q(
+        'Completa: «Ей восемнадцать ___.»',
+        'лет',
+        ['год', 'года', 'годы'],
+        'Con todos los demás números, incluidos del 11 al 19, se dice лет.',
+      ),
+      q(
+        '¿Cómo se pregunta «¿Cuánto cuesta esto?»?',
+        'Сколько это стоит?',
+        ['Сколько тебе лет?', 'Что это?', 'Какой это?'],
+        'Сколько это стоит? pregunta el precio. Сколько тебе лет? pregunta la edad.',
+      ),
+      q(
+        'Completa: «___ сестра»',
+        'одна',
+        ['один', 'одно', 'два'],
+        'сестра es femenino: одна сестра. Uno y dos tienen género.',
+      ),
+      q(
+        'Completa: «Кофе стоит сто пятьдесят ___.»',
+        'рублей',
+        ['рубль', 'рубля', 'рубли'],
+        '150 termina en 0: con 5 o más se dice рублей.',
+      ),
+      q(
+        '¿Cómo se dice «Tengo 30 años»?',
+        'Мне тридцать лет.',
+        ['Я тридцать лет.', 'У меня тридцать лет.', 'Меня тридцать лет.'],
+        'La edad se dice con мне: «a mí 30 años».',
+      ),
+    ],
+    // 7. El presente de los verbos
+    [
+      q(
+        'Completa: «Я ___ книгу.» (читать)',
+        'читаю',
+        ['читаешь', 'читает', 'читают'],
+        'Primera conjugación: я -ю → я читаю.',
+      ),
+      q(
+        'Completa: «Ты ___ по-русски?» (говорить)',
+        'говоришь',
+        ['говорю', 'говорит', 'говорят'],
+        'Segunda conjugación: ты -ишь → ты говоришь.',
+      ),
+      q(
+        'Completa: «Я ___ в Лиме.» (жить)',
+        'живу',
+        ['жию', 'живю', 'жить'],
+        'жить es irregular: я живу, ты живёшь, он живёт…',
+      ),
+      q(
+        'Completa: «Она ___ письмо.» (писать)',
+        'пишет',
+        ['писает', 'пишу', 'пишут'],
+        'писать cambia la raíz: я пишу, ты пишешь, он / она пишет.',
+      ),
+      q(
+        'Completa: «Они ___ кофе.» (хотеть)',
+        'хотят',
+        ['хочут', 'хотет', 'хочет'],
+        'хотеть es mixto: хочу, хочешь, хочет, pero хотим, хотите, хотят.',
+      ),
+      q(
+        '¿Cómo se dice «Hablo ruso»?',
+        'Я говорю по-русски.',
+        ['Я говорю русский.', 'Я говорю в русском.', 'Я говорю русски.'],
+        'Con говорить el idioma se dice по-русски, по-испански, по-английски.',
+      ),
+      q(
+        'Completa: «Я люблю ___.» (Me gusta leer.)',
+        'читать',
+        ['читаю', 'читает', 'читал'],
+        'Cuando hay dos verbos seguidos, el segundo va en infinitivo.',
+      ),
+      q(
+        'Completa: «Я ___ музыку.» (любить)',
+        'люблю',
+        ['любю', 'любу', 'любит'],
+        'En la forma я aparece una л: любить → я люблю.',
+      ),
+      q(
+        '¿Qué significa «Я читаю»?',
+        '«Leo» y también «estoy leyendo»',
+        ['Solo «estoy leyendo»', 'Solo «leo habitualmente»', '«Leí»'],
+        'El ruso tiene un solo presente, que cubre los dos usos.',
+      ),
+      q(
+        '¿Qué significa иногда?',
+        'A veces',
+        ['Siempre', 'Nunca', 'A menudo'],
+        'иногда = a veces. Siempre es всегда, a menudo es часто y nunca es никогда не.',
+      ),
+    ],
+    // 8. El plural y los adjetivos
+    [
+      q(
+        '¿Cuál es el plural de книга?',
+        'книги',
+        ['книгы', 'книга', 'книгя'],
+        'Después de г, к, х, ж, ш, щ, ч nunca se escribe ы, sino и.',
+      ),
+      q(
+        '¿Cuál es el plural de окно?',
+        'окна',
+        ['окны', 'окни', 'окно'],
+        'Los neutros en -о hacen el plural en -а: окно → окна.',
+      ),
+      q(
+        '¿Cuál es el plural de друг?',
+        'друзья',
+        ['други', 'другы', 'друга'],
+        'Es irregular: друг → друзья, como брат → братья.',
+      ),
+      q(
+        '¿Cuál es el plural de человек?',
+        'люди',
+        ['человеки', 'человека', 'человекы'],
+        'человек tiene un plural de otra raíz: люди.',
+      ),
+      q(
+        'Completa: «Это ___ машина.»',
+        'новая',
+        ['новый', 'новое', 'новые'],
+        'машина es femenino: новая машина.',
+      ),
+      q(
+        'Completa: «Это ___ окно.»',
+        'большое',
+        ['большой', 'большая', 'большие'],
+        'окно es neutro: большое окно.',
+      ),
+      q(
+        '¿Cuál es el opuesto de дорогой?',
+        'дешёвый',
+        ['старый', 'маленький', 'плохой'],
+        'дорогой (caro) / дешёвый (barato).',
+      ),
+      q(
+        '¿Qué significa красный?',
+        'rojo',
+        ['bonito', 'negro', 'verde'],
+        'красный = rojo. Bonito es красивый, que se le parece.',
+      ),
+      q(
+        '¿Cuál de estas palabras solo existe en plural?',
+        'деньги',
+        ['дом', 'книга', 'окно'],
+        'деньги, часы, очки y брюки solo existen en plural.',
+      ),
+      q(
+        'Completa: «Какие это книги?» — «Это ___ книги.»',
+        'интересные',
+        ['интересный', 'интересная', 'интересное'],
+        'книги es plural: интересные книги.',
+      ),
+    ],
+    // 9. El caso preposicional y la ciudad
+    [
+      q(
+        'Completa: «Я живу в ___.» (Москва)',
+        'Москве',
+        ['Москва', 'Москву', 'Москвы'],
+        'El preposicional de las palabras en -а termina en -е: в Москве.',
+      ),
+      q(
+        'Completa: «Книга лежит на ___.» (стол)',
+        'столе',
+        ['стол', 'столу', 'стола'],
+        'A la consonante se le añade -е: на столе.',
+      ),
+      q(
+        'Completa: «Я живу в ___.» (Россия)',
+        'России',
+        ['Россие', 'Россия', 'Россию'],
+        'Las palabras en -ия hacen el preposicional en -ии: в России, в Испании.',
+      ),
+      q(
+        'Completa: «Мы были ___ концерте.»',
+        'на',
+        ['в', 'о', 'из'],
+        'Las actividades llevan на: на концерте, на уроке, на работе.',
+      ),
+      q(
+        '¿Cómo se dice «Estoy en casa»?',
+        'Я дома.',
+        ['Я в доме.', 'Я на доме.', 'Я дом.'],
+        'дома significa «en casa» y va sin preposición. «В доме» es «dentro del edificio».',
+      ),
+      q(
+        'Completa: «Он едет в ___.» / «Он сейчас в ___.» (метро)',
+        'метро / метро',
+        ['метру / метре', 'метро / метре', 'метра / метро'],
+        'Las palabras extranjeras en -о, -е, -и, -у no cambian: в метро, в кафе, в такси.',
+      ),
+      q(
+        'Completa: «Мы гуляем в ___.» (лес)',
+        'лесу',
+        ['лесе', 'лес', 'леса'],
+        'Algunos masculinos cortos llevan -у acentuada: в лесу, в саду, в аэропорту.',
+      ),
+      q(
+        'Completa: «Я думаю о ___.» (работа)',
+        'работе',
+        ['работа', 'работу', 'работы'],
+        'о + preposicional: думать о работе.',
+      ),
+      q(
+        '¿Qué significa аптека?',
+        'farmacia',
+        ['hospital', 'biblioteca', 'tienda'],
+        'аптека = farmacia. Hospital es больница, biblioteca es библиотека y tienda es магазин.',
+      ),
+      q(
+        'Completa: «Она ___ в университете.» (учиться)',
+        'учится',
+        ['учусь', 'учатся', 'учит'],
+        'учиться: я учусь, ты учишься, он / она учится.',
+      ),
+    ],
+    // 10. El acusativo
+    [
+      q(
+        'Completa: «Я читаю ___.» (книга)',
+        'книгу',
+        ['книга', 'книге', 'книги'],
+        'En acusativo los femeninos en -а pasan a -у: книгу.',
+      ),
+      q(
+        'Completa: «Я вижу ___.» (брат)',
+        'брата',
+        ['брат', 'брату', 'брате'],
+        'Los masculinos animados añaden -а / -я en acusativo: брата.',
+      ),
+      q(
+        'Completa: «Я читаю ___.» (журнал)',
+        'журнал',
+        ['журнала', 'журналу', 'журнале'],
+        'Los masculinos inanimados no cambian en acusativo.',
+      ),
+      q(
+        'Completa: «Ты знаешь ___?» (Мария)',
+        'Марию',
+        ['Мария', 'Марии', 'Марие'],
+        'Los femeninos en -я pasan a -ю: Марию.',
+      ),
+      q(
+        '¿Cómo se dice «Te quiero»?',
+        'Я тебя люблю.',
+        ['Я ты люблю.', 'Я тебе люблю.', 'Я твой люблю.'],
+        'El pronombre ты en acusativo es тебя.',
+      ),
+      q(
+        'Completa: «Куда ты идёшь?» — «Я иду в ___.» (школа)',
+        'школу',
+        ['школе', 'школа', 'школы'],
+        'Куда? pide acusativo: в школу. Где? pide preposicional: в школе.',
+      ),
+      q(
+        'Completa: «Она ___ в Москву на поезде.»',
+        'едет',
+        ['идёт', 'едут', 'иду'],
+        'ехать es ir en transporte: она едет. идти es ir a pie.',
+      ),
+      q(
+        '¿Cómo se dice «Voy a casa»?',
+        'Я иду домой.',
+        ['Я иду дома.', 'Я иду в дом.', 'Я иду на дом.'],
+        'домой = a casa (dirección); дома = en casa (lugar).',
+      ),
+      q(
+        '¿Qué significa «Счёт, пожалуйста»?',
+        'La cuenta, por favor',
+        ['La carta, por favor', 'Agua, por favor', 'Otro, por favor'],
+        'счёт es la cuenta. La carta se pide con «Можно меню?».',
+      ),
+      q(
+        'Completa: «На завтрак я ем ___.» (каша)',
+        'кашу',
+        ['каша', 'каше', 'каши'],
+        'Objeto directo femenino en -а → -у: кашу.',
+      ),
+    ],
+    // 11. У меня есть… La familia
+    [
+      q(
+        '¿Cómo se dice «Tengo un hermano»?',
+        'У меня есть брат.',
+        ['Я имею брат.', 'Я есть брат.', 'Мне есть брат.'],
+        '«Tener» se dice con У + persona + есть + lo que se tiene, en nominativo.',
+      ),
+      q(
+        'Completa: «У ___ есть машина.» (ella)',
+        'неё',
+        ['она', 'её', 'ней'],
+        'Tras у los pronombres de tercera persona llevan н-: у него, у неё, у них.',
+      ),
+      q(
+        'Completa: «У меня нет ___.» (брат)',
+        'брата',
+        ['брат', 'брату', 'брате'],
+        'нет pide genitivo: los masculinos añaden -а → нет брата.',
+      ),
+      q(
+        'Completa: «У меня нет ___.» (сестра)',
+        'сестры',
+        ['сестра', 'сестру', 'сестре'],
+        'En genitivo los femeninos en -а pasan a -ы: нет сестры.',
+      ),
+      q(
+        'Completa: «У неё нет ___.» (книга)',
+        'книги',
+        ['книгы', 'книгу', 'книга'],
+        'Tras г, к, х no se escribe ы sino и: нет книги.',
+      ),
+      q(
+        '¿Qué frase es correcta para «Tengo una familia grande»?',
+        'У меня большая семья.',
+        [
+          'У меня есть большая семью.',
+          'Я большая семья.',
+          'У меня нет большая семья.',
+        ],
+        'Cuando importa cómo es lo que se tiene, y no si se tiene, есть se omite.',
+      ),
+      q(
+        '¿Qué significa бабушка?',
+        'abuela',
+        ['abuelo', 'tía', 'hija'],
+        'бабушка = abuela. Abuelo es дедушка, tía es тётя e hija es дочь.',
+      ),
+      q(
+        '¿Cómo se dice que una mujer está casada?',
+        'Она замужем.',
+        ['Она женат.', 'Она жена.', 'Она муж.'],
+        'De un hombre se dice женат; de una mujer, замужем.',
+      ),
+      q(
+        '¿Qué significa «У меня болит голова»?',
+        'Me duele la cabeza',
+        ['Tengo una pregunta', 'No tengo tiempo', 'Tengo la cabeza grande'],
+        'болит = duele; голова = cabeza.',
+      ),
+      q(
+        '¿Cómo se dice «hermana menor»?',
+        'младшая сестра',
+        ['старшая сестра', 'младший брат', 'двоюродная сестра'],
+        'младшая = menor; старшая = mayor. двоюродная сестра es la prima.',
+      ),
+    ],
+    // 12. El tiempo, la rutina y el pasado
+    [
+      q(
+        '¿Qué día es среда?',
+        'miércoles',
+        ['martes', 'jueves', 'viernes'],
+        'понедельник, вторник, среда, четверг, пятница: среда es miércoles.',
+      ),
+      q(
+        '¿Cómo se dice «el viernes» (¿cuándo?)?',
+        'в пятницу',
+        ['в пятница', 'на пятнице', 'в пятнице'],
+        'Con los días se usa в + acusativo: в пятницу, в среду, в субботу.',
+      ),
+      q(
+        'Completa: «Сейчас пять ___.»',
+        'часов',
+        ['час', 'часа', 'часы'],
+        '1 час; 2, 3, 4 часа; 5 o más часов.',
+      ),
+      q(
+        'Una mujer dice «Ayer leí». ¿Cómo lo dice?',
+        'Вчера я читала.',
+        ['Вчера я читал.', 'Вчера я читали.', 'Вчера я читаю.'],
+        'El pasado concuerda con el género del sujeto: -ла para el femenino.',
+      ),
+      q(
+        '¿Cuál es el pasado masculino de идти?',
+        'шёл',
+        ['идил', 'идёл', 'шла'],
+        'идти es irregular en pasado: шёл, шла, шли.',
+      ),
+      q(
+        'Completa: «Вчера мы ___ в театре.»',
+        'были',
+        ['был', 'была', 'было'],
+        'мы es plural: были. En pasado sí aparece el verbo быть.',
+      ),
+      q(
+        '¿Cómo se dice «No tuve tiempo»?',
+        'У меня не было времени.',
+        ['У меня не был время.', 'У меня нет было время.', 'Я не был времени.'],
+        '«No tener» en pasado es не было + genitivo: не было времени.',
+      ),
+      q(
+        '¿Cómo dice un hombre «Ayer fui al cine»?',
+        'Вчера я был в кино.',
+        ['Вчера я шёл кино.', 'Вчера я был на кино.', 'Вчера я есть в кино.'],
+        '«Fui a…» se dice con быть + в / на + preposicional: был в кино.',
+      ),
+      q(
+        '¿Qué significa «Сегодня холодно»?',
+        'Hoy hace frío',
+        ['Hoy hace calor', 'Hoy llueve', 'Ayer hizo frío'],
+        'холодно = frío; жарко = calor; идёт дождь = llueve.',
+      ),
+      q(
+        '¿Cómo se dice «a las siete»?',
+        'в семь часов',
+        ['на семь часов', 'семь часа', 'в семь час'],
+        'La hora lleva в, y con 7 se dice часов.',
+      ),
+    ],
+  ],
+  exam: {
+    title: 'Examen final A1',
+    instructions: `Este examen cubre las doce estaciones del curso. Son 15 preguntas de opción múltiple; vale 100 puntos y se aprueba con 70. Puedes repetirlo las veces que quieras: cuenta tu mejor nota.
+
+TEXTO PARA LAS PREGUNTAS 11 A 15
+Здравствуйте! Меня зовут Карлос, мне двадцать шесть лет. Я из Мексики, но сейчас живу в Москве. Я программист и работаю в большой компании в центре. У меня есть младшая сестра Лаура, она студентка и живёт в Гвадалахаре. У меня нет машины, поэтому я еду на работу на метро. Утром я пью кофе и читаю новости. Вечером я изучаю русский язык: читаю тексты и смотрю русские фильмы. В субботу я был в музее, а в воскресенье гулял в парке, потому что было тепло. Я люблю Москву: это очень красивый город!`,
+    questions: [
+      q(
+        '¿Cómo se pronuncia хорошо?',
+        '[jarashó]',
+        ['[joroshó]', '[járasho]', '[ksoroshó]'],
+        'Х suena j y las о sin acento suenan casi como a: [jarashó].',
+      ),
+      q(
+        'Te presentan a una persona mayor. ¿Qué dices?',
+        'Здравствуйте! Очень приятно.',
+        ['Привет! Как дела?', 'Пока! До завтра!', 'Спокойной ночи!'],
+        'Con desconocidos y mayores se usa la forma de вы: Здравствуйте.',
+      ),
+      q(
+        'Completa: «___ тетрадь»',
+        'твоя',
+        ['твой', 'твоё', 'твои'],
+        'тетрадь es femenino aunque termine en -ь: твоя тетрадь.',
+      ),
+      q(
+        'Completa: «Ей тридцать три ___.»',
+        'года',
+        ['год', 'лет', 'годы'],
+        '33 termina en 3: года.',
+      ),
+      q(
+        'Completa: «Мы ___ журналы.» (читать)',
+        'читаем',
+        ['читаю', 'читаете', 'читают'],
+        'мы -ем: мы читаем.',
+      ),
+      q(
+        '¿Cuál es el plural de «Это новый студент»?',
+        'Это новые студенты.',
+        ['Это новый студенты.', 'Эти новые студент.', 'Это новые студенти.'],
+        'Adjetivo y sustantivo van en plural: новые студенты. Это no cambia.',
+      ),
+      q(
+        'Completa: «Он работает ___ почте.»',
+        'на',
+        ['в', 'о', 'у'],
+        'почта es uno de los lugares que piden на: на почте, на вокзале, на рынке.',
+      ),
+      q(
+        'Completa: «Она покупает ___ и хлеб.» (рыба)',
+        'рыбу',
+        ['рыба', 'рыбе', 'рыбы'],
+        'Objeto directo femenino: -а → -у. хлеб, masculino inanimado, no cambia.',
+      ),
+      q(
+        '¿Cómo se dice «Ella no tiene carro»?',
+        'У неё нет машины.',
+        ['У неё нет машина.', 'Она нет машину.', 'У её нет машины.'],
+        'У неё нет + genitivo: машина → машины.',
+      ),
+      q(
+        'Reescribe en pasado: «Мы работаем в офисе.»',
+        'Мы работали в офисе.',
+        [
+          'Мы работал в офисе.',
+          'Мы работала в офисе.',
+          'Мы работаем в офисе вчера.',
+        ],
+        'Con un sujeto plural el pasado termina en -ли.',
+      ),
+      q(
+        'Según el texto, ¿cuántos años tiene Carlos?',
+        'Veintiséis',
+        ['Dieciséis', 'Veintidós', 'Treinta y seis'],
+        '«Мне двадцать шесть лет»: двадцать шесть = 26.',
+      ),
+      q(
+        'Según el texto, ¿a qué se dedica Carlos?',
+        'Es programador',
+        ['Es estudiante', 'Es periodista', 'Es profesor de ruso'],
+        '«Я программист и работаю в большой компании».',
+      ),
+      q(
+        'Según el texto, ¿por qué va al trabajo en metro?',
+        'Porque no tiene carro',
+        [
+          'Porque vive lejos del centro',
+          'Porque le gusta el metro',
+          'Porque el carro es caro',
+        ],
+        '«У меня нет машины, поэтому я еду на работу на метро».',
+      ),
+      q(
+        'Según el texto, ¿dónde vive su hermana?',
+        'En Guadalajara',
+        ['En Moscú', 'En Ciudad de México', 'Con Carlos'],
+        '«Лаура… живёт в Гвадалахаре».',
+      ),
+      q(
+        'Según el texto, ¿qué hizo Carlos el domingo?',
+        'Paseó por el parque',
+        ['Fue al museo', 'Vio películas rusas', 'Trabajó en la oficina'],
+        '«В субботу я был в музее, а в воскресенье гулял в парке».',
+      ),
+    ],
+  },
+};

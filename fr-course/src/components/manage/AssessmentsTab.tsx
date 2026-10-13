@@ -12,16 +12,134 @@ import {
 import { ASSESSMENT_TYPES } from "@/lib/labels";
 import { useApi } from "@/lib/useApi";
 
+const MAX_OPTIONS = 6;
+
+interface QuestionDraft {
+  prompt: string;
+  options: string[];
+  answer: number;
+  explanation: string;
+}
+
+const newQuestion = (): QuestionDraft => ({
+  prompt: "",
+  options: ["", "", "", ""],
+  answer: 0,
+  explanation: "",
+});
+
 const EMPTY = {
   title: "",
   type: "QUIZ" as AssessmentType,
-  maxScore: 100,
-  weight: 20,
+  maxScore: 10,
+  weight: 5,
   lessonId: "",
   instructions: "",
-  // Un ejercicio por línea.
-  questions: "",
+  questions: [newQuestion()],
 };
+
+// Editor de una pregunta de opción múltiple: enunciado, opciones (se marca la
+// correcta) y la explicación que ve el estudiante al corregir.
+function QuestionEditor({
+  index,
+  question,
+  onChange,
+  onRemove,
+}: {
+  index: number;
+  question: QuestionDraft;
+  onChange: (question: QuestionDraft) => void;
+  onRemove?: () => void;
+}) {
+  const setOption = (i: number, value: string) =>
+    onChange({
+      ...question,
+      options: question.options.map((option, j) => (j === i ? value : option)),
+    });
+  const removeOption = (i: number) =>
+    onChange({
+      ...question,
+      options: question.options.filter((_, j) => j !== i),
+      // La correcta sigue siendo la misma opción aunque cambie de posición.
+      answer:
+        question.answer === i ? 0 : question.answer > i ? question.answer - 1 : question.answer,
+    });
+
+  return (
+    <fieldset className="question-editor stack">
+      <legend className="row spread">
+        <strong>Pregunta {index + 1}</strong>
+        {onRemove && (
+          <button type="button" className="btn btn-quiet btn-danger" onClick={onRemove}>
+            Quitar pregunta
+          </button>
+        )}
+      </legend>
+      <label className="field">
+        <span>Enunciado</span>
+        <textarea
+          className="input"
+          required
+          maxLength={1000}
+          style={{ minHeight: "4rem" }}
+          value={question.prompt}
+          onChange={(e) => onChange({ ...question, prompt: e.target.value })}
+        />
+      </label>
+      <div className="field">
+        <span>Opciones (marca la correcta)</span>
+        {question.options.map((option, i) => (
+          <div key={i} className="option-row">
+            <input
+              type="radio"
+              name={`correct-${index}`}
+              checked={question.answer === i}
+              onChange={() => onChange({ ...question, answer: i })}
+              aria-label={`La opción ${i + 1} es la correcta`}
+            />
+            <input
+              className="input"
+              required
+              maxLength={300}
+              value={option}
+              onChange={(e) => setOption(i, e.target.value)}
+              aria-label={`Opción ${i + 1} de la pregunta ${index + 1}`}
+            />
+            {question.options.length > 2 && (
+              <button
+                type="button"
+                className="btn btn-quiet"
+                onClick={() => removeOption(i)}
+                aria-label={`Quitar la opción ${i + 1}`}
+              >
+                Quitar
+              </button>
+            )}
+          </div>
+        ))}
+        {question.options.length < MAX_OPTIONS && (
+          <button
+            type="button"
+            className="btn btn-quiet"
+            style={{ justifySelf: "start" }}
+            onClick={() => onChange({ ...question, options: [...question.options, ""] })}
+          >
+            Añadir opción
+          </button>
+        )}
+      </div>
+      <label className="field">
+        <span>Explicación (opcional)</span>
+        <input
+          className="input"
+          maxLength={1000}
+          value={question.explanation}
+          onChange={(e) => onChange({ ...question, explanation: e.target.value })}
+        />
+      </label>
+    </fieldset>
+  );
+}
 
 export function AssessmentsTab({
   courseId,
@@ -37,7 +155,7 @@ export function AssessmentsTab({
 
   const used = assessments.data?.reduce((sum, a) => sum + a.weight, 0) ?? 0;
 
-  // El listado no trae los enunciados; se piden al abrir la edición.
+  // El listado no trae las preguntas; se piden al abrir la edición.
   const startEdit = (id: string) =>
     action.run(async () => {
       const a = await api<AssessmentDetail>(`/assessments/${id}`);
@@ -49,7 +167,14 @@ export function AssessmentsTab({
         weight: a.weight,
         lessonId: a.lessonId ?? "",
         instructions: a.instructions ?? "",
-        questions: a.questions.join("\n"),
+        questions: a.questions.length
+          ? a.questions.map((q) => ({
+              prompt: q.prompt,
+              options: q.options,
+              answer: q.answer ?? 0,
+              explanation: q.explanation ?? "",
+            }))
+          : [newQuestion()],
       });
     });
 
@@ -57,6 +182,12 @@ export function AssessmentsTab({
     setEditingId(null);
     setForm(EMPTY);
   };
+
+  const setQuestion = (index: number, question: QuestionDraft) =>
+    setForm({
+      ...form,
+      questions: form.questions.map((q, i) => (i === index ? question : q)),
+    });
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -70,10 +201,10 @@ export function AssessmentsTab({
             ...rest,
             ...(lessonId && { lessonId }),
             ...(instructions.trim() && { instructions: instructions.trim() }),
-            questions: questions
-              .split("\n")
-              .map((line) => line.trim())
-              .filter(Boolean),
+            questions: questions.map(({ explanation, ...question }) => ({
+              ...question,
+              ...(explanation.trim() && { explanation: explanation.trim() }),
+            })),
           },
         },
       );
@@ -112,9 +243,10 @@ export function AssessmentsTab({
               <tr>
                 <th>Evaluación</th>
                 <th>Tipo</th>
-                <th className="num">Ejercicios</th>
+                <th className="num">Preguntas</th>
                 <th className="num">Nota máxima</th>
                 <th className="num">Peso</th>
+                <th className="num">Respondieron</th>
                 <th />
               </tr>
             </thead>
@@ -126,6 +258,7 @@ export function AssessmentsTab({
                   <td className="num">{a.questionCount || "—"}</td>
                   <td className="num">{a.maxScore}</td>
                   <td className="num">{a.weight}%</td>
+                  <td className="num">{a.attempted}</td>
                   <td>
                     <span className="row" style={{ justifyContent: "flex-end" }}>
                       <button
@@ -153,6 +286,11 @@ export function AssessmentsTab({
 
       <form className="panel stack" onSubmit={submit}>
         <h3>{editingId ? "Editar evaluación" : "Nueva evaluación"}</h3>
+        <p className="small muted">
+          Todo es de opción múltiple y se corrige solo. El test de una estación la
+          completa cuando el estudiante lo aprueba con 70 %; el examen se abre al
+          completar todas las estaciones.
+        </p>
         <div className="form-grid">
           <label className="field">
             <span>Título</span>
@@ -207,13 +345,13 @@ export function AssessmentsTab({
             />
           </label>
           <label className="field">
-            <span>Estación relacionada (opcional)</span>
+            <span>Estación de la que es test (opcional)</span>
             <select
               className="input"
               value={form.lessonId}
               onChange={(e) => setForm({ ...form, lessonId: e.target.value })}
             >
-              <option value="">Todo el curso</option>
+              <option value="">Ninguna: todo el curso</option>
               {lessons.map((lesson) => (
                 <option key={lesson.id} value={lesson.id}>
                   {lesson.order}. {lesson.title}
@@ -231,19 +369,32 @@ export function AssessmentsTab({
             onChange={(e) => setForm({ ...form, instructions: e.target.value })}
           />
         </label>
-        <label className="field">
-          <span>Ejercicios, uno por línea</span>
-          <textarea
-            className="input"
-            required
-            value={form.questions}
-            onChange={(e) => setForm({ ...form, questions: e.target.value })}
+
+        {form.questions.map((question, index) => (
+          <QuestionEditor
+            key={index}
+            index={index}
+            question={question}
+            onChange={(q) => setQuestion(index, q)}
+            onRemove={
+              form.questions.length > 1
+                ? () =>
+                    setForm({
+                      ...form,
+                      questions: form.questions.filter((_, i) => i !== index),
+                    })
+                : undefined
+            }
           />
-          <span className="small muted" style={{ fontWeight: 400 }}>
-            El estudiante responde cada ejercicio en la plataforma y el profe que
-            eligió califica su entrega en la pestaña Entregas.
-          </span>
-        </label>
+        ))}
+        <button
+          type="button"
+          className="btn"
+          onClick={() => setForm({ ...form, questions: [...form.questions, newQuestion()] })}
+        >
+          Añadir pregunta
+        </button>
+
         <div className="row">
           <button className="btn btn-primary" disabled={action.busy}>
             {editingId ? "Guardar cambios" : "Añadir evaluación"}

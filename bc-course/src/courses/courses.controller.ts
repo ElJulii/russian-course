@@ -45,12 +45,6 @@ export class CoursesController {
     return this.courses.listManageable(query);
   }
 
-  @Get('teaching')
-  @RequirePermissions(Permission.GradeManage)
-  listTeaching(@CurrentUser() user: AuthUser) {
-    return this.courses.listTeaching(user);
-  }
-
   @Public()
   @Get(':courseId')
   findOne(

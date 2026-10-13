@@ -7,22 +7,19 @@ import { AssessmentsTab } from "@/components/manage/AssessmentsTab";
 import { GradebookTab } from "@/components/manage/GradebookTab";
 import { LessonsTab } from "@/components/manage/LessonsTab";
 import { StatsTab } from "@/components/manage/StatsTab";
-import { SubmissionsTab } from "@/components/manage/SubmissionsTab";
 import { Guard, Loading, Notice, Roundel, lineStyle, useAction } from "@/components/ui";
 import { api, type CourseDetail } from "@/lib/api";
 import { COURSE_STATUS, plural } from "@/lib/labels";
 import { useApi } from "@/lib/useApi";
 
-const TABS = ["Estaciones", "Evaluaciones", "Entregas", "Notas", "Cifras"] as const;
-// El profe no edita el curso: solo revisa y califica a sus estudiantes.
-const GRADING_TABS: readonly (typeof TABS)[number][] = ["Entregas", "Notas"];
+const TABS = ["Estaciones", "Evaluaciones", "Notas", "Cifras"] as const;
 
 function Manage() {
   const { id } = useParams<{ id: string }>();
   const router = useRouter();
   const course = useApi<CourseDetail>(`/courses/${id}`);
   const action = useAction();
-  const [chosenTab, setTab] = useState<(typeof TABS)[number] | null>(null);
+  const [tab, setTab] = useState<(typeof TABS)[number]>("Estaciones");
   const [confirmDelete, setConfirmDelete] = useState(false);
 
   if (!course.data) {
@@ -32,18 +29,15 @@ function Manage() {
       </main>
     );
   }
-  const { canManage, canGrade } = course.data.viewer;
-  if (!canGrade) {
+  if (!course.data.viewer.canManage) {
     return (
       <main className="shell page">
-        <Notice>Tu cuenta no puede calificar en este curso.</Notice>
+        <Notice>Solo la administración gestiona los cursos.</Notice>
       </main>
     );
   }
 
   const { status, level, title, lessons, _count } = course.data;
-  const tabs = canManage ? TABS : GRADING_TABS;
-  const tab = chosenTab ?? tabs[0];
 
   const change = (path: string, method = "POST") =>
     action.run(async () => {
@@ -63,7 +57,7 @@ function Manage() {
       style={{ ...lineStyle(level), "--gap": "1.75rem" } as CSSProperties}
     >
       <Link href="/ensenar" className="small">
-        {canManage ? "Cursos" : "Evaluar"}
+        Cursos
       </Link>
 
       <header className="course-head">
@@ -78,12 +72,7 @@ function Manage() {
             </span>
           </div>
           <h1>{title}</h1>
-          {!canManage && (
-            <p className="muted">
-              Aquí ves solo a los estudiantes que te eligieron para evaluarlos.
-            </p>
-          )}
-          <div className="row" hidden={!canManage}>
+          <div className="row">
             {status === "PUBLISHED" ? (
               <button
                 className="btn"
@@ -132,7 +121,7 @@ function Manage() {
       <Notice>{action.error}</Notice>
 
       <div className="tabs" role="group" aria-label="Secciones del curso">
-        {tabs.map((name) => (
+        {TABS.map((name) => (
           <button
             key={name}
             aria-pressed={tab === name}
@@ -144,20 +133,19 @@ function Manage() {
         ))}
       </div>
 
-      {canManage && tab === "Estaciones" && (
+      {tab === "Estaciones" && (
         <LessonsTab courseId={id} lessons={lessons} reload={course.reload} />
       )}
-      {canManage && tab === "Evaluaciones" && <AssessmentsTab courseId={id} lessons={lessons} />}
-      {tab === "Entregas" && <SubmissionsTab courseId={id} />}
+      {tab === "Evaluaciones" && <AssessmentsTab courseId={id} lessons={lessons} />}
       {tab === "Notas" && <GradebookTab courseId={id} />}
-      {canManage && tab === "Cifras" && <StatsTab courseId={id} />}
+      {tab === "Cifras" && <StatsTab courseId={id} />}
     </main>
   );
 }
 
 export default function ManagePage() {
   return (
-    <Guard roles={["INSTRUCTOR", "ADMIN"]}>
+    <Guard roles={["ADMIN"]}>
       <Manage />
     </Guard>
   );

@@ -25,8 +25,7 @@ export class LessonsService {
     private readonly courses: CoursesService,
   ) {}
 
-  // El contenido completo solo lo ven los profes, los admins y los
-  // estudiantes inscritos.
+  // El contenido completo solo lo ven los admins y los estudiantes inscritos.
   async findOne(user: AuthUser, courseId: string, lessonId: string) {
     await this.courses.getVisible(user, courseId);
     const lesson = await this.prisma.lesson.findFirst({
@@ -34,7 +33,7 @@ export class LessonsService {
     });
     if (!lesson) throw new NotFoundException('Lección no encontrada');
 
-    if (!this.courses.canGrade(user)) {
+    if (!this.courses.canManage(user)) {
       const enrollment = await this.prisma.enrollment.findUnique({
         where: { studentId_courseId: { studentId: user.id, courseId } },
         select: { status: true },

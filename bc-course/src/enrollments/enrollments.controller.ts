@@ -1,5 +1,4 @@
 import {
-  Body,
   Controller,
   Get,
   HttpCode,
@@ -8,7 +7,7 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
-import { IsEnum, IsOptional, IsUUID } from 'class-validator';
+import { IsEnum, IsOptional } from 'class-validator';
 import type { AuthUser } from '../common/decorators';
 import { CurrentUser, RequirePermissions } from '../common/decorators';
 import { PaginationDto } from '../common/pagination';
@@ -22,11 +21,6 @@ class ListEnrollmentsDto extends PaginationDto {
   status?: EnrollmentStatus;
 }
 
-class EnrollDto {
-  @IsUUID()
-  evaluatorId: string;
-}
-
 @Controller()
 export class EnrollmentsController {
   constructor(private readonly enrollments: EnrollmentsService) {}
@@ -36,9 +30,8 @@ export class EnrollmentsController {
   enroll(
     @CurrentUser() user: AuthUser,
     @Param('courseId', ParseUUIDPipe) courseId: string,
-    @Body() dto: EnrollDto,
   ) {
-    return this.enrollments.enroll(user, courseId, dto.evaluatorId);
+    return this.enrollments.enroll(user, courseId);
   }
 
   @Post('courses/:courseId/lessons/:lessonId/complete')
@@ -60,12 +53,6 @@ export class EnrollmentsController {
     @Query() query: ListEnrollmentsDto,
   ) {
     return this.enrollments.listByCourse(user, courseId, query.status, query);
-  }
-
-  @Get('enrollments/evaluating')
-  @RequirePermissions(Permission.GradeManage)
-  listEvaluating(@CurrentUser() user: AuthUser) {
-    return this.enrollments.listEvaluating(user);
   }
 
   @Get('enrollments/me')

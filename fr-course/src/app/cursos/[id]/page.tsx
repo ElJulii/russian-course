@@ -3,13 +3,8 @@
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { Loading, Meter, Notice, Roundel, lineStyle, useAction } from "@/components/ui";
-import { useState, type CSSProperties } from "react";
-import {
-  api,
-  type CourseDetail,
-  type Instructor,
-  type StudentAssessment,
-} from "@/lib/api";
+import type { CSSProperties } from "react";
+import { api, type CourseDetail, type StudentAssessment } from "@/lib/api";
 import { useAuth } from "@/lib/auth";
 import {
   ASSESSMENT_TYPES,
@@ -29,19 +24,10 @@ export default function CoursePage() {
   const viewer = course.data?.viewer;
   const inCourse =
     !!viewer &&
-    (viewer.canGrade || (!!viewer.enrollment && viewer.enrollment.status !== "DROPPED"));
+    (viewer.canManage || (!!viewer.enrollment && viewer.enrollment.status !== "DROPPED"));
   const assessments = useApi<StudentAssessment[]>(
     inCourse ? `/courses/${id}/assessments` : null,
   );
-
-  // Al subirse, el estudiante elige qué profe lo evaluará.
-  const [evaluatorId, setEvaluatorId] = useState("");
-  const canEnroll =
-    !!viewer &&
-    user?.role === "STUDENT" &&
-    course.data?.status === "PUBLISHED" &&
-    (!viewer.enrollment || viewer.enrollment.status === "DROPPED");
-  const instructors = useApi<Instructor[]>(canEnroll ? "/users/instructors" : null);
 
   if (!course.data || !viewer) {
     return (
@@ -53,6 +39,7 @@ export default function CoursePage() {
 
   const { lessons, ...info } = course.data;
   const answerable = assessments.data?.filter((a) => a.questionCount > 0) ?? [];
+  const exam = answerable.find((a) => a.type === "EXAM");
   const enrollment =
     viewer.enrollment?.status === "DROPPED" ? null : viewer.enrollment;
   const done = new Set(enrollment?.completedLessonIds);
@@ -60,12 +47,12 @@ export default function CoursePage() {
   const percent = lessons.length
     ? Math.round((done.size / lessons.length) * 100)
     : 0;
-  const canOpen = viewer.canGrade || !!enrollment;
+  const canOpen = viewer.canManage || !!enrollment;
   const minutes = lessons.reduce((sum, l) => sum + l.durationMinutes, 0);
 
   const enroll = () =>
     action.run(async () => {
-      await api(`/courses/${id}/enroll`, { method: "POST", body: { evaluatorId } });
+      await api(`/courses/${id}/enroll`, { method: "POST" });
       course.reload();
     });
   const drop = () =>
@@ -92,17 +79,18 @@ export default function CoursePage() {
           <p className="lede">{info.description}</p>
           <p className="small muted">
             {plural(lessons.length, "estación", "estaciones")}, unos {minutes}{" "}
-            minutos en total. Al subirte eliges qué profe te evalúa.
+            minutos en total. Avanzas a tu ritmo: cada estación tiene un test que
+            se corrige solo.
           </p>
         </div>
       </header>
 
       <Notice>{action.error}</Notice>
 
-      {viewer.canGrade ? (
+      {viewer.canManage ? (
         <div className="row">
           <Link href={`/ensenar/${id}`} className="btn btn-sun">
-            {viewer.canManage ? "Gestionar este curso" : "Calificar a mis estudiantes"}
+            Gestionar este curso
           </Link>
         </div>
       ) : enrollment ? (
@@ -116,7 +104,6 @@ export default function CoursePage() {
             <span className="cyr">{percent}%</span>
           </div>
           <Meter percent={percent} />
-          <p className="small muted">Te evalúa {enrollment.evaluator.name}.</p>
           <div className="row spread">
             {nextLesson ? (
               <Link
@@ -124,6 +111,13 @@ export default function CoursePage() {
                 className="btn btn-primary"
               >
                 {done.size ? "Seguir el viaje" : "Empezar el viaje"}
+              </Link>
+            ) : exam && !exam.passed ? (
+              <Link
+                href={`/cursos/${id}/evaluaciones/${exam.id}`}
+                className="btn btn-primary"
+              >
+                Hacer el examen final
               </Link>
             ) : (
               <Link href="/notas" className="btn">
@@ -153,44 +147,11 @@ export default function CoursePage() {
           </Link>
         </div>
       ) : user.role === "STUDENT" ? (
-        <form
-          className="panel stack"
-          onSubmit={(e) => {
-            e.preventDefault();
-            void enroll();
-          }}
-        >
-          <h2>Elige quién te evalúa</h2>
-          <p className="muted">
-            El curso es de la plataforma. El profe que elijas revisará tus ejercicios
-            y tu examen final y les pondrá nota.
-          </p>
-          <Loading loading={instructors.loading} error={instructors.error} />
-          {instructors.data?.length === 0 && (
-            <Notice>Todavía no hay profes disponibles. Vuelve más tarde.</Notice>
-          )}
-          {!!instructors.data?.length && (
-            <label className="field" style={{ maxWidth: "24rem" }}>
-              <span>Profe</span>
-              <select
-                className="input"
-                required
-                value={evaluatorId}
-                onChange={(e) => setEvaluatorId(e.target.value)}
-              >
-                <option value="">Elige un profe</option>
-                {instructors.data.map((instructor) => (
-                  <option key={instructor.id} value={instructor.id}>
-                    {instructor.name}
-                  </option>
-                ))}
-              </select>
-            </label>
-          )}
-          <button className="btn btn-primary" disabled={action.busy || !evaluatorId}>
+        <div className="row">
+          <button className="btn btn-primary" onClick={enroll} disabled={action.busy}>
             {viewer.enrollment ? "Volver a subirme" : "Subirme a esta línea"}
           </button>
-        </form>
+        </div>
       ) : null}
 
       <section className="stack">
@@ -237,10 +198,11 @@ export default function CoursePage() {
 
       {answerable.length > 0 && (
         <section className="stack">
-          <h2>Ejercicios y examen</h2>
+          <h2>Tests y examen</h2>
           <p className="muted">
-            Respondes aquí mismo y el profe califica cada entrega a mano. El examen
-            final se abre al completar todas las estaciones.
+            Son de opción múltiple y se corrigen al momento. Aprobar el test de una
+            estación abre la siguiente, y el examen final se abre al completarlas
+            todas. Puedes repetirlos las veces que quieras: cuenta tu mejor nota.
           </p>
           <div className="table-wrap">
             <table>
@@ -249,7 +211,7 @@ export default function CoursePage() {
                   <th>Evaluación</th>
                   <th>Tipo</th>
                   <th className="num">Peso</th>
-                  {!viewer.canGrade && <th>Estado</th>}
+                  {!viewer.canManage && <th>Tu mejor nota</th>}
                 </tr>
               </thead>
               <tbody>
@@ -260,12 +222,14 @@ export default function CoursePage() {
                     </td>
                     <td>{ASSESSMENT_TYPES[a.type]}</td>
                     <td className="num">{a.weight}%</td>
-                    {!viewer.canGrade && (
+                    {!viewer.canManage && (
                       <td>
-                        {a.score === null ? (
+                        {a.bestScore === null ? (
                           <span className="muted">{assessmentState(a)}</span>
                         ) : (
-                          <strong>{assessmentState(a)}</strong>
+                          <span className={a.passed ? "chip chip-sun" : "chip"}>
+                            {assessmentState(a)}
+                          </span>
                         )}
                       </td>
                     )}

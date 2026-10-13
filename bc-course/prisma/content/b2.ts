@@ -1,14 +1,13 @@
-import type { CourseContent } from './course-content';
+import type { LessonContent } from './course-content';
 
 // Temario B2 (equivalente a ТРКИ-2): matices del aspecto, prefijos verbales,
 // rección, sintaxis del texto escrito, modalidad, formación de palabras,
 // estilos funcionales y argumentación.
-export const B2: CourseContent = {
-  lessons: [
-    {
-      title: 'Matices del aspecto verbal',
-      durationMinutes: 60,
-      content: `En B2 ya no basta con «proceso frente a resultado». El aspecto transmite la actitud del hablante: si le interesa el hecho, el resultado, el intento o la anulación.
+export const B2: LessonContent[] = [
+  {
+    title: 'Matices del aspecto verbal',
+    durationMinutes: 60,
+    content: `En B2 ya no basta con «proceso frente a resultado». El aspecto transmite la actitud del hablante: si le interesa el hecho, el resultado, el intento o la anulación.
 
 1. EL HECHO EN GENERAL (общефактическое значение)
 El imperfectivo nombra la acción sin interesarse por su resultado ni por el momento.
@@ -58,18 +57,11 @@ Iterativos coloquiales: говаривать, хаживать, сиживать
 
 TEXTO
 — Вы когда-нибудь бывали в Сибири? — Бывал, и не раз. В первый раз я ездил туда ещё студентом. Помню, долго уговаривал родителей отпустить меня и всё-таки уговорил. Мы плыли по Енисею две недели. Бывало, проснёшься рано утром, выйдешь на палубу — а вокруг туман, и ничего не разглядишь. Однажды ночью кто-то заходил в мою каюту и брал фонарь: утром он лежал не на своём месте. Кто это был, я так и не выяснил.`,
-      exercises: [
-        'Explica el matiz de cada par: a) Кто открывал окно? / Кто открыл окно? b) Я сдавал экзамен по истории. / Я сдал экзамен по истории. c) Ты звонил директору? / Ты позвонил директору? d) Он эту задачу не решит. / Он эту задачу не решает.',
-        'Elige el aspecto y justifica: Я долго (вспоминал / вспомнил) её адрес и наконец (вспоминал / вспомнил). — Вы (смотрели / посмотрели) этот спектакль? — Да, (смотрел / посмотрел) в прошлом году. К тебе (приезжала / приехала) сестра? — Да, она уехала вчера. Кто (писал / написал) «Евгения Онегина»? Не советую вам (брать / взять) этот кредит.',
-        'Transforma con el perfectivo de sentido potencial. Modelo: Никто не может его понять. → Его не поймёшь. — Невозможно поднять этот камень. / Нельзя всё предусмотреть. / Трудно сразу ответить на этот вопрос. / Ничего нельзя сделать. / Никто не может его переспорить.',
-        'Di si cada verbo es imperfectivo, perfectivo o biaspectual y escribe una frase con cada uno: зависеть, состояться, использовать, очутиться, обещать, принадлежать, крикнуть, организовать.',
-        'Escribe un relato de 12 frases que empiece con «Бывало, …» sobre algo que hacías a menudo en tu infancia, usando el perfectivo futuro para la repetición, dos verbos de resultado anulado y un par de intento y logro.',
-      ],
-    },
-    {
-      title: 'Prefijos verbales: el significado está en el prefijo',
-      durationMinutes: 65,
-      content: `Un mismo verbo cambia de significado con cada prefijo. Conocer el valor de los prefijos permite entender verbos nunca vistos.
+  },
+  {
+    title: 'Prefijos verbales: el significado está en el prefijo',
+    durationMinutes: 65,
+    content: `Un mismo verbo cambia de significado con cada prefijo. Conocer el valor de los prefijos permite entender verbos nunca vistos.
 
 1. VALORES PRINCIPALES
 в- hacia dentro: вписать, включить, вложить, вникнуть (profundizar)
@@ -119,18 +111,11 @@ Al añadir un prefijo con significado nuevo, el verbo es perfectivo y necesita u
 
 TEXTO
 Мы с Олегом давно не виделись, а вчера наконец созвонились и договорились встретиться. Я зашёл за ним после работы. Сначала разговор не клеился, но потом мы разговорились и просидели в кафе до полуночи. Олег рассказал, что передумал уезжать: друзья отговорили его, да и сам он, всё хорошенько обдумав, понял, что недооценил свою нынешнюю работу. Мы так заговорились, что я чуть не проехал свою остановку. Зато наговорились на год вперёд!`,
-      exercises: [
-        'Explica en español la diferencia entre los verbos de cada serie y escribe una frase con cada uno: записать / переписать / подписать / списать · передумать / придумать / обдумать / задуматься · уговорить / отговорить / договориться / проговориться.',
-        'Completa con el prefijo adecuado: Суп невозможно есть: ты его ___солил. Я ___спал и опоздал на работу. Мы ___гуляли по городу весь день и очень устали. Она так ___читалась, что не услышала звонка. Я ___звонил всех друзей, но никто не знает, где он. Он ___оценил противника и проиграл. Дай мне ___читать главу, осталось две страницы.',
-        'Forma el verbo con circunfijo y -ся que corresponde: comer hasta hartarse (есть) · lograr comunicar por teléfono (звонить) · echarse a llorar (плакать) · dormir a fondo (спать) · quedarse absorto leyendo (читать) · ponerse de acuerdo (говорить) · irse de la lengua (говорить) · errar el cálculo (считать). Escribe una frase con cada uno.',
-        'Forma el imperfectivo secundario: записать, рассмотреть, уговорить, опоздать, спросить, заработать, объяснить, выбрать, привыкнуть, пересмотреть, обдумать, подписать.',
-        'Escribe un texto de 12 frases sobre un reencuentro con un viejo amigo o una decisión difícil, usando al menos diez verbos con prefijo de esta lección (tres con circunfijo y -ся).',
-      ],
-    },
-    {
-      title: 'Verbos de movimiento en sentido figurado',
-      durationMinutes: 55,
-      content: `En el lenguaje culto los verbos de movimiento rara vez hablan de caminar: describen procesos, relaciones y estados. Cada expresión admite solo un verbo.
+  },
+  {
+    title: 'Verbos de movimiento en sentido figurado',
+    durationMinutes: 55,
+    content: `En el lenguaje culto los verbos de movimiento rara vez hablan de caminar: describen procesos, relaciones y estados. Cada expresión admite solo un verbo.
 
 1. ИДТИ Y SUS DERIVADOS
 идти: идёт дождь, время, урок, война, речь о + prep. (se trata de): Речь идёт о важном решении. · идти на компромисс, на риск, на уступки · идти в ногу со временем · идти навстречу + dat. (acceder a los deseos de)
@@ -175,18 +160,11 @@ TEXTO
 
 TEXTO
 Переговоры шли уже третий день, но стороны никак не могли прийти к соглашению. Руководитель делегации вёл себя сдержанно, хотя оппоненты не раз пытались вывести его из себя. Наконец он привёл несколько убедительных доводов и предложил перенести обсуждение спорных пунктов. Противоположная сторона пошла навстречу. Это решение превзошло все ожидания: документ, вошедший позже в историю дипломатии, был подписан уже через неделю. «Нам просто повезло», — скромно сказал он журналистам, уходя от прямого ответа.`,
-      exercises: [
-        'Completa con el verbo de movimiento adecuado en la forma correcta: Речь ___ о будущем компании. Он ___ к выводу, что был неправ. Эта привычка ___ в моду недавно. Мне ___ отказаться от поездки. Его слова ___ меня из себя. Авария ___ к серьёзным последствиям. Учёный ___ большой вклад в науку. Давайте ___ встречу на пятницу.',
-        'Sustituye la parte en mayúsculas por una expresión con verbo de movimiento: Мы ДОГОВОРИЛИСЬ. / Он ОЧЕНЬ РАССЕРДИЛСЯ. / Компьютер СЛОМАЛСЯ. / Она СТАЛА ЖЕНОЙ инженера. / Я ЗАБЫЛ его имя. / Это КАСАЕТСЯ всех сотрудников. / Он НЕ МОЖЕТ ТЕРПЕТЬ шума. / Спектакль ПОНРАВИЛСЯ ВСЕМ БОЛЬШЕ, ЧЕМ ЖДАЛИ.',
-        'Traduce al ruso: Tuvimos que recurrir a la ayuda de un abogado. Hay que evitar estos errores. No te metas donde no te llaman. ¿Qué actitud tiene usted ante esta reforma? Sus argumentos me causaron una gran impresión. Todo se arreglará.',
-        'Forma el sustantivo derivado y escribe una frase con cada uno: подойти, вывести, перевести, произойти, относиться, вести себя, расходовать, произвести.',
-        'Redacta una nota de prensa de 12 frases sobre unas negociaciones, una reforma o un proyecto, con al menos diez expresiones figuradas de esta lección.',
-      ],
-    },
-    {
-      title: 'La rección verbal: qué caso pide cada verbo',
-      durationMinutes: 60,
-      content: `La rección (управление) es la mayor fuente de errores en el nivel avanzado: en ruso el caso lo dicta cada verbo, y rara vez coincide con la preposición española.
+  },
+  {
+    title: 'La rección verbal: qué caso pide cada verbo',
+    durationMinutes: 60,
+    content: `La rección (управление) es la mayor fuente de errores en el nivel avanzado: en ruso el caso lo dicta cada verbo, y rara vez coincide con la preposición española.
 
 1. GENITIVO SIN PREPOSICIÓN
 бояться, опасаться (temer) · избегать (evitar) · достигать / достичь (alcanzar) · добиваться / добиться (conseguir) · требовать · просить (algo abstracto: просить совета, помощи) · ждать (algo indefinido: ждать ответа) · желать · хотеть (счастья, мира) · касаться (concernir; tocar) · придерживаться (atenerse a) · заслуживать (merecer) · лишаться / лишиться (perder, quedar privado de) · стоить (труда, усилий) · слушаться (obedecer) · стесняться · стыдиться · держаться (мнения)
@@ -226,18 +204,11 @@ Con preposición: следить за · наблюдать за · ухажив
 
 TEXTO
 Успех любого проекта зависит от людей, которые в нём участвуют. Хороший руководитель не злоупотребляет властью, прислушивается к мнению коллег и отвечает за свои решения. Он не боится трудностей, стремится к ясной цели и добивается её. Если он ошибся в расчётах, он признаётся в этом и не обвиняет подчинённых в собственных промахах. Такому человеку доверяют, им гордятся, на него рассчитывают — и именно это отличает лидера от начальника.`,
-      exercises: [
-        'Pon las palabras en el caso correcto, con preposición si hace falta: Всё зависит ___ (погода). Он добился ___ (большой успех). Я сомневаюсь ___ (его честность). Она гордится ___ (свои ученики). Мы рассчитываем ___ (ваша помощь). Это противоречит ___ (здравый смысл). Он отказался ___ (наше предложение). Я настаиваю ___ (своё решение).',
-        'Completa: Кто отвечает ___ (безопасность)? Он не ответил ___ (мой вопрос). Комиссия состоит ___ (пять человек). Проблема состоит ___ (то), что нет денег. Я согласен ___ (вы), но не согласен ___ (такие условия). Она страдает ___ (бессонница). Мы боремся ___ (свои права) ___ (несправедливость).',
-        'Corrige los errores de rección: «Оплатите за проезд». «Он уверен о своей победе». «Я скучаю за тобой». «Она вышла замуж с инженером». «Мы обсуждали о проблеме». «Обратите внимание об этом факте». «Он женился с Анной».',
-        'Escribe una frase con cada verbo mostrando su rección: избегать, способствовать, соответствовать, пренебрегать, обладать, нуждаться, свидетельствовать, влиять, разбираться, придерживаться.',
-        'Escribe un texto de 12 a 14 frases sobre el tema «Каким должен быть хороший руководитель (или учитель)?» usando al menos quince verbos de esta lección con su rección correcta.',
-      ],
-    },
-    {
-      title: 'Participios y gerundios en el texto escrito',
-      durationMinutes: 55,
-      content: `En B1 aprendiste a formarlos. En B2 debes usarlos con soltura para condensar la información, como exige el estilo escrito, y saber cuándo evitarlos.
+  },
+  {
+    title: 'Participios y gerundios en el texto escrito',
+    durationMinutes: 55,
+    content: `En B1 aprendiste a formarlos. En B2 debes usarlos con soltura para condensar la información, como exige el estilo escrito, y saber cuándo evitarlos.
 
 1. CADENAS DE PARTICIPIOS Y EL ORDEN DE PALABRAS
 El giro participial puede preceder al sustantivo con sus complementos intercalados, como en alemán:
@@ -288,18 +259,11 @@ Sufijos: -ние / -ение (изучение, решение, создание
 
 TEXTO
 Обсуждаемый сегодня законопроект, внесённый в парламент группой депутатов и уже вызвавший бурные споры, касается защиты окружающей среды. Учитывая сложившуюся ситуацию, авторы предлагают ввести новые налоги для предприятий, загрязняющих воздух. Выступая перед журналистами, министр отметил, что, принимая такие решения, нельзя забывать об интересах работников. Судя по результатам опроса, проведённого на прошлой неделе, большинство граждан поддерживает реформу, несмотря на ожидаемый рост цен.`,
-      exercises: [
-        'Sustituye por participio cuando sea posible y explica por qué no se puede en los demás casos: Проблемы, которые обсуждаются на конференции, очень актуальны. / Человек, с которым я разговаривал, оказался журналистом. / Студент, который приедет завтра, будет жить в общежитии. / Решение, которое приняло правительство, вызвало критику. / Страны, которые развиваются, нуждаются в инвестициях.',
-        'Antepón el giro participial al sustantivo y quita las comas: Книга, опубликованная в прошлом году, стала бестселлером. / Меры, принятые правительством, оказались эффективными. / Люди, живущие в больших городах, часто страдают от стресса. / Письмо, полученное мной вчера, очень меня удивило.',
-        'Corrige las frases incorrectas: a) Прочитав книгу, она была возвращена в библиотеку. b) Подводя итоги, можно сказать, что эксперимент удался. c) Глядя на эту картину, мне становится грустно. d) Учитывая все факты, комиссия вынесла решение. e) Проезжая мимо станции, с меня слетела шляпа.',
-        'Nominaliza: Когда строили этот завод, использовали новые технологии. / После того как закончился спектакль, зрители долго аплодировали. / Чтобы улучшить качество, нужны инвестиции. / Хотя шёл дождь, матч не отменили. / Если будут соблюдаться правила, аварий не будет. / Потому что выросли цены, упал спрос.',
-        'Reescribe en estilo periodístico formal (10 frases, con al menos cinco participios, tres gerundios y tres nominalizaciones) esta noticia coloquial: «Вчера в городе открыли новую больницу. Её строили три года. Мэр сказал, что теперь людям не надо будет ездить в столицу. Жители рады, хотя некоторые говорят, что врачей не хватает».',
-      ],
-    },
-    {
-      title: 'Pasiva, oraciones impersonales y sujeto indeterminado',
-      durationMinutes: 55,
-      content: `El ruso dispone de muchos recursos para no nombrar al agente o para presentar al ser humano como experimentador y no como autor. Usarlos bien es lo que hace sonar natural un texto.
+  },
+  {
+    title: 'Pasiva, oraciones impersonales y sujeto indeterminado',
+    durationMinutes: 55,
+    content: `El ruso dispone de muchos recursos para no nombrar al agente o para presentar al ser humano como experimentador y no como autor. Usarlos bien es lo que hace sonar natural un texto.
 
 1. LAS TRES PASIVAS (repaso con matices)
 · быть + participio corto perfectivo: resultado. Договор подписан. Договор был подписан в мае. (был = hecho pasado; sin был = el resultado sigue vigente)
@@ -340,18 +304,11 @@ Numerales: Пришло / пришли пять человек. (singular neutro
 
 TEXTO
 Ночью сильно похолодало, а к утру всё вокруг занесло снегом. В деревне говорят, что такой зимы не было лет тридцать. Дороги не чистят, автобусы отменили, и до города теперь не добраться. Мне не спалось: всю ночь выло в трубе и пахло дымом. Думалось о том, что пора бы уезжать, да жаль бросать дом. Утром постучали в дверь — это сосед пришёл сказать, что свет дадут только к вечеру. Что ж, делать нечего: будем ждать.`,
-      exercises: [
-        'Clasifica cada oración (pasiva, de sujeto indeterminado, generalizadora o impersonal) y tradúcela: Меня попросили подождать. / Дорогу размыло дождём. / Что посеешь, то и пожнёшь. / Документы были отправлены вчера. / Мне не сидится дома. / Здесь продаются билеты. / Не хватает трёх человек.',
-        'Transforma en impersonal. Modelo: Ветер сорвал крышу. → Крышу сорвало ветром. — Вода залила подвал. / Молния зажгла дерево. / Снег засыпал дорогу. / Волна перевернула лодку. — Modelo: Я не сплю. → Мне не спится. — Я хочу есть. / Он не работает сегодня. / Я верю с трудом. / Она хорошо живёт в деревне.',
-        'Expresa la misma idea de tres maneras (activa, indeterminada y pasiva): La universidad fue fundada por Lomonósov en 1755. / El gobierno aprobó la ley ayer. / Los científicos han descubierto un nuevo planeta.',
-        'Elige la concordancia y explica: Прошл_ пять лет. Большинство депутатов проголосовал_ против. На собрание пришл_ двадцать человек. Несколько студентов не сдал_ экзамен. В аварии пострадал_ трое.',
-        'Describe en 12 frases una noche de tormenta, una ola de calor o una nevada usando al menos ocho oraciones impersonales de tipos distintos y dos de sujeto indeterminado.',
-      ],
-    },
-    {
-      title: 'Sintaxis compleja y conectores del discurso',
-      durationMinutes: 60,
-      content: `Un texto de nivel B2 enlaza ideas con precisión. Estas son las conjunciones compuestas y los conectores que distinguen el registro escrito.
+  },
+  {
+    title: 'Sintaxis compleja y conectores del discurso',
+    durationMinutes: 60,
+    content: `Un texto de nivel B2 enlaza ideas con precisión. Estas son las conjunciones compuestas y los conectores que distinguen el registro escrito.
 
 1. CAUSA Y MOTIVO
 Neutras: потому что · так как · поскольку
@@ -407,18 +364,11 @@ OJO: no son incisos y NO llevan comas: вдруг, ведь, вряд ли, вс
 
 TEXTO
 Как известно, изучение иностранных языков развивает память. Более того, по данным недавних исследований, оно замедляет старение мозга. Тем не менее многие взрослые бросают занятия, едва начав. Дело в том, что они ждут быстрых результатов, тогда как язык требует времени. С одной стороны, современные приложения делают учёбу доступнее; с другой — они создают иллюзию лёгкости. Следовательно, как бы удобны ни были технологии, без регулярной работы не обойтись. Иными словами, чудес не бывает.`,
-      exercises: [
-        'Une las frases con la conjunción indicada y haz los cambios necesarios: Цены выросли. Спрос упал. (вследствие чего) / Он опоздал. Его никто не ждал. (тем более что) / Было очень трудно. Мы закончили работу в срок. (как бы… ни) / Ему стоит появиться. Все замолкают. (стоит…, как) / Прошёл месяц. Он нашёл работу. (не прошло и…, как)',
-        'Sustituye la conjunción neutra por una del registro escrito: Матч отменили, потому что шёл дождь. / Он учит язык, чтобы работать за границей. / Если будет необходимо, мы изменим план. / Хотя были трудности, проект завершён. / Он приехал, поэтому мы смогли начать.',
-        'Pon las comas que falten: Во-первых я не согласен с вами. К сожалению он вряд ли придёт. По-моему это однако не так просто. Он ведь действительно прав. Итак подведём итоги. Кстати вы видели этот фильм? Тем не менее мы решили ехать.',
-        'Completa con el conector adecuado (более того, тем не менее, иными словами, с одной стороны / с другой стороны, следовательно, кстати, к счастью): Он не пришёл на встречу; ___, он даже не позвонил. Задача была сложной; ___ мы её решили. ___, удалённая работа экономит время, ___ — люди меньше общаются. Все расчёты верны, ___, ошибка в исходных данных. ___, никто не пострадал.',
-        'Escribe un texto argumentativo de 14 a 16 frases sobre «Нужно ли учить языки, если есть автоматический перевод?» con al menos doce conectores de grupos distintos, dos concesiones con ни y una condición sin если.',
-      ],
-    },
-    {
-      title: 'Modalidad: obligación, posibilidad, probabilidad',
-      durationMinutes: 55,
-      content: `La modalidad expresa cómo ve el hablante la acción: necesaria, posible, deseable o dudosa. El ruso la reparte entre adjetivos cortos, palabras impersonales con dativo y verbos.
+  },
+  {
+    title: 'Modalidad: obligación, posibilidad, probabilidad',
+    durationMinutes: 55,
+    content: `La modalidad expresa cómo ve el hablante la acción: necesaria, posible, deseable o dudosa. El ruso la reparte entre adjetivos cortos, palabras impersonales con dativo y verbos.
 
 1. OBLIGACIÓN Y NECESIDAD
 должен, должна, должно, должны + inf. (concuerda con el sujeto en nominativo): deber moral, acuerdo, plan o suposición. Я должен идти. · Поезд должен прийти в пять. · En pasado y futuro: должен был / должен буду.
@@ -471,18 +421,11 @@ Ajeno, no garantizado: якобы, будто бы, говорят, по слу�
 
 TEXTO
 Вы, должно быть, слышали, что с нового года всем сотрудникам придётся проходить аттестацию. По слухам, тех, кто не сдаст экзамен, якобы переведут на другую должность. Вряд ли это правда: начальство не вправе менять условия договора. Тем не менее готовиться стоит. Мне, например, не удалось найти прошлогодние вопросы, так что я вынужден читать всё подряд. Жаловаться нечего — нам ещё работать здесь, и, пожалуй, лишние знания никому не повредят.`,
-      exercises: [
-        'Explica la diferencia: a) Я должен был уехать. / Мне пришлось уехать. / Я был вынужден уехать. b) Он может плавать. / Он умеет плавать. c) Вам не надо приходить. / Вам нельзя приходить. / Вы можете не приходить. d) Он, должно быть, дома. / Он должен быть дома к шести.',
-        'Ordena de mayor a menor seguridad y escribe una frase con cada una: вряд ли, наверняка, может быть, должно быть, якобы, скорее всего, не исключено.',
-        'Reformula con la palabra indicada: У меня получилось купить билеты. (удалось) / Обстоятельства заставили его продать дом. (вынужден) / Этот музей рекомендую посетить. (стоит) / Нет причин волноваться. (нечего) / Никто не сможет его догнать. (не + inf. + dat.) / Я планирую поехать в Казань. (собираться / намерен)',
-        'Traduce al ruso: Debe de estar enfermo. Dudo que venga. No tienes por qué responder. No hay más remedio que esperar. Dicen que supuestamente dimitió. No me importaría tomar un café. Me da pereza cocinar. ¡Podrías haber avisado!',
-        'Escribe un texto de 12 frases con las normas y recomendaciones para un estudiante extranjero que llega a tu país: qué debe hacer, qué no hace falta, qué está prohibido, qué vale la pena y qué probablemente le sorprenderá. Usa al menos doce expresiones modales distintas.',
-      ],
-    },
-    {
-      title: 'Formación de palabras',
-      durationMinutes: 55,
-      content: `El vocabulario ruso se construye como un mecano: raíz + prefijos + sufijos. Reconocer las piezas multiplica tu comprensión lectora.
+  },
+  {
+    title: 'Formación de palabras',
+    durationMinutes: 55,
+    content: `El vocabulario ruso se construye como un mecano: raíz + prefijos + sufijos. Reconocer las piezas multiplica tu comprensión lectora.
 
 1. SUSTANTIVOS DE PERSONA
 -тель (agente): учитель, писатель, читатель, житель, руководитель, покупатель, избиратель (votante), исследователь, зритель, слушатель, предприниматель (empresario), потребитель (consumidor)
@@ -536,18 +479,11 @@ Siglas: вуз (высшее учебное заведение), ЗАГС (regis
 
 TEXTO
 В нашем городке, как и во многих приморских посёлках, главная проблема — безработица. Молодёжь уезжает в поисках заработка, остаются в основном пенсионеры да немногочисленные предприниматели, владельцы магазинчиков и гостиниц. Однако трудолюбивые и терпеливые жители не теряют оптимизма. В прошлом году группа единомышленников открыла небольшое производство деревянных игрушек. Спрос превзошёл ожидания: необыкновенная красота и новизна изделий привлекли покупателей со всей страны.`,
-      exercises: [
-        'Forma sustantivos: (persona) читать, покупать, исследовать, переводить, участвовать, петь · (cualidad) важный, возможный, красивый, чистый, новый, ответственный · (acción) решить, развить, подготовить, выбрать, бороться, открыть.',
-        'Forma adjetivos y explica el matiz del sufijo: дерево, стекло, разговор, терпеть, серый (un poco), счастье, город, заменить (con не-), победить (con не-), борода.',
-        'Da el diminutivo y explica el matiz en cada frase: Подождите ___ (минута). Хотите ___ (чай)? Какой милый ___ (дом)! Выпейте ___ (вода). Он живёт в каком-то ___ (город, despectivo). Вот это ___ (дом, aumentativo)!',
-        'Descompón en prefijo, raíz y sufijo y traduce: безработица, сотрудник, международный, необъяснимый, трудолюбивый, ежедневный, послевоенный, предприниматель, землетрясение, одноразовый. Luego descifra: вуз, СМИ, зарплата, соцсети, ДТП.',
-        'Escribe la familia de palabras (al menos diez) de una de estas raíces: -раб- (работа), -жи- (жить), -да- (дать), -вид- (видеть). Después redacta un párrafo de 8 frases usando ocho de ellas.',
-      ],
-    },
-    {
-      title: 'Estilos funcionales: del coloquial al oficial',
-      durationMinutes: 55,
-      content: `Hablar bien ruso es elegir el registro adecuado. La estilística rusa distingue cinco estilos funcionales. La misma idea se dice de forma distinta en cada uno.
+  },
+  {
+    title: 'Estilos funcionales: del coloquial al oficial',
+    durationMinutes: 55,
+    content: `Hablar bien ruso es elegir el registro adecuado. La estilística rusa distingue cinco estilos funcionales. La misma idea se dice de forma distinta en cada uno.
 
 LA MISMA NOTICIA EN CUATRO ESTILOS
 Coloquial: Слыхал? У нас во дворе вчера такое было! Трубу прорвало, вода как хлынет — всё залило. До ночи возились.
@@ -594,18 +530,11 @@ Disentir: Ерунда! (coloquial) → Я не согласен. → Позво
 
 TEXTO
 Уважаемый Сергей Петрович! В связи с проведением ремонтных работ в здании института доводим до Вашего сведения, что с 1 по 15 июля доступ в лабораторию № 3 будет ограничен. Просим в указанный срок перенести оборудование в корпус Б. В случае возникновения вопросов обращайтесь в административный отдел. — А теперь то же самое по-человечески: «Серёж, у нас с первого ремонт, в третью две недели не пустят. Перетащи приборы в Б, ладно? Если что — звони».`,
-      exercises: [
-        'Identifica el estilo de cada fragmento y señala tres rasgos que lo prueban: a) «Настоящим подтверждаем получение Вашего письма от 3 мая». b) «Ну ты даёшь! Я ж тебе сто раз говорил». c) «Под фонемой понимается минимальная единица звукового строя языка». d) «Доколе чиновники будут закрывать глаза на беды простых людей?»',
-        'Pasa del registro oficial al neutro: оказать помощь, принять решение, произвести оплату, осуществлять контроль, в настоящее время, проживать, приобрести, в связи с тем что, довести до сведения, дать согласие.',
-        'Reescribe en estilo oficial (como aviso administrativo, 5 frases): «Ребята, в пятницу отключат свет с девяти до трёх, потому что будут чинить провода. Не забудьте выключить компьютеры. Если что непонятно — спросите у Иванова».',
-        'Ordena de más brusca a más cortés y añade una variante propia: Не могли бы вы открыть окно? / Открой окно! / Будьте добры, откройте окно. / Открой окно, пожалуйста. / Ты не откроешь окно? Luego escribe tres formas de expresar desacuerdo en registros distintos.',
-        'Cuenta el mismo suceso (un corte de luz, un atasco, un robo o la apertura de un museo) en tres estilos: coloquial (5 frases), periodístico (5 frases) y oficial (5 frases).',
-      ],
-    },
-    {
-      title: 'Partículas, fraseología y lenguaje coloquial',
-      durationMinutes: 55,
-      content: `Las partículas son palabras mínimas que no se traducen, pero dan a la frase su tono: sorpresa, duda, insistencia, reproche. Junto con los modismos, son lo que más cuesta al extranjero y lo que más delata su nivel.
+  },
+  {
+    title: 'Partículas, fraseología y lenguaje coloquial',
+    durationMinutes: 55,
+    content: `Las partículas son palabras mínimas que no se traducen, pero dan a la frase su tono: sorpresa, duda, insistencia, reproche. Junto con los modismos, son lo que más cuesta al extranjero y lo que más delata su nivel.
 
 1. PARTÍCULAS ENFÁTICAS
 же: insiste en algo evidente o contrasta. Я же тебе говорил! (¡si te lo dije!) · Он же врач. (¿no ves que es médico?) · Когда же ты придёшь? (impaciencia) · такой же, тот же, там же (identidad)
@@ -645,18 +574,11 @@ TEXTO
 
 TEXTO
 — Ну что, сдал? — Да какое там! Чуть не провалился. Билет-то я знал, а вот на дополнительном вопросе сел в калошу. — Неужели так трудно было? Ты же весь месяц зубрил! — Вот именно. Голову сломал над этими датами, а они взяли да и вылетели из головы. Профессор, правда, закрыл на это глаза — поставил четвёрку. — Ничего себе «провалился»! Да ты просто делаешь из мухи слона. — Ладно, уж и пожаловаться нельзя. Зато теперь камень с души свалился.`,
-      exercises: [
-        'Explica qué añade la partícula en cada frase: Я же тебе говорил! / Разве он не приехал? / Неужели он не приехал? / Дай-ка мне ручку. / Ты заболел, что ли? / Он, мол, ничего не знал. / Я чуть не опоздал. / Книгу-то я купил.',
-        'Completa con la partícula adecuada (же, ведь, разве, неужели, -ка, вряд ли, чуть не, хоть): ___ ты не слышал новость? Все уже знают. ___ это правда?! Не могу поверить. Послушай-___, что я тебе скажу. Почему ты не оделся теплее? На улице ___ мороз! Он ___ придёт: у него много работы. Я так смеялся, что ___ упал со стула. Скажи ___ слово!',
-        'Explica el significado de estos modismos y escribe una frase con cada uno: ломать голову, рукой подать, не в своей тарелке, делать из мухи слона, кот наплакал, собаку съесть, держать язык за зубами, как снег на голову, убить двух зайцев, медвежья услуга.',
-        'Elige el refrán adecuado para cada situación y explícalo: a) Tu amigo llega con una semana de retraso a felicitarte. b) Alguien quiere decidir algo importante a medianoche. c) Un hijo tiene los mismos defectos que su padre. d) Alguien quiere los resultados sin esforzarse. e) Un compañero firma un contrato sin leerlo.',
-        'Escribe un diálogo coloquial de 14 líneas entre dos amigos tras un examen, una entrevista de trabajo o una cita, con al menos ocho partículas, cinco modismos, tres interjecciones o respuestas hechas y un refrán.',
-      ],
-    },
-    {
-      title: 'Sociedad, medios y debate: escribir un ensayo',
-      durationMinutes: 60,
-      content: `El ТРКИ-2 exige comprender prensa y televisión, participar en una discusión y redactar un texto argumentativo. Esta estación reúne el léxico social y la técnica del ensayo (эссе, сочинение-рассуждение).
+  },
+  {
+    title: 'Sociedad, medios y debate: escribir un ensayo',
+    durationMinutes: 60,
+    content: `El ТРКИ-2 exige comprender prensa y televisión, participar en una discusión y redactar un texto argumentativo. Esta estación reúne el léxico social y la técnica del ensayo (эссе, сочинение-рассуждение).
 
 1. MEDIOS DE COMUNICACIÓN (СМИ)
 газета, журнал, издание (publicación) · тираж (tirada) · выпуск (número, edición) · рубрика · заголовок (titular) · передовая статья (editorial) · репортаж · интервью · обзор (reseña, panorama) · колонка · очерк (crónica) · заметка (suelto)
@@ -702,37 +624,5 @@ Concluir: В заключение хочу сказать… · Давайте �
 
 TEXTO MODELO
 В наше время всё чаще говорят о том, что социальные сети вытесняют живое общение. На мой взгляд, это утверждение справедливо лишь отчасти. Во-первых, сети позволяют поддерживать связь с теми, кто живёт далеко: по данным опросов, каждый второй пользователь общается в интернете с родственниками из других городов. Во-вторых, они дают голос людям, которых раньше никто не слышал. Противники этой точки зрения утверждают, что подростки проводят в телефоне слишком много времени и разучиваются разговаривать. Действительно, нельзя отрицать, что зависимость существует. Однако виноваты в этом не технологии, а неумение ими пользоваться. Таким образом, социальные сети — лишь инструмент, и только от нас зависит, станет ли он мостом между людьми или стеной.`,
-      exercises: [
-        'En el texto modelo, identifica y copia: la introducción, la tesis, los dos argumentos con su apoyo, el contraargumento, la refutación y la conclusión. Subraya (escríbelos aparte) todos los conectores.',
-        'Describe con frases completas estos datos: безработица: 2020 — 8 %, 2025 — 5 %. / цены на жильё: +15 % за год. / население города: 1 млн → 2 млн за двадцать лет. / 70 % молодёжи читает новости в соцсетях. / число студентов-иностранцев: 300 тыс. (на 10 % больше, чем в прошлом году).',
-        'Responde a cada afirmación con acuerdo parcial y una objeción (2 o 3 frases cada una): «Телевидение скоро исчезнет». «Высшее образование должно быть бесплатным для всех». «Искусственный интеллект оставит людей без работы».',
-        'Escribe la introducción y la conclusión (4 frases cada una) de un ensayo sobre «Должен ли каждый человек сортировать мусор?» y enumera en una línea cada uno los tres argumentos que usarías.',
-        'Escribe un ensayo completo de 20 a 25 frases sobre uno de estos temas: «Свобода слова в интернете: нужны ли границы?» / «Большой город или природа: где лучше растить детей?» / «Может ли удалённая работа заменить офис?». Sigue la estructura de la lección e incluye al menos un dato numérico y un contraargumento refutado.',
-      ],
-    },
-  ],
-  exam: {
-    title: 'Examen final B2',
-    instructions: `Este examen cubre las doce estaciones del curso y sigue el formato del ТРКИ-2: léxico y gramática, lectura y escritura. Responde en ruso salvo que el ejercicio pida otra cosa. Puedes corregir tu entrega mientras el profe no la haya calificado. Vale 100 puntos y se aprueba con 70.
-
-TEXTO PARA LOS EJERCICIOS 11 Y 12
-Говорят, что современный человек разучился ждать. Ещё полвека назад письмо шло неделями, и никому не приходило в голову жаловаться на это. Сегодня же, отправив сообщение, мы начинаем волноваться, если ответ не пришёл через пять минут. Психологи, изучающие влияние технологий на поведение, предупреждают: привычка к мгновенному результату ведёт к тому, что нам всё труднее сосредоточиться на долгой работе. Как показало исследование, проведённое в нескольких европейских университетах, студенты, вынужденные на время эксперимента отказаться от телефонов, сначала испытывали тревогу, однако уже через неделю отмечали, что им стало легче читать длинные тексты. Разумеется, было бы наивно призывать к отказу от технологий: без них сегодня не обойтись. Речь идёт о другом. Умение ждать — это не слабость, а навык, которому, как и любому другому, можно научиться. Тот, кто способен отложить удовольствие, чаще добивается своих целей. Недаром говорится: тише едешь — дальше будешь. Вряд ли наши прадеды были терпеливее нас от природы; им просто не из чего было выбирать.`,
-    questions: [
-      'Aspecto. Elige y explica el matiz: Кто (брал / взял) мой зонт? Он мокрый и висит не там. / Я долго (уговаривал / уговорил) её, но так и не (уговаривал / уговорил). / — Вы (читали / прочитали) Булгакова? — Да, в юности. / Этот чемодан ты один не (поднимаешь / поднимешь). / Не советую вам (соглашаться / согласиться) на эти условия.',
-      'Prefijos. Completa con el verbo adecuado: Я так ___ (читать, absorto), что проехал свою остановку. Мы ___ (говорить, acuerdo) встретиться в шесть. Он ___ (думать, cambiar de idea) уезжать. Суп ___ (солить, exceso). Я не ___ (звонить, lograr) до него весь день. Ты ___ (оценить, insuficiente) своего соперника. Дай мне ___ (смотреть, hasta el final) фильм.',
-      'Sentido figurado. Completa con un verbo de movimiento en la forma correcta: Речь ___ о судьбе проекта. Комиссия ___ к выводу, что виновных нет. Его поведение ___ всех из себя. Эти меры ___ к росту цен. Учёный ___ большой вклад в медицину. Нам ___ отложить поездку. Как вы ___ к этой идее?',
-      'Rección. Pon en el caso correcto con la preposición necesaria: Успех зависит ___ (ваши усилия). Он добился ___ (поставленная цель). Она отказалась ___ (выгодное предложение). Я не сомневаюсь ___ (его способности). Это не соответствует ___ (действительность). Мы настаиваем ___ (пересмотр) решения. Он злоупотребляет ___ (наше доверие). Кто отвечает ___ (этот проект)?',
-      'Participios, gerundios y nominalización. a) Antepón el giro: Закон, принятый парламентом на прошлой неделе, вступит в силу в июле. b) Sustituye por gerundio: Когда он выступал перед студентами, он привёл интересный пример. c) Nominaliza: После того как подписали договор, начались работы. / Хотя были трудности, проект завершили. / Чтобы решить эту проблему, нужны деньги.',
-      'Pasiva e impersonales. Transforma: Ураган повалил деревья. (impersonal) / Я не сплю сегодня. (reflexivo involuntario) / Комиссия рассмотрит ваше заявление. (pasiva) / Кто-то звонил вам утром. (sujeto indeterminado) / Я вынужден согласиться. (con пришлось)',
-      'Conectores. Completa el párrafo con: более того, тем не менее, во-первых, следовательно, с другой стороны, иными словами. «Удалённая работа имеет свои плюсы. ___, человек экономит время на дорогу. ___, он сам планирует свой день. ___, не всем подходит такой режим. ___, дома трудно отделить работу от отдыха, ___ человек работает больше, чем в офисе. ___, выбирать формат нужно индивидуально».',
-      'Modalidad. Reformula con la expresión indicada: Наверное, он уже уехал. (должно быть) / Сомневаюсь, что она согласится. (вряд ли) / Говорят, он болен, но я не уверен. (якобы) / Нет причин спорить. (нечего) / У меня получилось найти билеты. (удалось) / Этот музей рекомендую посетить. (стоит) / Обстоятельства заставили его продать дом. (вынужден)',
-      'Formación de palabras y registro. a) Forma: sustantivo de persona de исследовать, de cualidad de ответственный, de acción de развить; adjetivo con не-…-им- de объяснить; diminutivo de минута. b) Pasa a registro neutro: «В связи с проведением ремонтных работ движение транспорта будет осуществляться в соответствии с изменённым расписанием».',
-      'Partículas y modismos. a) Explica el matiz: Разве ты не знал? / Неужели ты не знал? / Ты же знал! b) Explica y usa en una frase: ломать голову, делать из мухи слона, не в своей тарелке, закрывать глаза на что-либо, рукой подать.',
-      'Comprensión. Lee el texto y responde con tus palabras: В чём автор видит главное отличие современного человека от его предков? Что показал эксперимент со студентами? Призывает ли автор отказаться от технологий? Как он это объясняет? Как вы понимаете последнюю фразу текста?',
-      'Análisis del texto. Copia del texto: una oración de sujeto indeterminado, dos participios activos, dos participios pasivos, un gerundio, una expresión figurada con verbo de movimiento, tres palabras o expresiones modales, un refrán y dos conectores. Explica brevemente la función de cada uno.',
-      'Resumen. Resume el texto en 5 o 6 frases en estilo neutro, en tercera persona («Автор считает, что…»), sin copiar frases literales.',
-      'Carta oficial. Escribe una carta formal de 10 a 12 frases a la administración de tu ciudad proponiendo una mejora (transporte, parques, reciclaje). Usa clichés del estilo oficial, al menos tres construcciones con preposiciones derivadas (в связи с, в целях, в случае…) y fórmulas de apertura y cierre.',
-      'Ensayo. Escribe un ensayo de 22 a 25 frases sobre el tema «Умение ждать: устаревшая добродетель или необходимый навык?». Estructura: introducción, tesis, dos argumentos con ejemplo, un contraargumento refutado y conclusión. Incluye al menos un dato o ejemplo concreto, dos modismos o refranes y conectores variados.',
-    ],
   },
-};
+];

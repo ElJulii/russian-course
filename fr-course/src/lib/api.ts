@@ -1,11 +1,11 @@
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000/api";
 const SESSION_HINT = "poyejali.session";
 
-export type Role = "STUDENT" | "INSTRUCTOR" | "ADMIN";
+export type Role = "STUDENT" | "ADMIN";
 export type Level = "A1" | "A2" | "B1" | "B2" | "C1" | "C2";
 export type CourseStatus = "DRAFT" | "PUBLISHED" | "ARCHIVED";
 export type EnrollmentStatus = "ACTIVE" | "COMPLETED" | "DROPPED";
-export type AssessmentType = "QUIZ" | "ASSIGNMENT" | "EXAM";
+export type AssessmentType = "QUIZ" | "EXAM";
 
 export interface User {
   id: string;
@@ -35,21 +35,6 @@ export interface CourseSummary {
   _count: { lessons: number; enrollments: number };
 }
 
-export interface Instructor {
-  id: string;
-  name: string;
-}
-
-// Curso en el que un profe tiene estudiantes que evaluar.
-export interface TeachingCourse {
-  id: string;
-  title: string;
-  level: Level;
-  status: CourseStatus;
-  students: number;
-  pendingReview: number;
-}
-
 export interface LessonOutline {
   id: string;
   title: string;
@@ -64,14 +49,11 @@ export interface Lesson extends LessonOutline {
 export interface CourseDetail extends CourseSummary {
   lessons: LessonOutline[];
   viewer: {
-    // Editar el curso (admin) y revisar entregas (profe o admin).
+    // Editar el curso y ver las notas de todos (admin).
     canManage: boolean;
-    canGrade: boolean;
     enrollment: {
       id: string;
       status: EnrollmentStatus;
-      // Profe que el estudiante eligió para que lo evalúe.
-      evaluator: Instructor;
       completedLessonIds: string[];
     } | null;
   };
@@ -86,7 +68,6 @@ export interface Progress {
 export interface MyEnrollment {
   id: string;
   status: EnrollmentStatus;
-  evaluator: string;
   course: {
     id: string;
     title: string;
@@ -103,62 +84,65 @@ export interface Assessment {
   maxScore: number;
   weight: number;
   dueDate: string | null;
+  // Con estación, es su test: aprobarlo la completa.
   lessonId: string | null;
-  // Ejercicios que se responden en la plataforma; 0 si se evalúa por fuera.
   questionCount: number;
 }
 
-// Lo que ve cada quien en el listado: el estudiante, el estado de su entrega;
-// el profe, cuántas entregas esperan nota.
-export interface StudentAssessment extends Assessment {
-  submittedAt: string | null;
-  score: number | null;
+// Lo que lleva un estudiante en un test. Puede repetirlo sin límite y cuenta
+// su mejor nota.
+export interface Standing {
+  attempts: number;
+  bestScore: number | null;
+  passed: boolean;
 }
+
+// Lo que ve cada quien en el listado: el estudiante, cómo le va; el admin,
+// cuántos estudiantes lo respondieron.
+export type StudentAssessment = Assessment & Standing;
 
 export interface ManagedAssessment extends Assessment {
-  submitted: number;
-  pendingReview: number;
+  attempted: number;
 }
 
-export interface Submission {
-  answers: string[];
-  submittedAt: string;
-}
-
-export interface GradeResult {
-  score: number;
-  feedback: string | null;
-  gradedAt: string;
+// Pregunta de opción múltiple. `answer` (índice de la opción correcta) y
+// `explanation` solo le llegan al admin; el estudiante los recibe al corregir.
+export interface Question {
+  prompt: string;
+  options: string[];
+  answer?: number;
+  explanation?: string;
 }
 
 export interface AssessmentDetail extends Assessment {
   instructions: string | null;
-  questions: string[];
+  questions: Question[];
   course: { id: string; title: string; level: Level };
   lesson: { id: string; title: string; order: number } | null;
-  viewer: {
-    canGrade: boolean;
+  viewer: Standing & {
+    canManage: boolean;
     lockedReason: string | null;
-    submission: Submission | null;
-    grade: GradeResult | null;
   };
 }
 
-export interface SubmissionInbox {
-  assessment: {
-    id: string;
-    title: string;
-    type: AssessmentType;
-    maxScore: number;
-    instructions: string | null;
-    questions: string[];
-  };
-  entries: {
-    enrollmentId: string;
-    student: { id: string; name: string; email: string };
-    submission: Submission | null;
-    grade: GradeResult | null;
+// Corrección de un intento, pregunta por pregunta.
+export interface AttemptResult {
+  correct: number;
+  total: number;
+  score: number;
+  maxScore: number;
+  passed: boolean;
+  passingGrade: number;
+  results: {
+    chosen: number;
+    answer: number;
+    isCorrect: boolean;
+    explanation: string | null;
   }[];
+  // Este intento completó la estación del test.
+  lessonCompleted: boolean;
+  attempts: number;
+  bestScore: number | null;
 }
 
 export interface GradeSummary {
@@ -173,11 +157,7 @@ export interface ReportCard {
   enrollmentId: string;
   status: EnrollmentStatus;
   course: { id: string; title: string; level: Level };
-  assessments: (Assessment & {
-    score: number | null;
-    feedback: string | null;
-    submittedAt: string | null;
-  })[];
+  assessments: (StudentAssessment & { lastAttemptAt: string | null })[];
   summary: GradeSummary;
 }
 
@@ -188,10 +168,8 @@ export interface Gradebook {
     enrollmentId: string;
     status: EnrollmentStatus;
     student: { id: string; name: string; email: string };
-    evaluator: Instructor;
+    // Mejor nota en cada evaluación; null si no la ha respondido.
     scores: Record<string, number | null>;
-    // Evaluaciones que el estudiante ya entregó.
-    submitted: string[];
   })[];
   classSummary: {
     students: number;
@@ -219,18 +197,6 @@ export interface CourseStats {
     maxPercent: number | null;
     passRate: number | null;
   }[];
-}
-
-// Un estudiante que el profe evalúa, en uno de sus cursos.
-export interface EvaluatedStudent {
-  id: string;
-  status: EnrollmentStatus;
-  student: { id: string; name: string; email: string };
-  evaluator: Instructor;
-  course: { id: string; title: string; level: Level };
-  progress: Progress;
-  // Ejercicios y exámenes: cuántos hay, cuántos entregó y cuántos esperan nota.
-  work: { total: number; submitted: number; graded: number; pendingReview: number };
 }
 
 export interface RosterEntry {

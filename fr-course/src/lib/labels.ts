@@ -19,7 +19,6 @@ export const LEVEL_KEYS = Object.keys(LEVELS) as Level[];
 
 export const ROLES: Record<Role, string> = {
   STUDENT: "Estudiante",
-  INSTRUCTOR: "Profe",
   ADMIN: "Admin",
 };
 
@@ -36,22 +35,13 @@ export const ENROLLMENT_STATUS: Record<EnrollmentStatus, string> = {
 };
 
 export const ASSESSMENT_TYPES: Record<AssessmentType, string> = {
-  QUIZ: "Quiz",
-  ASSIGNMENT: "Tarea",
+  QUIZ: "Test",
   EXAM: "Examen",
 };
 
-// Estado de una evaluación para el estudiante: la nota solo existe cuando el
-// profe revisa la entrega.
-export function assessmentState(a: {
-  questionCount: number;
-  maxScore: number;
-  submittedAt: string | null;
-  score: number | null;
-}) {
-  if (a.score !== null) return `${a.score} / ${a.maxScore}`;
-  if (a.submittedAt) return "Entregado, esperando nota";
-  return a.questionCount > 0 ? "Sin entregar" : "Pendiente";
+// Estado de una evaluación para el estudiante: su mejor nota hasta ahora.
+export function assessmentState(a: { maxScore: number; bestScore: number | null }) {
+  return a.bestScore === null ? "Sin responder" : `${a.bestScore} / ${a.maxScore}`;
 }
 
 export const plural = (n: number, one: string, many: string) =>
