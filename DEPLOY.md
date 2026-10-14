@@ -121,3 +121,20 @@ pero desde tu máquina no lo tendrías puesto).
   **Deployments → View logs**; los de la web, en Vercel → **Logs**.
 - **Límite de peticiones.** El contador vive en memoria: con una sola
   instancia de la API (lo normal en Railway) funciona bien.
+
+## Si algo falla
+
+| Síntoma | Causa y arreglo |
+| ------- | --------------- |
+| El build de Railway falla con `nest: not found` | Falta `NPM_CONFIG_INCLUDE=dev`: con `NODE_ENV=production` npm no instala las herramientas del build. |
+| La API no arranca y el log habla de `JWT_SECRET` | El secreto tiene menos de 32 caracteres o es el de ejemplo. Genera uno nuevo (paso 0). |
+| «Origen no permitido» (403) al entrar o registrarse | `CORS_ORIGIN` no es exactamente la dirección de Vercel: revisa `https://`, sin `/` final. |
+| Entras, pero al recargar se pierde la sesión | En Vercel `NEXT_PUBLIC_API_URL` no es `/api`, o lo cambiaste sin volver a desplegar. |
+| La web dice que no puede conectar con la API | `API_PROXY_TARGET` mal escrita, con `/api` al final, o la API de Railway caída (mira sus logs). |
+| No aparece el botón de Google | Falta la dirección de Vercel en «Orígenes autorizados» de Google Cloud, o `NEXT_PUBLIC_GOOGLE_CLIENT_ID` vacío. |
+| Google dice «acceso bloqueado» o «app no verificada» | La pantalla de consentimiento sigue «En prueba»: pásala a producción o añade esa cuenta como usuario de prueba. |
+| No llegan los correos de confirmación | `SMTP_PASS` no es una contraseña de aplicación, o `MAIL_FROM` no usa el mismo Gmail que `SMTP_USER`. El error exacto sale en los logs de la API. |
+| El enlace del correo lleva a `localhost` | `APP_URL` en Railway no es la dirección de Vercel. |
+| Entras con Google y no eres admin | `ADMIN_EMAILS` no tiene ese correo, o entraste con correo y contraseña en vez del botón de Google. |
+| «Error de base de datos» o tablas que no existen | Las migraciones no corrieron: revisa que el Start Command empiece por `npm run db:deploy`. |
+| No hay cursos | Falta el paso 4 (`npm run db:courses`). |
