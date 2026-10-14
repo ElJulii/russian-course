@@ -13,6 +13,7 @@ export function Nav() {
     { href: "/", label: "Líneas", show: true },
     { href: "/mi-ruta", label: "Mi ruta", show: user?.role === "STUDENT" },
     { href: "/notas", label: "Mis notas", show: user?.role === "STUDENT" },
+    { href: "/vocabulario", label: "Vocabulario", show: !!user },
     { href: "/ensenar", label: "Cursos", show: isAdmin(user) },
     { href: "/admin", label: "Usuarios", show: isAdmin(user) },
   ].filter((link) => link.show);

@@ -43,7 +43,9 @@ export default function LegalNoticePage() {
         titular o a quienes se los han licenciado, y están protegidos por las
         leyes de propiedad intelectual e industrial. No se permite reproducirlos,
         distribuirlos ni transformarlos sin autorización por escrito, más allá del
-        uso personal para aprender.
+        uso personal para aprender. Los datos, tipografías y programas de
+        terceros que usa el sitio, y sus licencias, se detallan en{" "}
+        <Link href="/creditos">Créditos</Link>.
       </p>
 
       <h2>4. Enlaces externos</h2>

@@ -6,6 +6,18 @@ export type Level = "A1" | "A2" | "B1" | "B2" | "C1" | "C2";
 export type CourseStatus = "DRAFT" | "PUBLISHED" | "ARCHIVED";
 export type EnrollmentStatus = "ACTIVE" | "COMPLETED" | "DROPPED";
 export type AssessmentType = "QUIZ" | "EXAM";
+export type PartOfSpeech =
+  | "noun"
+  | "verb"
+  | "adj"
+  | "adv"
+  | "pron"
+  | "prep"
+  | "conj"
+  | "part"
+  | "num"
+  | "interj"
+  | "pred";
 
 export interface User {
   id: string;
@@ -18,6 +30,16 @@ export interface User {
   isActive?: boolean;
   // false en las cuentas que solo entran con Google; solo viene en la sesión propia.
   hasPassword?: boolean;
+}
+
+// Una palabra de la lista de frecuencias; rank 1 es la más usada.
+export interface VocabularyWord {
+  rank: number;
+  word: string;
+  pos: PartOfSpeech;
+  // Solo en los verbos.
+  aspect?: "imperf" | "perf" | "both";
+  meaning: string;
 }
 
 export interface Page<T> {

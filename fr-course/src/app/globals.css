@@ -756,6 +756,16 @@ tr + tr td {
   border-top: 1px solid var(--rule);
 }
 
+.vocab .cyr {
+  font-size: 1.05rem;
+}
+
+/* El significado puede ser largo: que baje de línea en vez de ensanchar la tabla. */
+.vocab-meaning {
+  min-width: 14rem;
+  white-space: normal;
+}
+
 .num {
   text-align: right;
   font-variant-numeric: tabular-nums;

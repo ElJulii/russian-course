@@ -11,7 +11,7 @@ export const LEGAL = {
   courts: "Quito",
   authority: "https://spdp.gob.ec/",
   // Fecha de la última revisión de los textos; cámbiala cada vez que los edites.
-  updated: "13 de octubre de 2026",
+  updated: "14 de octubre de 2026",
   minAge: 18,
 };
 
@@ -20,4 +20,5 @@ export const LEGAL_PAGES = [
   { href: "/privacidad", label: "Política de privacidad" },
   { href: "/cookies", label: "Política de cookies" },
   { href: "/aviso-legal", label: "Aviso legal" },
+  { href: "/creditos", label: "Créditos" },
 ];

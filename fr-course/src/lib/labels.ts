@@ -2,6 +2,7 @@ import type {
   AssessmentType,
   CourseStatus,
   EnrollmentStatus,
+  PartOfSpeech,
   Level,
   Role,
 } from "./api";
@@ -38,6 +39,26 @@ export const ASSESSMENT_TYPES: Record<AssessmentType, string> = {
   QUIZ: "Test",
   EXAM: "Examen",
 };
+
+export const PARTS_OF_SPEECH: Record<PartOfSpeech, string> = {
+  noun: "sustantivo",
+  verb: "verbo",
+  adj: "adjetivo",
+  adv: "adverbio",
+  pron: "pronombre",
+  prep: "preposición",
+  conj: "conjunción",
+  part: "partícula",
+  num: "numeral",
+  interj: "interjección",
+  pred: "predicativo",
+};
+
+export const ASPECTS = {
+  imperf: "imperfectivo",
+  perf: "perfectivo",
+  both: "ambos aspectos",
+} as const;
 
 // Estado de una evaluación para el estudiante: su mejor nota hasta ahora.
 export function assessmentState(a: { maxScore: number; bestScore: number | null }) {
