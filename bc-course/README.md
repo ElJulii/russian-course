@@ -18,10 +18,12 @@ juntos, en minúsculas y sin espacios ni tildes:
 
 | Correo | Rol | Contraseña |
 | ------ | --- | ---------- |
-| `admin@ruso.dev` | Admin | `adminplataforma` |
 | `ana@ruso.dev` | Estudiante (terminó el A1) | `anatorres` |
 | `luis@ruso.dev` | Estudiante (va por la estación 3) | `luismendez` |
 | `sofia@ruso.dev` | Estudiante (recién inscrita) | `sofiarojas` |
+
+El seed no crea ningún admin. Para serlo, pon tu correo de Google en
+`ADMIN_EMAILS` y entra con el botón de Google (ver «Admin» más abajo).
 
 El seed crea además los seis cursos de la plataforma, de A1 a C2. El catálogo
 está en `prisma/courses.ts` y el contenido en `prisma/content/`, dos archivos
@@ -57,7 +59,7 @@ inscripciones ni notas: `npm run db:courses`.
 - **Seed**: borra la base y crea cuentas con contraseñas adivinables; se niega
   a correr con `NODE_ENV=production`. No lo uses fuera de desarrollo.
 - En producción sirve la API y el frontend por HTTPS y pon en `CORS_ORIGIN`
-  solo el dominio real del frontend.
+  solo el dominio real del frontend. Los pasos están en `DEPLOY.md`, en la raíz.
 
 ## Confirmación del correo
 
@@ -84,6 +86,14 @@ API. `APP_URL` es la dirección del frontend con la que se arma el enlace.
 La primera vez que alguien entra con Google se crea su cuenta de estudiante,
 sin contraseña (puede definir una en su perfil). Si el correo ya tenía cuenta,
 se vincula con ella y conserva su rol.
+
+## Admin
+
+Es admin quien entra con Google usando un correo de `ADMIN_EMAILS` (separados
+por coma): al entrar, la API le da el rol. Solo funciona con el botón de Google,
+que garantiza que el correo es de quien entra; con correo y contraseña no se
+asciende a nadie. Quitar un correo de la lista no le quita el rol: eso se hace
+desde la pantalla de Usuarios.
 
 ## Roles y permisos
 

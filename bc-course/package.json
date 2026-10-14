@@ -4,6 +4,9 @@
   "description": "",
   "author": "",
   "private": true,
+  "engines": {
+    "node": ">=22.12"
+  },
   "license": "UNLICENSED",
   "scripts": {
     "build": "nest build",
@@ -20,6 +23,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "postinstall": "prisma generate",
     "db:migrate": "prisma migrate dev",
+    "db:deploy": "prisma migrate deploy",
     "db:seed": "prisma db seed",
     "db:courses": "tsx prisma/add-courses.ts",
     "db:studio": "prisma studio"

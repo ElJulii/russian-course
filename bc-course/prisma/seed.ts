@@ -11,8 +11,9 @@ const prisma = new PrismaClient({
 });
 
 async function main() {
-  // El seed borra toda la base y crea cuentas con contraseñas adivinables,
-  // incluida una de admin: jamás debe correr contra producción.
+  // El seed borra toda la base y crea cuentas con contraseñas adivinables:
+  // jamás debe correr contra producción. No crea admin: lo es quien entra con
+  // Google con un correo de ADMIN_EMAILS.
   if (process.env.NODE_ENV === 'production') {
     throw new Error('El seed es solo para desarrollo (NODE_ENV=production).');
   }
@@ -26,19 +27,13 @@ async function main() {
 
   // La contraseña de cada cuenta es su nombre y apellido juntos, en
   // minúsculas y sin tildes (solo para desarrollo).
-  const user = async (
-    email: string,
-    firstName: string,
-    lastName: string,
-    role: 'STUDENT' | 'ADMIN',
-  ) =>
+  const user = async (email: string, firstName: string, lastName: string) =>
     prisma.user.create({
       data: {
         email,
         firstName,
         lastName,
         name: fullName(firstName, lastName),
-        role,
         emailVerifiedAt: new Date(),
         passwordHash: await bcrypt.hash(
           defaultPassword(firstName, lastName),
@@ -47,10 +42,9 @@ async function main() {
       },
     });
 
-  const admin = await user('admin@ruso.dev', 'Admin', 'Plataforma', 'ADMIN');
-  const ana = await user('ana@ruso.dev', 'Ana', 'Torres', 'STUDENT');
-  const luis = await user('luis@ruso.dev', 'Luis', 'Méndez', 'STUDENT');
-  const sofia = await user('sofia@ruso.dev', 'Sofía', 'Rojas', 'STUDENT');
+  const ana = await user('ana@ruso.dev', 'Ana', 'Torres');
+  const luis = await user('luis@ruso.dev', 'Luis', 'Méndez');
+  const sofia = await user('sofia@ruso.dev', 'Sofía', 'Rojas');
 
   // Los seis cursos de la plataforma, de A1 a C2.
   const courses: Awaited<ReturnType<typeof createCourse>>[] = [];
@@ -121,9 +115,8 @@ async function main() {
 
   console.log('Seed listo. La contraseña es nombre y apellido juntos:');
   console.table(
-    [admin, ana, luis, sofia].map((u) => ({
+    [ana, luis, sofia].map((u) => ({
       email: u.email,
-      rol: u.role,
       contraseña: defaultPassword(u.firstName, u.lastName),
     })),
   );

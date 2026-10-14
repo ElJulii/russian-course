@@ -89,8 +89,9 @@ export default function PrivacyPage() {
         </li>
         <li>
           <strong>Proveedores que nos prestan servicios</strong>: alojamiento del
-          sitio y de la base de datos, envío de correo y, si lo usas, el inicio
-          de sesión de Google (Google Ireland Limited / Google LLC). Solo tratan
+          sitio y de la base de datos, el envío de correo, que hacemos con Gmail,
+          y, si lo usas, el inicio de sesión de Google (ambos de Google Ireland
+          Limited / Google LLC). Solo tratan
           los datos siguiendo nuestras instrucciones o, en el caso de Google,
           conforme a su propia política de privacidad.
         </li>

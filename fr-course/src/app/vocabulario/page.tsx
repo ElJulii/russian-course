@@ -6,6 +6,7 @@ import { Guard, Loading } from "@/components/ui";
 import type { PartOfSpeech, VocabularyWord } from "@/lib/api";
 import { ASPECTS, PARTS_OF_SPEECH } from "@/lib/labels";
 import { useApi } from "@/lib/useApi";
+import { useRussianSpeech } from "@/lib/useSpeech";
 
 const PAGE_SIZE = 100;
 
@@ -22,7 +23,8 @@ const GROUPS: { label: string; matches: (pos: PartOfSpeech) => boolean }[] = [
   },
 ];
 
-// Sin mayúsculas, sin tildes y con ё = е, para buscar como se escribe a mano.
+// Sin mayúsculas, tildes ni marcas de acento, y con ё = е: se busca como se
+// escribe a mano.
 const fold = (text: string) =>
   text
     .toLowerCase()
@@ -35,8 +37,29 @@ function kind(word: VocabularyWord) {
   return word.aspect ? `${pos} · ${ASPECTS[word.aspect]}` : pos;
 }
 
+function SpeakerIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      width="18"
+      height="18"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      <path d="M11 5 6 9H3v6h3l5 4V5Z" />
+      <path d="M15.5 8.5a5 5 0 0 1 0 7" />
+      <path d="M18.5 5.5a9 9 0 0 1 0 13" />
+    </svg>
+  );
+}
+
 function Vocabulary() {
   const words = useApi<VocabularyWord[]>("/vocabulary");
+  const speak = useRussianSpeech();
   const [query, setQuery] = useState("");
   const [group, setGroup] = useState(0);
   const [page, setPage] = useState(0);
@@ -65,6 +88,11 @@ function Vocabulary() {
           Con ellas se entiende cerca de dos tercios de un texto corriente. Es
           material de consulta para repasar a tu ritmo: no es una clase ni cuenta
           para tus notas.
+        </p>
+        <p className="small muted">
+          La tilde sobre la vocal marca la sílaba que se acentúa (челове́к). En
+          ruso no se escribe, pero cambia la pronunciación. La ё siempre es
+          tónica, así que no la lleva.
         </p>
       </header>
 
@@ -128,8 +156,23 @@ function Vocabulary() {
                     {shown.map((w) => (
                       <tr key={w.rank}>
                         <td className="num muted">{w.rank}</td>
-                        <td lang="ru" className="cyr">
-                          {w.word}
+                        <td>
+                          <span className="vocab-word">
+                            {speak && (
+                              <button
+                                type="button"
+                                className="speak"
+                                onClick={() => speak(w.word)}
+                                aria-label={`Escuchar ${w.word}`}
+                                title="Escuchar"
+                              >
+                                <SpeakerIcon />
+                              </button>
+                            )}
+                            <span lang="ru" className="cyr">
+                              {w.word}
+                            </span>
+                          </span>
                         </td>
                         <td className="vocab-meaning">{w.meaning}</td>
                         <td className="small muted">{kind(w)}</td>
@@ -160,6 +203,14 @@ function Vocabulary() {
                 </nav>
               )}
             </>
+          )}
+
+          {!speak && (
+            <p className="small muted">
+              Tu navegador no tiene una voz en ruso, por eso no aparece el botón
+              para escuchar. En Windows se añade en Configuración › Hora e
+              idioma › Voz; en Android y iPhone, en los ajustes de texto a voz.
+            </p>
           )}
 
           <p className="small muted">

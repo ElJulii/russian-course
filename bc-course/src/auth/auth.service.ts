@@ -132,7 +132,8 @@ export class AuthService {
   }
 
   // Entra con Google. Si el correo ya tiene cuenta la vincula; si no, crea un
-  // estudiante, igual que el registro público.
+  // estudiante, igual que el registro público. Los correos de ADMIN_EMAILS
+  // pasan a admin: solo por aquí, porque Google garantiza que el correo es suyo.
   async google(dto: GoogleLoginDto) {
     const clientId = this.config.get<string>('GOOGLE_CLIENT_ID');
     if (!clientId) {
@@ -186,7 +187,21 @@ export class AuthService {
       });
     }
     if (!user.isActive) throw new UnauthorizedException('Cuenta desactivada');
+    if (user.role !== 'ADMIN' && this.adminEmails().includes(email)) {
+      user = await this.prisma.user.update({
+        where: { id: user.id },
+        data: { role: 'ADMIN' },
+      });
+    }
     return this.buildSession(user);
+  }
+
+  private adminEmails() {
+    return this.config
+      .get<string>('ADMIN_EMAILS', '')
+      .split(',')
+      .map((email) => email.trim().toLowerCase())
+      .filter(Boolean);
   }
 
   // Firmado con un secreto distinto al de las sesiones: el token del correo

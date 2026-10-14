@@ -180,8 +180,16 @@ function CheckEmail({ email, onBack }: { email: string; onBack: () => void }) {
             activar tu cuenta; vence en 24 horas.
           </p>
         </div>
+        {/* Se envía desde una cuenta de correo personal, no desde un servidor
+            de envíos: es fácil que el filtro lo mande a spam. */}
+        <p className="notice notice-warn" role="note">
+          <strong>Revisa también la carpeta de spam</strong> (o «Correo no deseado»):
+          es muy probable que llegue ahí. Busca el asunto «Confirma tu correo en
+          Поехали» y, si está en spam, márcalo como «No es spam» para que los
+          próximos lleguen bien.
+        </p>
         <div className="panel stack">
-          <p>¿No llegó? Mira en la carpeta de spam o pide otro enlace.</p>
+          <p>¿Tampoco está en spam? Espera un par de minutos o pide otro enlace.</p>
           <Notice>{error}</Notice>
           {resent && (
             <Notice ok>

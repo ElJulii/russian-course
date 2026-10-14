@@ -333,6 +333,12 @@ textarea.input {
   background: #e6f6ea;
 }
 
+.notice-warn {
+  border-color: var(--yellow);
+  background: #fff6d6;
+  font-weight: 400;
+}
+
 .empty {
   padding: 2.5rem 1.5rem;
   border: 2px dashed var(--rule);
@@ -758,6 +764,29 @@ tr + tr td {
 
 .vocab .cyr {
   font-size: 1.05rem;
+}
+
+.vocab-word {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.speak {
+  display: inline-grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border: 1.5px solid var(--rule);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+
+.speak:hover {
+  border-color: var(--ink);
+  color: var(--ink);
 }
 
 /* El significado puede ser largo: que baje de línea en vez de ensanchar la tabla. */
