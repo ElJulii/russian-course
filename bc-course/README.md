@@ -71,7 +71,9 @@ Para enviar correos de verdad rellena `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`,
 `SMTP_PASS` y `MAIL_FROM` en `.env` (con Gmail: `smtp.gmail.com`, puerto `587`,
 tu dirección y una [contraseña de aplicación](https://myaccount.google.com/apppasswords)).
 Si `SMTP_HOST` está vacío no se envía nada: el enlace sale en la consola de la
-API. `APP_URL` es la dirección del frontend con la que se arma el enlace.
+API. En Railway el SMTP está bloqueado: allí se usa la API de Gmail
+(`GMAIL_CLIENT_ID`, `GMAIL_CLIENT_SECRET`, `GMAIL_REFRESH_TOKEN`), que tiene
+prioridad sobre SMTP. Los pasos están en `DEPLOY.md`. `APP_URL` es la dirección del frontend con la que se arma el enlace.
 
 ## Entrar con Google
 

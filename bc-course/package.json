@@ -26,7 +26,8 @@
     "db:deploy": "prisma migrate deploy",
     "db:seed": "prisma db seed",
     "db:courses": "tsx prisma/add-courses.ts",
-    "db:studio": "prisma studio"
+    "db:studio": "prisma studio",
+    "mail:autorizar": "tsx scripts/gmail-token.ts"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",

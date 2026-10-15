@@ -12,12 +12,12 @@ Google Cloud Console y a tu cuenta de Gmail.
 
 ## 0. Antes de empezar
 
-- **Contraseña de aplicación de Gmail.** Los correos de confirmación salen de
-  tu Gmail. En [myaccount.google.com/apppasswords](https://myaccount.google.com/apppasswords)
-  crea una (pide tener la verificación en dos pasos). Es la que va en
-  `SMTP_PASS`; nunca pongas tu contraseña normal. Gmail admite unos 500 envíos
-  al día y es probable que los correos lleguen a spam: la pantalla de registro
-  ya avisa de ello.
+- **Permiso de Gmail para enviar correos.** Railway bloquea el SMTP saliente
+  (puertos 25, 465 y 587) fuera del plan Pro, así que en producción los correos
+  salen por la API de Gmail, que va por HTTPS. Se configura una sola vez:
+  sección «Correo con la API de Gmail», al final de esta guía. Gmail admite unos
+  500 envíos al día y es probable que lleguen a spam: la pantalla de registro ya
+  avisa de ello.
 - **Cuenta admin.** Usa una cuenta de Google dedicada solo a administrar, no la
   personal, y actívale la verificación en dos pasos: quien entre con ella
   controla cursos y usuarios. Su correo va en `ADMIN_EMAILS` y no hace falta
@@ -52,13 +52,13 @@ Google Cloud Console y a tu cuenta de Gmail.
    | `APP_URL` | la misma dirección de Vercel |
    | `GOOGLE_CLIENT_ID` | el ID de cliente OAuth |
    | `ADMIN_EMAILS` | el correo de Google de la cuenta admin |
-   | `SMTP_HOST` | `smtp.gmail.com` |
-   | `SMTP_PORT` | `587` |
-   | `SMTP_USER` | el Gmail desde el que salen los correos |
-   | `SMTP_PASS` | la contraseña de aplicación del paso 0 |
-   | `MAIL_FROM` | `Поехали <ese mismo Gmail>` |
+   | `GMAIL_CLIENT_ID` | de «Correo con la API de Gmail» |
+   | `GMAIL_CLIENT_SECRET` | ídem |
+   | `GMAIL_REFRESH_TOKEN` | ídem (lo deja en tu `.env` el script) |
+   | `MAIL_FROM` | `Поехали <el Gmail que dio el permiso>` |
 
-   `PORT` no hace falta: Railway lo pone solo.
+   `PORT` no hace falta: Railway lo pone solo. Las `SMTP_*` tampoco: en Railway
+   no funcionan, y si están las `GMAIL_*` se ignoran.
 
 ## 2. Web en Vercel
 
@@ -133,8 +133,45 @@ pero desde tu máquina no lo tendrías puesto).
 | La web dice que no puede conectar con la API | `API_PROXY_TARGET` mal escrita, con `/api` al final, o la API de Railway caída (mira sus logs). |
 | No aparece el botón de Google | Falta la dirección de Vercel en «Orígenes autorizados» de Google Cloud, o `NEXT_PUBLIC_GOOGLE_CLIENT_ID` vacío. |
 | Google dice «acceso bloqueado» o «app no verificada» | La pantalla de consentimiento sigue «En prueba»: pásala a producción o añade esa cuenta como usuario de prueba. |
-| No llegan los correos de confirmación | `SMTP_PASS` no es una contraseña de aplicación, o `MAIL_FROM` no usa el mismo Gmail que `SMTP_USER`. El error exacto sale en los logs de la API. |
+| Al registrarse la pantalla tarda ~10 s y dice que no pudo enviar el correo, con `ETIMEDOUT` en los logs | Se está usando SMTP, que Railway bloquea. Faltan las tres `GMAIL_*` en Railway (o alguna está vacía). |
+| No llegan los correos y en los logs sale `invalid_grant` | El permiso de Gmail venció o se revocó. Pasa si la app de Google Cloud quedó «En prueba» (vence a los 7 días) o si cambiaste la contraseña de Gmail. Publica la app y repite `npm run mail:autorizar`. |
+| `403` de `gmail.googleapis.com` en los logs | La Gmail API no está habilitada en el proyecto de Google Cloud de `GMAIL_CLIENT_ID` (paso 2 de «Correo con la API de Gmail»). |
 | El enlace del correo lleva a `localhost` | `APP_URL` en Railway no es la dirección de Vercel. |
 | Entras con Google y no eres admin | `ADMIN_EMAILS` no tiene ese correo, o entraste con correo y contraseña en vez del botón de Google. |
 | «Error de base de datos» o tablas que no existen | Las migraciones no corrieron: revisa que el Start Command empiece por `npm run db:deploy`. |
 | No hay cursos | Falta el paso 4 (`npm run db:courses`). |
+
+## Correo con la API de Gmail
+
+Se hace una sola vez, desde tu máquina. Usa un proyecto de Google Cloud
+**aparte** del del botón «Entrar con Google»: así el permiso para enviar
+correos no toca la pantalla que ven los estudiantes al entrar.
+
+1. En [console.cloud.google.com](https://console.cloud.google.com), arriba,
+   **selector de proyectos → Proyecto nuevo**, por ejemplo «Poyejali correo».
+2. Con ese proyecto elegido: **APIs y servicios → Biblioteca**, busca
+   **Gmail API** y pulsa **Habilitar**.
+3. **Google Auth Platform** (o «Pantalla de consentimiento de OAuth») →
+   **Comenzar**: nombre de la app, tu Gmail como correo de asistencia,
+   público **Externo** y tu correo de contacto.
+4. En **Público**, pulsa **Publicar app** para pasarla a **En producción**.
+   Importante: si se queda «En prueba», el permiso vence a los 7 días y los
+   correos dejan de salir. Google no necesita verificarla: solo la autorizas tú.
+5. En **Clientes → Crear cliente**, tipo **App de escritorio**, y crea. Copia el
+   ID y el secreto a tu `.env` de `bc-course`:
+
+   ```
+   GMAIL_CLIENT_ID="…apps.googleusercontent.com"
+   GMAIL_CLIENT_SECRET="…"
+   ```
+
+6. En `bc-course`, ejecuta `npm run mail:autorizar -- --probar`, abre el
+   enlace que imprime y entra con **el Gmail que envía los correos**. Google
+   avisará de que «no verificó esta app» (es la tuya): **Configuración
+   avanzada → Ir a … (no seguro)**, y acepta el permiso de enviar correos.
+7. La terminal dirá que guardó `GMAIL_REFRESH_TOKEN` en `.env` y te llegará un
+   correo de prueba (mira en spam).
+8. Copia las tres `GMAIL_*` de tu `.env` a las Variables de Railway.
+
+El permiso solo deja **enviar** correos, no leerlos. Se puede quitar cuando
+quieras en [myaccount.google.com/permissions](https://myaccount.google.com/permissions).
